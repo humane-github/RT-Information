@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.6.0_45"/>
 	<classpathentry kind="lib" path="C:/Program Files/OpenRTM-aist/1.1/jar/OpenRTM-aist-1.1.0.jar"/>
 	<classpathentry kind="lib" path="C:/DEV/10.opencv/opencv2.4.5/build/java/opencv-245.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/MessageLib"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/OpenCVLib"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/XmlLib"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/XMLLib"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

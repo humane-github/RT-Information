@@ -37,7 +37,8 @@ import RTC.TimedWString;
  * @brief CameraDevice
  *
  */
-public class CameraDeviceImpl extends DataFlowComponentBase {
+public class CameraDeviceImpl extends DataFlowComponentBase
+{
 
 	private VideoCapture m_camera = null;
     private Mat m_cameraMat = null;
