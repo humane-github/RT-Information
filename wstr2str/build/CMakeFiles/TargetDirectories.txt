@@ -1,0 +1,6 @@
+C:/DEV/17.InformationClerk/10.src/wstr2str/build/CMakeFiles/ALL_BUILD.dir
+C:/DEV/17.InformationClerk/10.src/wstr2str/build/CMakeFiles/ZERO_CHECK.dir
+C:/DEV/17.InformationClerk/10.src/wstr2str/build/doc/CMakeFiles/doxygen_doc.dir
+C:/DEV/17.InformationClerk/10.src/wstr2str/build/CMakeFiles/uninstall.dir
+C:/DEV/17.InformationClerk/10.src/wstr2str/build/src/CMakeFiles/wstr2str.dir
+C:/DEV/17.InformationClerk/10.src/wstr2str/build/src/CMakeFiles/wstr2strComp.dir

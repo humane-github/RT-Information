@@ -1,0 +1,54 @@
+# JuliusClient CMake config file
+#
+# This file sets the following variables:
+# JuliusClient_FOUND - Always TRUE.
+# JuliusClient_INCLUDE_DIRS - Directories containing the JuliusClient include files.
+# JuliusClient_IDL_DIRS - Directories containing the JuliusClient IDL files.
+# JuliusClient_LIBRARIES - Libraries needed to use JuliusClient.
+# JuliusClient_DEFINITIONS - Compiler flags for JuliusClient.
+# JuliusClient_VERSION - The version of JuliusClient found.
+# JuliusClient_VERSION_MAJOR - The major version of JuliusClient found.
+# JuliusClient_VERSION_MINOR - The minor version of JuliusClient found.
+# JuliusClient_VERSION_REVISION - The revision version of JuliusClient found.
+# JuliusClient_VERSION_CANDIDATE - The candidate version of JuliusClient found.
+
+message(STATUS "Found JuliusClient-@PROJECT_VERSION@")
+set(JuliusClient_FOUND TRUE)
+
+find_package(<dependency> REQUIRED)
+
+#set(JuliusClient_INCLUDE_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@"
+#    ${<dependency>_INCLUDE_DIRS}
+#    )
+#
+#set(JuliusClient_IDL_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@/idl")
+set(JuliusClient_INCLUDE_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@"
+    ${<dependency>_INCLUDE_DIRS}
+    )
+set(JuliusClient_IDL_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@/idl")
+
+
+if(WIN32)
+    set(JuliusClient_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_STATIC_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+else(WIN32)
+    set(JuliusClient_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_SHARED_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+endif(WIN32)
+
+set(JuliusClient_DEFINITIONS ${<dependency>_DEFINITIONS})
+
+set(JuliusClient_VERSION @PROJECT_VERSION@)
+set(JuliusClient_VERSION_MAJOR @PROJECT_VERSION_MAJOR@)
+set(JuliusClient_VERSION_MINOR @PROJECT_VERSION_MINOR@)
+set(JuliusClient_VERSION_REVISION @PROJECT_VERSION_REVISION@)
+set(JuliusClient_VERSION_CANDIDATE @PROJECT_VERSION_CANDIDATE@)
+
