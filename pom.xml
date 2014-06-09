@@ -1,0 +1,71 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>jp.co.humane.RT-Information</groupId>
+  <artifactId>RT-Information</artifactId>
+  <version>1.0</version>
+  <packaging>pom</packaging>
+
+  <!-- モジュール一覧 -->
+  <modules>
+    <module>CameraDevice</module>
+    <module>FaceDetector</module>
+    <module>InfoClerkManager</module>
+    <module>JuliusClient</module>
+    <module>MotionDetector</module>
+    <module>str2wstr</module>
+    <module>UserMaster</module>
+  </modules>
+  
+  
+  <!-- プロパティ定義 -->
+  <properties>
+    <!-- jarファイル格納フォルダ名 -->
+    <jar.copy.dir>_target</jar.copy.dir>
+    <!-- 内部リポジトリ(暫定的にNASで管理) -->
+    <inside.repogitory.path>//Ls-wsxl973/hsc-file/RTミドルウェア/17.InformationClerk/30.repogitory</inside.repogitory.path>
+  </properties>
+  
+  <!-- リポジトリの登録 -->
+  <distributionManagement>
+    <repository>
+      <id>inside.repogitory</id>
+      <name>Humane Repogitory</name>
+      <url>file://${inside.repogitory.path}</url>
+    </repository>
+  </distributionManagement>
+  
+  <build>
+    <plugins>
+    
+      <!-- 生成jarファイルを一か所に固める -->
+      <!--
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.7</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <configuration>
+              <tasks>
+                <mkdir dir="${jar.copy.dir}"/>
+                <copy file="CameraDevice/target/CameraDevice.jar"         tofile="${jar.copy.dir}/CameraDevice.jar"/>
+                <copy file="FaceDetector/target/FaceDetector.jar"         tofile="${jar.copy.dir}/FaceDetector.jar"/>
+                <copy file="InfoClerkManager/target/InfoClerkManager.jar" tofile="${jar.copy.dir}/InfoClerkManager.jar"/>
+                <copy file="JuliusClient/target/JuliusClient.jar"         tofile="${jar.copy.dir}/JuliusClient.jar"/>
+                <copy file="MotionDetector/target/MotionDetector.jar"     tofile="${jar.copy.dir}/MotionDetector.jar"/>
+                <copy file="str2wstr/target/str2wstr.jar"                 tofile="${jar.copy.dir}/str2wstr.jar"/>
+                <copy file="UserMaster/target/UserMaster.jar"             tofile="${jar.copy.dir}/UserMaster.jar"/>
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      -->
+      
+    </plugins>
+  </build>
+
+</project>

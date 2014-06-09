@@ -1,0 +1,9 @@
+infoclerk\user\UserMasterBean.class
+infoclerk\user\UserMaster.class
+infoclerk\user\UserMasterFactory.class
+infoclerk\user\DBUserMaster.class
+infoclerk\user\UserMasterFactory$1.class
+infoclerk\user\UserMasterArgs.class
+infoclerk\user\TextUserMaster.class
+infoclerk\user\UserInfo.class
+infoclerk\user\UserMasterFactory$TYPE.class
