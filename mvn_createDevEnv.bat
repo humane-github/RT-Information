@@ -35,13 +35,13 @@ if not "%ERRORLEVEL%" == "0" exit /b
 
 @rem eclipseからビルド可能にするための処理
 @rem テストクラスを一旦作れば不要
-if not exist CameraDevice\src\test\java mkdir ConfigLib\src\test\java
-if not exist FaceDetector\src\test\java mkdir DBUtility\src\test\java
-if not exist InfoClerkManager\src\test\java mkdir ExceptionLib\src\test\java
-if not exist JuliusClient\src\test\java mkdir FileOperatorUtil\src\test\java
-if not exist MotionDetector\src\test\java mkdir HCharEncoder\src\test\java
-if not exist str2wstr\src\test\java mkdir Logger\src\test\java
-if not exist UserMaster\src\test\java mkdir MessageLib\src\test\java
+if not exist CameraDevice\src\test\java     mkdir CameraDevice\src\test\java
+if not exist FaceDetector\src\test\java     mkdir FaceDetector\src\test\java
+if not exist InfoClerkManager\src\test\java mkdir InfoClerkManager\src\test\java
+if not exist JuliusClient\src\test\java     mkdir JuliusClient\src\test\java
+if not exist MotionDetector\src\test\java   mkdir MotionDetector\src\test\java
+if not exist str2wstr\src\test\java         mkdir str2wstr\src\test\java
+if not exist UserMaster\src\test\java       mkdir UserMaster\src\test\java
 
 
 echo ####### 正常終了しました #######
