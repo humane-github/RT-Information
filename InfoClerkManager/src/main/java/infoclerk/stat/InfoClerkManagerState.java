@@ -11,7 +11,7 @@ public class InfoClerkManagerState extends BaseWorker
 	private UserInfo m_noticeUserInfo = null;
 	
 	/**
-	 * ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * **/
 	public InfoClerkManagerState(InfoClerkManagerImpl o)
 	{
@@ -22,9 +22,9 @@ public class InfoClerkManagerState extends BaseWorker
 	
 	
 	/**
-	 * ‰¹º‡¬‚ğs‚¤
+	 * éŸ³å£°åˆæˆã‚’è¡Œã†
 	 * 
-	 * @param	data	‰¹º‡¬‚ğs‚¤•¶š—ñ
+	 * @param	data	éŸ³å£°åˆæˆã‚’è¡Œã†æ–‡å­—åˆ—
 	 * **/
 	public void speech(String data)
 	{
@@ -32,9 +32,9 @@ public class InfoClerkManagerState extends BaseWorker
 	}
 	
 	/**
-	 * ƒƒO‚Ìo—Í—p
+	 * ãƒ­ã‚°ã®å‡ºåŠ›ç”¨
 	 * 
-	 * @param	log	ƒƒOo—Í•¶š—ñ
+	 * @param	log	ãƒ­ã‚°å‡ºåŠ›æ–‡å­—åˆ—
 	 * **/	
 	public void log(String log)
 	{
@@ -42,10 +42,10 @@ public class InfoClerkManagerState extends BaseWorker
 	}
 	
 	/**
-	 * ƒ†[ƒU[î•ñ‚ğæ“¾‚·‚é
+	 * ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ã‚’å–å¾—ã™ã‚‹
 	 * 
-	 * @param	name		ƒ†[ƒU[–¼
-	 * @return	UserInfo[]	ƒ†[ƒU[î•ñ
+	 * @param	name		ãƒ¦ãƒ¼ã‚¶ãƒ¼å
+	 * @return	UserInfo[]	ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±
 	 * **/
 	public UserInfo[] getUserInfo(String name)
 	{
@@ -58,7 +58,7 @@ public class InfoClerkManagerState extends BaseWorker
 	}
 	
 	/**
-	 * RTƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌINƒ|[ƒgƒAƒNƒZƒT
+	 * RTã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®INãƒãƒ¼ãƒˆã‚¢ã‚¯ã‚»ã‚µ
 	 * **/	
 	public boolean noticeUsernamIsNew()
 	{
@@ -114,7 +114,7 @@ public class InfoClerkManagerState extends BaseWorker
 	}
 
 	/**
-	 * RTƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌOUTƒ|[ƒgƒAƒNƒZƒT
+	 * RTã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®OUTãƒãƒ¼ãƒˆã‚¢ã‚¯ã‚»ã‚µ
 	 * **/
 	public void writeSpeech(String data)
 	{

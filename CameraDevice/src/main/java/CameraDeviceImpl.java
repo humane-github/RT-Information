@@ -107,13 +107,13 @@ public class CameraDeviceImpl extends DataFlowComponentBase
     @Override
     protected ReturnCode_t onActivated(int ec_id)
     {
-    	//OpenCV‚ÌDLLƒ[ƒh
+    	//OpenCVã®DLLãƒ­ãƒ¼ãƒ‰
     	OpenCVLib.LoadDLL();
-    	//RTCML‰ğÍƒGƒ“ƒWƒ“‰Šú‰»
+    	//RTCMLè§£æã‚¨ãƒ³ã‚¸ãƒ³åˆæœŸåŒ–
     	m_rtcmlParser = new RTCML();
-    	//ƒRƒ“ƒtƒBƒO“Ç‚İ‚İ
+    	//ã‚³ãƒ³ãƒ•ã‚£ã‚°èª­ã¿è¾¼ã¿
     	m_waittimeValue = m_waittime.getValue();
-    	//USBƒJƒƒ‰‰Šú‰»
+    	//USBã‚«ãƒ¡ãƒ©åˆæœŸåŒ–
     	m_camera = new VideoCapture(m_deviceid.getValue());
     	if( !m_camera.isOpened() )
     	{
@@ -124,7 +124,7 @@ public class CameraDeviceImpl extends DataFlowComponentBase
 		m_CameraImage.v.width = 0;
 		m_CameraImage.v.height = 0;
 
-		//ƒJƒƒ‰‰f‘œ‚Ìs—ñ
+		//ã‚«ãƒ¡ãƒ©æ˜ åƒã®è¡Œåˆ—
 		m_cameraMat = new Mat(0, 0, CvType.CV_32S);
 		
     	return super.onActivated(ec_id);
@@ -198,9 +198,9 @@ public class CameraDeviceImpl extends DataFlowComponentBase
     }
     
     /**
-     * RTCML‚ğ‰ğÍ‚µAw’è‚³‚ê‚½ƒpƒ‰ƒ[ƒ^‚ğXV‚·‚é
+     * RTCMLã‚’è§£æã—ã€æŒ‡å®šã•ã‚ŒãŸãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’æ›´æ–°ã™ã‚‹
      * 
-     * @param	rtcml	RTCML•¶š—ñ
+     * @param	rtcml	RTCMLæ–‡å­—åˆ—
      * **/
     private void parseRTCML(String rtcml)
     {

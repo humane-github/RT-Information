@@ -11,10 +11,10 @@ public class UserMasterFactory
 	}
 	
 	/**
-	 * UserMasterƒIƒuƒWƒFƒNƒg‚ğ¶¬‚·‚é
+	 * UserMasterã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆã™ã‚‹
 	 * 
-	 * @param	type	UserMaster‚Ìí—Ş
-	 * @param	args	UserMasterƒIƒuƒWƒFƒNƒg‚Ì¶¬‚É•K—v‚È‰Šúƒpƒ‰ƒ[ƒ^
+	 * @param	type	UserMasterã®ç¨®é¡
+	 * @param	args	UserMasterã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç”Ÿæˆã«å¿…è¦ãªåˆæœŸãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
 	 * **/
 	public static UserMaster create(TYPE type,UserMasterArgs arg )
 	{
@@ -26,17 +26,17 @@ public class UserMasterFactory
 		switch(type)
 		{
 		case TEXT:
-			log.trace("TEXT‚ÌUserMaster“Ç‚İ‚İŠJn");
+			log.trace("TEXTã®UserMasterèª­ã¿è¾¼ã¿é–‹å§‹");
 			result = new TextUserMaster(arg.getFilepath());
 			break;
 		case DB:
-			log.trace("DB‚ÌUserMaster“Ç‚İ‚İŠJn");
+			log.trace("DBã®UserMasterèª­ã¿è¾¼ã¿é–‹å§‹");
 			result = new DBUserMaster(arg.getDbhostname(),
 										arg.getDbname(),
 										arg.getDbusername(),
 										arg.getDbpassword());
 		}
-		log.trace("UserMaster“Ç‚İ‚İŠ®—¹");
+		log.trace("UserMasterèª­ã¿è¾¼ã¿å®Œäº†");
 		return result;
 	}
 }

@@ -27,7 +27,7 @@ public class UsernameCallbackWaitAndroidState extends UsernameCallbackWaitState
 		m_owner = ((InfoClerkManagerState)worker);
 		m_owner.log("UsernameCallbackWaitAndroidState entry");
 		worker.StateMachine().setTimeoutTimer(InfoClerkManagerImpl.Config().getInt("CMN_SELECTUSERWAIT_TIMEOUT"));
-		//Œ`‘Ô‘f‰ğÍƒGƒ“ƒWƒ“‚Ì‰Šú‰»
+		//å½¢æ…‹ç´ è§£æã‚¨ãƒ³ã‚¸ãƒ³ã®åˆæœŸåŒ–
 		try
 		{
 			m_morphemeEngine = MorphemeEngineFactory.create(MorphemeEngineFactory.TYPE.IGO,InfoClerkManagerImpl.Config().getString("MORPHEME_IPADIC"));			
@@ -42,7 +42,7 @@ public class UsernameCallbackWaitAndroidState extends UsernameCallbackWaitState
 			m_owner.log(e2.getMessage());
 			m_halt = true;
 		}
-		//RTM on Android‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚É‰¹º”F¯ŠJnM†‚ğ‘—M‚·‚é
+		//RTM on Androidã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã«éŸ³å£°èªè­˜é–‹å§‹ä¿¡å·ã‚’é€ä¿¡ã™ã‚‹
 		//m_owner.writeSpeechRecogWakeupSignal("true");
 	}
 
@@ -60,30 +60,30 @@ public class UsernameCallbackWaitAndroidState extends UsernameCallbackWaitState
 		if( !m_halt && m_owner.androidVoiceRecognitionIsNew() )
 		{
 			m_owner.log("UsernameCallbackWaitAndroidState exec");
-			//’Ê’mƒ†[ƒU[î•ñ‚ğæ“¾‚µ‰ğÍ‚·‚é
+			//é€šçŸ¥ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ã‚’å–å¾—ã—è§£æã™ã‚‹
 			m_owner.androidVoiceRecognitionInRead();
 			String voice = m_owner.getAndroidVoiceRecognitionIn();
-			//UTF-16LE‚Ì•¶šƒR[ƒh‚ğ•¶š—ñ‚É•ÏŠ·‚·‚é
+			//UTF-16LEã®æ–‡å­—ã‚³ãƒ¼ãƒ‰ã‚’æ–‡å­—åˆ—ã«å¤‰æ›ã™ã‚‹
 			voice = hex2String(voice);
 			m_owner.log("UsernameCallbackWaitAndroidState conv="+voice);
-			//Œ`‘Ô‘f‰ğÍ‚ğs‚Á‚Äl–¼‚ğ”²‚«o‚·
+			//å½¢æ…‹ç´ è§£æã‚’è¡Œã£ã¦äººåã‚’æŠœãå‡ºã™
 			String username = username(m_morphemeEngine.parse(voice));
 			
-			//ƒ†[ƒU[–¼‚©‚çƒ†[ƒU[î•ñ‚ğæ“¾
+			//ãƒ¦ãƒ¼ã‚¶ãƒ¼åã‹ã‚‰ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ã‚’å–å¾—
     		UserInfo[] userInfolist = m_owner.getUserInfo(username);
-    		//–¢“o˜^ƒ†[ƒU[‚È‚Ì‚ÅƒGƒ‰[
+    		//æœªç™»éŒ²ãƒ¦ãƒ¼ã‚¶ãƒ¼ãªã®ã§ã‚¨ãƒ©ãƒ¼
     		if( userInfolist == null || userInfolist.length < 1 || userInfolist[0] == null )
     		{
     			m_owner.log(String.format("user:%s not found",username));
     			m_owner.speech(Msg.get("0025"));
     		}
-    		//ƒ†[ƒU[–¼‚ğ‚à‚¤ˆê“xŠm”F
+    		//ãƒ¦ãƒ¼ã‚¶ãƒ¼åã‚’ã‚‚ã†ä¸€åº¦ç¢ºèª
     		else
     		{
-    			//‰¹º”F¯‚ğ’â~‚·‚é
+    			//éŸ³å£°èªè­˜ã‚’åœæ­¢ã™ã‚‹
     			//m_owner.writeSpeechRecogWakeupSignal("false");
-    			//ƒ†[ƒU[‚É’Ê’m
-				m_owner.log(String.format("%s(%s)‚³‚ñ‚Ö—ˆ‹q’Ê’m‚ğs‚¢‚Ü‚·", userInfolist[0].username(),userInfolist[0].ipaddress()));
+    			//ãƒ¦ãƒ¼ã‚¶ãƒ¼ã«é€šçŸ¥
+				m_owner.log(String.format("%s(%s)ã•ã‚“ã¸æ¥å®¢é€šçŸ¥ã‚’è¡Œã„ã¾ã™", userInfolist[0].username(),userInfolist[0].ipaddress()));
 				m_owner.speech(Msg.get("0020"));
 				worker.StateMachine().changeState(UserResponseWaitState.Instance());
     		}
@@ -91,7 +91,7 @@ public class UsernameCallbackWaitAndroidState extends UsernameCallbackWaitState
 	}
 	
 	/**
-	 * ƒ^ƒCƒ€ƒAƒEƒg‚Ìˆ—
+	 * ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆæ™‚ã®å‡¦ç†
 	 * **/
 	public void timeout(BaseWorker worker)
 	{
@@ -109,16 +109,16 @@ public class UsernameCallbackWaitAndroidState extends UsernameCallbackWaitState
 	}
 	
 	/**
-	 * ƒAƒ“ƒhƒƒCƒh‚©‚çæ“¾‚µ‚½UTF-16LE‚Ì•¶šƒR[ƒh‚ğ•¶š—ñ‚É•ÏŠ·‚·‚é
+	 * ã‚¢ãƒ³ãƒ‰ãƒ­ã‚¤ãƒ‰ã‹ã‚‰å–å¾—ã—ãŸUTF-16LEã®æ–‡å­—ã‚³ãƒ¼ãƒ‰ã‚’æ–‡å­—åˆ—ã«å¤‰æ›ã™ã‚‹
 	 * 
-	 * @param	val	UTF-16LE‚Ì•¶šƒR[ƒh
+	 * @param	val	UTF-16LEã®æ–‡å­—ã‚³ãƒ¼ãƒ‰
 	 * @return
 	 * **/
 	private String hex2String(String val)
 	{
 		ArrayList<String> recvdata = new ArrayList<String>(); 
 		StringBuffer buff = new StringBuffer();
-		//ƒŠƒgƒ‹ƒGƒ“ƒfƒBƒAƒ“‚Ì•¶šƒR[ƒh‚ğƒrƒbƒOƒGƒ“ƒfƒBƒAƒ“‚É•ÏŠ·
+		//ãƒªãƒˆãƒ«ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ã®æ–‡å­—ã‚³ãƒ¼ãƒ‰ã‚’ãƒ“ãƒƒã‚°ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ã«å¤‰æ›
 		for( int i=0; i<val.length();i+=4)
 		{
 			String token = val.substring(i,i+4);
@@ -126,7 +126,7 @@ public class UsernameCallbackWaitAndroidState extends UsernameCallbackWaitState
 			recvdata.add(buff.toString());
 			buff.delete(0, buff.length());
 		}
-		//•¶šƒR[ƒh‚©‚ç•¶š—ñ‰»
+		//æ–‡å­—ã‚³ãƒ¼ãƒ‰ã‹ã‚‰æ–‡å­—åˆ—åŒ–
 		String[] recvdataArray = new String[recvdata.size()];
 		recvdataArray = (String[])recvdata.toArray(recvdataArray);    		
 		String convdata = HCharEncoder.toString(recvdataArray);
@@ -134,7 +134,7 @@ public class UsernameCallbackWaitAndroidState extends UsernameCallbackWaitState
 		return convdata;
 	}
 	/**
-	 * Œ`‘Ô‘f‰ğÍ‚ğs‚¢•¶Í’†‚©‚ç–¼Œ‚ğ”²‚«o‚·
+	 * å½¢æ…‹ç´ è§£æã‚’è¡Œã„æ–‡ç« ä¸­ã‹ã‚‰åè©ã‚’æŠœãå‡ºã™
 	 * **/
 	private String username(List<Morpheme> tokens)
 	{
@@ -144,10 +144,10 @@ public class UsernameCallbackWaitAndroidState extends UsernameCallbackWaitState
 		{
 			String[] features = token.Features();
 			if( features == null || features.length < 4 ){continue;}
-			if( features[0].equals("–¼Œ") && features[1].equals("ŒÅ—L–¼Œ") && features[2].equals("l–¼"))
+			if( features[0].equals("åè©") && features[1].equals("å›ºæœ‰åè©") && features[2].equals("äººå"))
 			{
-				if( features[3].equals("©") ){sei = token.Surface();}
-				if( features[3].equals("–¼") ){mei = token.Surface();}
+				if( features[3].equals("å§“") ){sei = token.Surface();}
+				if( features[3].equals("å") ){mei = token.Surface();}
 			}
 		}
 		return sei + mei;

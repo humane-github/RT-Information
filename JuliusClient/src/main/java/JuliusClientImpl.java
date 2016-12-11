@@ -164,7 +164,7 @@ public class JuliusClientImpl extends DataFlowComponentBase implements JuliusLis
     {
     	System.out.println(String.format("onActivated ec_id=%d",ec_id));
        	
-    	//ˆ—‘ÎÛ‚Æ‚·‚éƒNƒ‰ƒXID‚ğæ“¾
+    	//å‡¦ç†å¯¾è±¡ã¨ã™ã‚‹ã‚¯ãƒ©ã‚¹IDã‚’å–å¾—
     	String[] targetClassId = new String[]{};
     	String tmpClassid = m_targetClassid.value;
     	if( tmpClassid != null && tmpClassid.indexOf("|") < 0 )
@@ -184,14 +184,14 @@ public class JuliusClientImpl extends DataFlowComponentBase implements JuliusLis
     		}
     	}
     	
-    	//Julius‚ÌÀs
+    	//Juliusã®å®Ÿè¡Œ
     	JuliusExecuter.execute(m_juliusPath.value,
     							m_juliusConfPath.value,
     							m_juliusHostname.value,
     							m_audioPort.value,
     							m_modulePort.value);
    	
-    	//Julius‚©‚çŒ‹‰Êæ“¾—pƒNƒ‰ƒCƒAƒ“ƒg
+    	//Juliusã‹ã‚‰çµæœå–å¾—ç”¨ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆ
 		System.out.println("### Initialize julius connector");
     	juliusConnector = new JuliusConnector(JuliusExecuter.Julius(),
     									m_juliusHostname.value,
@@ -200,7 +200,7 @@ public class JuliusClientImpl extends DataFlowComponentBase implements JuliusLis
     	juliusConnector.addListener(this);
     	juliusConnector.setTargetClassId(targetClassId);
     	juliusConnector.initialize();
-    	//JuliusClient‚ğÀs
+    	//JuliusClientã‚’å®Ÿè¡Œ
 		System.out.println("### Start julius connector");
     	juliusConnector.start();
     	
@@ -217,7 +217,7 @@ public class JuliusClientImpl extends DataFlowComponentBase implements JuliusLis
     		//return super.onActivated(ec_id);
     	}
     	
-    	// Julius‚©‚çæ“¾‚µ‚½‰¹º”F¯Œ‹‰Ê‚ğŠÄ‹
+    	// Juliusã‹ã‚‰å–å¾—ã—ãŸéŸ³å£°èªè­˜çµæœã‚’ç›£è¦–
     	juliusThread = new Thread()
     	{
     		public void run()
@@ -387,7 +387,7 @@ public class JuliusClientImpl extends DataFlowComponentBase implements JuliusLis
 //
     
     /**
-     * ‰¹ºƒf[ƒ^“ü—Í‚É”­¶‚·‚éƒCƒxƒ“ƒg
+     * éŸ³å£°ãƒ‡ãƒ¼ã‚¿å…¥åŠ›æ™‚ã«ç™ºç”Ÿã™ã‚‹ã‚¤ãƒ™ãƒ³ãƒˆ
      * **/
     protected void onVoiceData(ConnectorInfo info,TimedOctetSeq data)
     {
@@ -420,10 +420,10 @@ public class JuliusClientImpl extends DataFlowComponentBase implements JuliusLis
     }
     
     /**
-     * Julius‚ÌAUDIOƒ\ƒPƒbƒg‚ÆÚ‘±‚·‚é
+     * Juliusã®AUDIOã‚½ã‚±ãƒƒãƒˆã¨æ¥ç¶šã™ã‚‹
      * 
-     * @param	host	JuliusÀsƒzƒXƒg–¼
-     * @param	port	Ú‘±ƒ|[ƒg”Ô†
+     * @param	host	Juliuså®Ÿè¡Œãƒ›ã‚¹ãƒˆå
+     * @param	port	æ¥ç¶šãƒãƒ¼ãƒˆç•ªå·
      * **/
     private Socket openAudioSocket(String host,int port) throws IOException
     {
@@ -443,7 +443,7 @@ public class JuliusClientImpl extends DataFlowComponentBase implements JuliusLis
     }
     
     /**
-     * ƒ|[ƒg‚ğ•Â‚¶‚é
+     * ãƒãƒ¼ãƒˆã‚’é–‰ã˜ã‚‹
      * **/
     private void closeSocket(Socket socket)
     {
@@ -458,9 +458,9 @@ public class JuliusClientImpl extends DataFlowComponentBase implements JuliusLis
     }
 
     /**
-     * JuliusConnector‚©‚çJulius‚Ì‰¹º”F¯Œ‹‰Ê‚ğó‚¯æ‚é
+     * JuliusConnectorã‹ã‚‰Juliusã®éŸ³å£°èªè­˜çµæœã‚’å—ã‘å–ã‚‹
      * 
-     * @param	data	‰¹º”F¯Œ‹‰Ê
+     * @param	data	éŸ³å£°èªè­˜çµæœ
      * **/
     public void onVoiceData(String data,String status)
     {

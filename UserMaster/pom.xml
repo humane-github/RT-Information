@@ -1,101 +1,61 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>jp.co.humane.RT-Information</groupId>
-  <artifactId>UserMaster</artifactId>
-  <version>1.0</version>
+  
+  <groupId>jp.co.humane.infoclerk</groupId>
+  <artifactId>user-master</artifactId>
+  <version>1.0.0</version>
   <packaging>jar</packaging>
 
-  <!-- プロパティ定義 -->
-  <properties>
-    <!-- 生成jarファイル名 -->
-    <jar.file.name>UserMaster</jar.file.name>
-    <!-- 内部リポジトリ(暫定的にNASで管理) -->
-    <inside.repogitory.path>//Ls-wsxl973/hsc-file/RTミドルウェア/17.InformationClerk/30.repogitory</inside.repogitory.path>
-  </properties>
-
-  <!-- リポジトリの登録 -->
-  <distributionManagement>
-    <repository>
-      <id>inside.repogitory</id>
-      <name>Humane Repogitory</name>
-      <url>file://${inside.repogitory.path}</url>
-    </repository>
-  </distributionManagement>
-
-  <!-- 参照リポジトリの追加 -->
-  <repositories>
-    <repository>
-      <id>inside.repogitory</id>
-      <name>Humane Repogitory</name>
-      <url>file://${inside.repogitory.path}</url>
-    </repository>
-  </repositories>
+  <!-- 親pom -->
+  <parent>
+    <groupId>jp.co.humane.infoclerk.parent</groupId>
+    <artifactId>infoclerk-parent</artifactId>
+    <version>1.0</version>
+    <relativePath>../parent</relativePath>
+  </parent>
 
   <!-- 参照するjarを定義 -->
   <dependencies>
 
-    <!-- commons-dbutils-1.5.jar -->
+    <!-- commons-dbutils -->
     <dependency>
       <groupId>commons-dbutils</groupId>
       <artifactId>commons-dbutils</artifactId>
       <version>1.5</version>
-      <scope>compile</scope>
-      <type>jar</type>
     </dependency>
 
-    <!-- DBUtility-1.0.jar -->
+    <!-- DBUtility -->
     <dependency>
       <groupId>jp.co.humane.humane-lib</groupId>
-      <artifactId>DBUtility</artifactId>
-      <version>1.0</version>
-      <scope>compile</scope>
-      <type>jar</type>
+      <artifactId>db-utility</artifactId>
+      <version>1.0.0</version>
     </dependency>
 
-    <!-- FileOperatorUtil-1.0.jar -->
+    <!-- FileOperatorUtil -->
     <dependency>
       <groupId>jp.co.humane.humane-lib</groupId>
-      <artifactId>FileOperatorUtil</artifactId>
-      <version>1.0</version>
-      <scope>compile</scope>
-      <type>jar</type>
+      <artifactId>file-operator-util</artifactId>
     </dependency>
 
-    <!-- Logger-1.0.jar -->
+    <!-- Logger -->
     <dependency>
       <groupId>jp.co.humane.humane-lib</groupId>
-      <artifactId>Logger</artifactId>
-      <version>1.0</version>
-      <scope>compile</scope>
-      <type>jar</type>
+      <artifactId>logger</artifactId>
+      <version>1.0.0</version>
     </dependency>
 
   </dependencies>
 
   <build>
     <plugins>
-    
-      <!-- java1.7を使用(JAVA_HOMEが1.7の必要あり) -->
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
-        <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
-          <encoding>MS932</encoding>
-        </configuration>
-      </plugin>
-      
-      <!-- jarファイル名を指定 -->
+      <!-- jar作成 -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>2.4</version>
         <configuration>
-          <finalName>${jar.file.name}</finalName>
+          <finalName>${project.artifactId}</finalName>
         </configuration>
       </plugin>
-
     </plugins>
   </build>
 

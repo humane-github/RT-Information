@@ -25,12 +25,12 @@ public class UserResponseWaitState implements BaseState
 	public void entry(BaseWorker worker)
 	{
 		m_owner = (InfoClerkManagerState)worker;
-		//‘—M—pƒNƒ‰ƒCƒAƒ“ƒg¶¬
+		//é€ä¿¡ç”¨ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆç”Ÿæˆ
 		m_chatSender = new ChatSender("",
 				InfoClerkManagerImpl.Config().getInt("CHAT_SENDIMAGEPORT"),
 				InfoClerkManagerImpl.Config().getString("CHAT_ENCODING"),
 				InfoClerkManagerImpl.Config().getInt("CHAT_PACKETSIZE"));
-		//óM—pƒNƒ‰ƒCƒAƒ“ƒg¶¬
+		//å—ä¿¡ç”¨ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆç”Ÿæˆ
 		m_chatRecver = new ChatReciver(InfoClerkManagerImpl.Config().getInt("CHAT_RECVPORT"),
 										InfoClerkManagerImpl.Config().getString("CHAT_ENCODING"),
 										InfoClerkManagerImpl.Config().getInt("CHAT_PACKETSIZE"));

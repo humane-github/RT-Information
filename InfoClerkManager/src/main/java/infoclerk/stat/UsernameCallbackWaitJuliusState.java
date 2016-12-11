@@ -32,22 +32,22 @@ public class UsernameCallbackWaitJuliusState extends UsernameCallbackWaitState
 		if( m_owner.noticeUsernamIsNew() )
 		{
 			m_owner.log("UsernameCallbackWaitJuliusState exec");
-			//’Ê’mƒ†[ƒU[î•ñ‚ğæ“¾‚µ‰ğÍ‚·‚é
+			//é€šçŸ¥ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ã‚’å–å¾—ã—è§£æã™ã‚‹
 			m_owner.noticeUsernameRead();
     		VoiceDataInfo voiceInfo = new VoiceDataInfo(m_owner.getNoticeUsername());
-    		//ƒ†[ƒU[–¼‚Ì’Ê’m‚©”»’è‚·‚é
+    		//ãƒ¦ãƒ¼ã‚¶ãƒ¼åã®é€šçŸ¥ã‹åˆ¤å®šã™ã‚‹
     		if( voiceInfo.classId.equals(InfoClerkManagerImpl.Config().getString("VOICE_NAME_CLASSID")) &&
     			voiceInfo.score > InfoClerkManagerImpl.Config().getFloat("VOICE_AVAILABLE_SCORE")	)
     		{
-    			//ƒ†[ƒU[–¼‚©‚çƒ†[ƒU[î•ñ‚ğæ“¾
+    			//ãƒ¦ãƒ¼ã‚¶ãƒ¼åã‹ã‚‰ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ã‚’å–å¾—
         		UserInfo[] userInfolist = m_owner.getUserInfo(voiceInfo.voiceData);
-        		//–¢“o˜^ƒ†[ƒU[‚È‚Ì‚ÅƒGƒ‰[
+        		//æœªç™»éŒ²ãƒ¦ãƒ¼ã‚¶ãƒ¼ãªã®ã§ã‚¨ãƒ©ãƒ¼
         		if( userInfolist == null || userInfolist.length < 1 || userInfolist[0] == null )
         		{
         			m_owner.log(String.format("user:%s is not already exists",m_owner.getNoticeUsername()));
         			m_owner.speech(Msg.get("0025"));
         		}
-        		//ƒ†[ƒU[–¼‚ğ‚à‚¤ˆê“xŠm”F
+        		//ãƒ¦ãƒ¼ã‚¶ãƒ¼åã‚’ã‚‚ã†ä¸€åº¦ç¢ºèª
         		else
         		{
         			m_owner.speech(Msg.get("0030", new Object[]{userInfolist[0].username()}));
@@ -55,7 +55,7 @@ public class UsernameCallbackWaitJuliusState extends UsernameCallbackWaitState
         			worker.StateMachine().changeState(ConfirmSelectUserWaitState.Instance());
         		}    			
     		}
-    		//ƒ†[ƒU[–¼‚Ì’Ê’m‚Å‚Í‚È‚¢‚Ì‚ÅAÄ“x“ü—Í‘Ò‚¿
+    		//ãƒ¦ãƒ¼ã‚¶ãƒ¼åã®é€šçŸ¥ã§ã¯ãªã„ã®ã§ã€å†åº¦å…¥åŠ›å¾…ã¡
     		else
     		{
     			m_owner.log(String.format("user:%s is not already exists",m_owner.getNoticeUsername()));
@@ -66,7 +66,7 @@ public class UsernameCallbackWaitJuliusState extends UsernameCallbackWaitState
 	
  
 	/**
-	 * ƒ^ƒCƒ€ƒAƒEƒg‚Ìˆ—
+	 * ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆæ™‚ã®å‡¦ç†
 	 * **/
 	public void timeout(BaseWorker worker)
 	{

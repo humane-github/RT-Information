@@ -7,10 +7,10 @@ public class UserInfo
 	private String m_ipaddress = null;
 	
 	/**
-	 * ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * 
-	 * @param	username	ƒ†[ƒU[–¼
-	 * @param	ipaddress	ƒ†[ƒU[PC‚ÌIPƒAƒhƒŒƒX
+	 * @param	username	ãƒ¦ãƒ¼ã‚¶ãƒ¼å
+	 * @param	ipaddress	ãƒ¦ãƒ¼ã‚¶ãƒ¼PCã®IPã‚¢ãƒ‰ãƒ¬ã‚¹
 	 * **/
 	public UserInfo(String username,String ipaddress)
 	{

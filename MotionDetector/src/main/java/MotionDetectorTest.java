@@ -39,9 +39,9 @@ public class MotionDetectorTest
 		VideoCapture camera = new VideoCapture(0);
     	if( !camera.isOpened() )
     	{
-    		System.out.println("ƒJƒƒ‰‰Šú‰»¸”s");
+    		System.out.println("ã‚«ãƒ¡ãƒ©åˆæœŸåŒ–å¤±æ•—");
     	}
-		//ƒJƒƒ‰‰f‘œæ“¾
+		//ã‚«ãƒ¡ãƒ©æ˜ åƒå–å¾—
 		Mat cameraMat = new Mat(0, 0, CvType.CV_32S);
 		
 		m_previewDialog = new PreviewDialog();
@@ -53,27 +53,27 @@ public class MotionDetectorTest
 	    	cameraMat.release();
 			camera.read(cameraMat);
 
-			//‘O‰ñ‚Ì‰æ‘œ‚ğ•Û
+			//å‰å›ã®ç”»åƒã‚’ä¿æŒ
 			if( m_currentMat != null )
 			{
 				m_prevMat = MatFactory.create(m_currentMat.width(), m_currentMat.height(), MatType.MONO_8BIT);
 				m_currentMat.copyTo(m_prevMat);
 			}
-			//ƒOƒŒ[ƒXƒP[ƒ‹‚Ì‰æ‘œs—ñ—Ìˆæ‚ğŠm•Û
+			//ã‚°ãƒ¬ãƒ¼ã‚¹ã‚±ãƒ¼ãƒ«ã®ç”»åƒè¡Œåˆ—é ˜åŸŸã‚’ç¢ºä¿
 			m_currentMat = MatFactory.create(cameraMat.width(), cameraMat.height(), MatType.MONO_8BIT);
-			//‰æ‘œ‚ğƒOƒŒ[ƒXƒP[ƒ‹‚É•ÏŠ·
+			//ç”»åƒã‚’ã‚°ãƒ¬ãƒ¼ã‚¹ã‚±ãƒ¼ãƒ«ã«å¤‰æ›
 			Imgproc.cvtColor(cameraMat, m_currentMat, Imgproc.COLOR_BGR2GRAY);
 			
-			//ƒR[ƒi[ŒŸo
+			//ã‚³ãƒ¼ãƒŠãƒ¼æ¤œå‡º
 			if( m_currentCorners == null ){m_currentCorners = new MatOfPoint();}    		
 			Imgproc.goodFeaturesToTrack(m_currentMat, m_currentCorners, MAX_CORNERS, QUALITY_LEVEL, MIN_DISTANCE);
-			//MatOfPoint2‚†‚É•ÏŠ·
+			//MatOfPoint2ï½†ã«å¤‰æ›
 			MatOfPoint2f currentPoints = new MatOfPoint2f();
     		m_currentCorners.copyTo(currentPoints);
-    		//calcOpticalFlowPyrlk‚ÍCV_32FC3‚µ‚©ó‚¯•t‚¯‚È‚¢‚Ì‚Å‚±‚±‚Å•ÏŠ·
+    		//calcOpticalFlowPyrlkã¯CV_32FC3ã—ã‹å—ã‘ä»˜ã‘ãªã„ã®ã§ã“ã“ã§å¤‰æ›
     		currentPoints.convertTo(currentPoints, CvType.CV_32FC3);
     		
-			//ƒIƒvƒeƒBƒJƒ‹ƒtƒ[ŒŸo
+			//ã‚ªãƒ—ãƒ†ã‚£ã‚«ãƒ«ãƒ•ãƒ­ãƒ¼æ¤œå‡º
 			if( m_prevMat != null )
 			{
 	    		MatOfByte status = new MatOfByte();

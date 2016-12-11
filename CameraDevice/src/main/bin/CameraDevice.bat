@@ -1,15 +1,13 @@
-@rem Namingサービスを起動
-@rem start start-orbd.vbs
-
 @rem CameraDeviceCompを起動
-cd ..
-set CLASSPATH=%CLASSPATH%;classes
-set CLASSPATH=%CLASSPATH%;lib\MessageLib-1.0.jar
-set CLASSPATH=%CLASSPATH%;lib\opencv-249.jar
-set CLASSPATH=%CLASSPATH%;lib\OpenCVLib-1.0.jar
-set CLASSPATH=%CLASSPATH%;lib\OpenRTM-aist-1.1.0.jar
-set CLASSPATH=%CLASSPATH%;lib\XMLLib-1.0.jar
-set CLASSPATH=%CLASSPATH%;lib\commons-cli-1.1.jar
 
-java -classpath %CLASSPATH% CameraDeviceComp -f conf/rtc.conf
+@rem ファイルの存在するディレクトリのパスに移動
+set CURRENT_DIR=%~dp0
+cd "%CURRENT_DIR%"
+
+@rem クラスパスを設定
+set CLASSPATH=%CLASSPATH%;"%CURRENT_DIR%camera-device.jar"
+
+@rem RTC起動
+java -classpath %CLASSPATH% CameraDeviceComp -f "%CURRENT_DIR%rtc.conf"
+
 pause

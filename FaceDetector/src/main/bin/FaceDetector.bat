@@ -1,17 +1,13 @@
-@rem Namingサービスを起動
-@rem start start-orbd.vbs
-
 @rem FaceDetectorを起動
-cd ..
-set CLASSPATH=%CLASSPATH%;classes
-set CLASSPATH=%CLASSPATH%;lib\commons-cli-1.1.jar
-set CLASSPATH=%CLASSPATH%;lib\opencv-249.jar
-set CLASSPATH=%CLASSPATH%;lib\OpenRTM-aist-1.1.0.jar
-set CLASSPATH=%CLASSPATH%;lib\ConfigLib-1.0.jar
-set CLASSPATH=%CLASSPATH%;lib\ExceptionLib-1.0.jar
-set CLASSPATH=%CLASSPATH%;lib\OpenCVLib-1.0.jar
-set CLASSPATH=%CLASSPATH%;lib\XMLLib-1.0.jar
 
-java -classpath %CLASSPATH% FaceDetectorComp -f conf/rtc.conf
+@rem ファイルの存在するディレクトリのパスを取得
+set CURRENT_DIR=%~dp0
+cd "%CURRENT_DIR%"
+
+@rem クラスパスを設定
+set CLASSPATH=%CLASSPATH%;"%CURRENT_DIR%face-detector.jar"
+
+@rem RTC起動
+java -classpath %CLASSPATH% FaceDetectorComp -f "%CURRENT_DIR%rtc.conf"
+
 pause
-

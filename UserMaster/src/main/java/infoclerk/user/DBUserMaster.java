@@ -11,39 +11,39 @@ import jp.co.humane.logger.Logger;
 
 public class DBUserMaster implements UserMaster
 {
-	//DBƒzƒXƒg–¼
+	//DBãƒ›ã‚¹ãƒˆå
 	private String m_host = null;
-	//DB–¼
+	//DBå
 	private String m_dbname = null;
-	//DBƒ†[ƒU[–¼
+	//DBãƒ¦ãƒ¼ã‚¶ãƒ¼å
 	private String m_username = null;
-	//ƒƒOƒCƒ“ƒpƒXƒ[ƒh
+	//ãƒ­ã‚°ã‚¤ãƒ³ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰
 	private String m_password = null;
-	//DB‘€ìƒIƒuƒWƒFƒNƒg
+	//DBæ“ä½œã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	private Database m_db = null;
-	//ƒƒOo—Í—p
+	//ãƒ­ã‚°å‡ºåŠ›ç”¨
 	private Logger m_Logger = null;
 	/**
-	 * ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * 
-	 * @param	host		DBƒzƒXƒg–¼
-	 * @param	dbname		DB–¼
-	 * @param	username	ƒ†[ƒU[–¼
-	 * @param	password	ƒpƒXƒ[ƒh
+	 * @param	host		DBãƒ›ã‚¹ãƒˆå
+	 * @param	dbname		DBå
+	 * @param	username	ãƒ¦ãƒ¼ã‚¶ãƒ¼å
+	 * @param	password	ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰
 	 * **/
 	public DBUserMaster(String host,String dbname,String username,String password)
 	{
-		//DBÚ‘±î•ñ‚ğİ’è
+		//DBæ¥ç¶šæƒ…å ±ã‚’è¨­å®š
 		m_host = host;
 		m_dbname = dbname;
 		m_username = username;
 		m_password = password;
-		//‰Šú‰»
+		//åˆæœŸåŒ–
 		initialize();
 	}
 	
 	/**
-	 * ‰Šú‰»ˆ—
+	 * åˆæœŸåŒ–å‡¦ç†
 	 * **/
 	public int initialize()
 	{
@@ -63,7 +63,7 @@ public class DBUserMaster implements UserMaster
 	}
 	
 	/**
-	 * I—¹ˆ—
+	 * çµ‚äº†å‡¦ç†
 	 * **/
 	public int terminate()
 	{
@@ -72,9 +72,9 @@ public class DBUserMaster implements UserMaster
 	}
 	
 	/**
-	 * ƒ†[ƒU[î•ñ‚ğæ“¾‚·‚é
+	 * ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ã‚’å–å¾—ã™ã‚‹
 	 * 
-	 * @param	key	ƒ†[ƒU[ID
+	 * @param	key	ãƒ¦ãƒ¼ã‚¶ãƒ¼ID
 	 * **/
 	public UserInfo[] get(String key)
 	{
@@ -86,17 +86,17 @@ public class DBUserMaster implements UserMaster
 		String whereLike = "like '%"+key+"%'";
 		try
 		{
-			//ƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“ŠJn
+			//ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹
 			ac.beginTransaction();
-			//SQL¶¬
+			//SQLç”Ÿæˆ
 			if( key != null )
 			{
 				sql += where + whereLike;				
 			}
 			m_Logger.trace(sql);
-			//SQLÀs
+			//SQLå®Ÿè¡Œ
 			List<UserMasterBean> beans = ac.executeQuery(sql,null, UserMasterBean.class);
-			//Œ‹‰Êæ“¾
+			//çµæœå–å¾—
 			userinfolist = new UserInfo[beans.size()];
 			for( int i=0 ; i < userinfolist.length ; i++ )
 			{
@@ -120,7 +120,7 @@ public class DBUserMaster implements UserMaster
 	}
 	
 	/**
-	 * ‘Sƒ†[ƒU[‚ğæ“¾‚·‚é
+	 * å…¨ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚’å–å¾—ã™ã‚‹
 	 * **/
 	public UserInfo[] getAll()
 	{
@@ -128,7 +128,7 @@ public class DBUserMaster implements UserMaster
 	}
 	
 	/**
-	 * ƒ†[ƒU[”‚ğæ“¾‚·‚é
+	 * ãƒ¦ãƒ¼ã‚¶ãƒ¼æ•°ã‚’å–å¾—ã™ã‚‹
 	 * **/
 	public int size()
 	{
@@ -137,15 +137,15 @@ public class DBUserMaster implements UserMaster
 		String sql = "select count(*) from usermaster";
 		try
 		{
-			//ƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“ŠJn
+			//ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹
 			ac.beginTransaction();
-			//SQLÀs
+			//SQLå®Ÿè¡Œ
 			 long res = (long)ac.executeQuery(sql,null, new ScalarHandler(1));
 			 result = (int)res;
 		}
 		catch (DBUtilException e)
 		{
-			m_Logger.trace("SQL‚ÌÀs‚É¸”s‚µ‚Ü‚µ‚½F"+sql);
+			m_Logger.trace("SQLã®å®Ÿè¡Œã«å¤±æ•—ã—ã¾ã—ãŸï¼š"+sql);
 			e.printStackTrace();
 		}
 		finally
@@ -163,7 +163,7 @@ public class DBUserMaster implements UserMaster
 	{
 		DBUserMaster m = new DBUserMaster("localhost", "InfoClerk", "postgres", "root");
 		m.initialize();
-		UserInfo[] res = m.get("—é–Ø");
+		UserInfo[] res = m.get("éˆ´æœ¨");
 		for( UserInfo u : res )
 		{
 			System.out.println(String.format("username=%s password=%s", u.username(),u.ipaddress()));

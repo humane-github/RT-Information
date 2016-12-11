@@ -4,30 +4,30 @@ package infoclerk.user;
 public interface UserMaster
 {
 	/**
-	 * ƒ†[ƒU[î•ñ‚ğæ“¾‚·‚é
+	 * ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ã‚’å–å¾—ã™ã‚‹
 	 * 
-	 * @param	key	ƒ†[ƒU[–¼
+	 * @param	key	ãƒ¦ãƒ¼ã‚¶ãƒ¼å
 	 * **/
 	public UserInfo[] get(String key);
 	/**
-	 * ‘Sƒ†[ƒU[‚ğæ“¾‚·‚é
+	 * å…¨ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚’å–å¾—ã™ã‚‹
 	 * **/
 	public UserInfo[] getAll();
 	/**
-	 * ƒ†[ƒU[”‚ğæ“¾‚·‚é
+	 * ãƒ¦ãƒ¼ã‚¶ãƒ¼æ•°ã‚’å–å¾—ã™ã‚‹
 	 * **/
 	public int size();
 	/**
-	 * ‰Šú‰»ˆ—
+	 * åˆæœŸåŒ–å‡¦ç†
 	 * 
-	 * @return	int	ƒGƒ‰[ƒR[ƒh
+	 * @return	int	ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰
 	 * **/
 	public int initialize();
 	
 	/**
-	 * I—¹ˆ—
+	 * çµ‚äº†å‡¦ç†
 	 * 
-	 * @return	int	ƒGƒ‰[ƒR[ƒh
+	 * @return	int	ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰
 	 * **/
 	public int terminate();
 }

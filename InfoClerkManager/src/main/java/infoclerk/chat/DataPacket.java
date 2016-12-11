@@ -6,17 +6,17 @@ import jp.co.humane.hcharencoder.HCharEncoder;
 
 public class DataPacket
 {
-    //ƒwƒbƒ_‚Ì’·‚³
+    //ãƒ˜ãƒƒãƒ€ã®é•·ã•
     private final static int HEADER_LENGTH = 10;
 	private final static int TYPE_SIZE = 3;
 	private final static int LENGTH_SIZE = 4;
 	
 	private Charset m_charset = Charset.forName("ascii");
 	/**
-	 * Header‚Ìd—l
-	 * [0]:í•Ê
-	 * [1-4]:“d•¶’·
-	 * [5-10]:—\”õ
+	 * Headerã®ä»•æ§˜
+	 * [0]:ç¨®åˆ¥
+	 * [1-4]:é›»æ–‡é•·
+	 * [5-10]:äºˆå‚™
 	 * **/
 	private byte[] m_data = null;
 	private byte[] m_header = null;
@@ -35,18 +35,18 @@ public class DataPacket
 	private static byte ETX = 0x03;
 
 	/**
-	 * ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * **/
     public DataPacket(byte[] type,byte[] body)
     {
-        //‰Šú‰»
+        //åˆæœŸåŒ–
         int idx = 0;
         m_data = new byte[HEADER_LENGTH+body.length];
         for (int i = 0; i < m_data.length; i++)
         {
             m_data[i] = RESERVE;
         }
-        //ƒwƒbƒ_[¶¬
+        //ãƒ˜ãƒƒãƒ€ãƒ¼ç”Ÿæˆ
         for (int i = 0; i < type.length; i++)
         {
             m_data[i] = type[i];
@@ -57,7 +57,7 @@ public class DataPacket
         {
             m_data[idx + i] = lenByteArray[i];
         }
-        //ƒ{ƒfƒB¶¬
+        //ãƒœãƒ‡ã‚£ç”Ÿæˆ
         for (int i = 0; i < body.length; i++)
         {
             m_data[i + HEADER_LENGTH] = body[i];
@@ -65,19 +65,19 @@ public class DataPacket
     }
     
     /**
-     * ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+     * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
      * **/
     public DataPacket(byte[] data)
     {
     	if( data == null || data.length < 1 ){return;}
-        //ƒwƒbƒ_•”’Šo
+        //ãƒ˜ãƒƒãƒ€éƒ¨æŠ½å‡º
         m_header = new byte[HEADER_LENGTH];
         m_data = data;
         for (int i = 0; i < HEADER_LENGTH; i++)
         {
             m_header[i] = m_data[i];
         }
-        //ƒ{ƒfƒB•”’Šo
+        //ãƒœãƒ‡ã‚£éƒ¨æŠ½å‡º
         m_body = new byte[m_data.length - HEADER_LENGTH];
         for (int i = HEADER_LENGTH; i < m_data.length; i++)
         {
@@ -142,7 +142,7 @@ public class DataPacket
 	}
 	
 	/**
-	 * ƒpƒPƒbƒg‚Ì•¶š—ñ‰»
+	 * ãƒ‘ã‚±ãƒƒãƒˆã®æ–‡å­—åˆ—åŒ–
 	 * **/
 	public String toString()
 	{

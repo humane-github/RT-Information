@@ -25,7 +25,7 @@ public class ChatReciver
 	private boolean m_runnable = false;
 	
 	/**
-	 * コンストラクタ
+	 * 繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
 	 * **/
 	public ChatReciver(int port,String encoding,int buffSize)
 	{

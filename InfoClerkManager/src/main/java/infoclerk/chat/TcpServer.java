@@ -24,25 +24,25 @@ public class TcpServer
 	private final static String CMD_GETIMG = "CMD_GETIMG";
 	private final static int PORT = 11000;
 	private final static int PORT_HEARTBEAT = 11001;
-	//ƒT[ƒo[‚Ìó‘Ôƒtƒ‰ƒO
+	//ã‚µãƒ¼ãƒãƒ¼ã®çŠ¶æ…‹ãƒ•ãƒ©ã‚°
 	private boolean m_sleep = false;
-	//ƒNƒ‰ƒCƒAƒ“ƒg‚Æ‚ÌÚ‘±Šm”F—p
+	//ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã¨ã®æ¥ç¶šç¢ºèªç”¨
 	private byte[] m_alive = new byte[]{0,1};
-	//ƒT[ƒo[ƒ\ƒPƒbƒg
+	//ã‚µãƒ¼ãƒãƒ¼ã‚½ã‚±ãƒƒãƒˆ
 	private ServerSocket m_serverSocket = null;
 	private ServerSocket m_hbServerSocket = null;
-	//Ú‘±‚µ‚Ä‚¢‚éƒNƒ‰ƒCƒAƒ“ƒg‚ÌIPƒAƒhƒŒƒX‚ğƒL[‚Æ‚µ‚½Map
+	//æ¥ç¶šã—ã¦ã„ã‚‹ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã®IPã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’ã‚­ãƒ¼ã¨ã—ãŸMap
 	private HashMap<String,ServerThread> m_sockets = new HashMap<String,ServerThread>();
 	private byte[] m_senddata = null;
 	public void setSendData(byte[] d){m_senddata = d;}
 	
 	/**
-	 * ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * **/
 	public TcpServer(){}
 	
 	/**
-	 * ƒT[ƒo[ŠJn
+	 * ã‚µãƒ¼ãƒãƒ¼é–‹å§‹
 	 * **/
 	public void start()
 	{
@@ -74,9 +74,9 @@ public class TcpServer
 		private byte[] m_sendData = null;
 		
 		/**
-		 * ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		 * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		 * 
-		 * @param	socket	Ú‘±ƒNƒ‰ƒCƒAƒ“ƒg‚ÌSocket
+		 * @param	socket	æ¥ç¶šã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã®Socket
 		 * **/
 		public ServerThread(Socket socket,Socket hsocket)
 		{
@@ -92,11 +92,11 @@ public class TcpServer
 				if( m_sendData == null ){return;}
 				try
 				{
-					//ƒNƒ‰ƒCƒAƒ“ƒg‚Æ‚ÌÚ‘±Šm”F
+					//ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã¨ã®æ¥ç¶šç¢ºèª
 					m_hertbeatSocket.getOutputStream().write(m_alive);
 					m_hertbeatSocket.getOutputStream().flush();
 					
-					//ƒNƒ‰ƒCƒAƒ“ƒg‚©‚ç‚ÌƒRƒ}ƒ“ƒhóM
+					//ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã‹ã‚‰ã®ã‚³ãƒãƒ³ãƒ‰å—ä¿¡
 					BufferedReader reader = new BufferedReader(new InputStreamReader(m_socket.getInputStream()));
 					String recvdata = reader.readLine();
 					while(m_socket.getInputStream().available() != 0 )
@@ -104,10 +104,10 @@ public class TcpServer
 						recvdata += reader.readLine();
 					}
 					if( recvdata == null || recvdata.trim().length() < 1 ){continue;}
-					//RTCML‚Ì‰ğÍ
+					//RTCMLã®è§£æ
 					m_rtcml.parse(recvdata);
 					String cmd = m_rtcml.getString("command");
-					//ƒRƒ}ƒ“ƒh‚É‘Î‰‚µ‚½‰“š‚ğs‚¤
+					//ã‚³ãƒãƒ³ãƒ‰ã«å¯¾å¿œã—ãŸå¿œç­”ã‚’è¡Œã†
 					if( CMD_GETIMG.equals(cmd))
 					{
 						m_socket.getOutputStream().write(m_sendData);

@@ -28,28 +28,28 @@ import org.opencv.imgproc.Imgproc;
 
 public class InfoClerkTcpServer
 {
-	//ƒpƒPƒbƒgƒTƒCƒY
+	//ãƒ‘ã‚±ãƒƒãƒˆã‚µã‚¤ã‚º
 	private int m_buffSize = 0;
-	//ƒ|[ƒg
+	//ãƒãƒ¼ãƒˆ
 	private int m_port = 0;
-	//ƒZƒŒƒNƒ^[
+	//ã‚»ãƒ¬ã‚¯ã‚¿ãƒ¼
 	private Selector m_selector = null;
 	private ServerSocketChannel m_channel = null;
-	//ƒNƒ‰ƒCƒAƒ“ƒg‚É‘—‚é‰f‘œ
+	//ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã«é€ã‚‹æ˜ åƒ
 	private byte[] m_senddata = null;
 	public void setSendData(byte[] d){m_senddata = d;}
-	//ƒNƒ‰ƒCƒAƒ“ƒg‚©‚ç‚ÌÚ‘±‘Ò‚¿‚¤‚¯ƒXƒŒƒbƒh
+	//ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã‹ã‚‰ã®æ¥ç¶šå¾…ã¡ã†ã‘ã‚¹ãƒ¬ãƒƒãƒ‰
 	private Thread m_acceptThread = null;
-	//InfoClerk‚ÌƒƒCƒ“ƒNƒ‰ƒX
+	//InfoClerkã®ãƒ¡ã‚¤ãƒ³ã‚¯ãƒ©ã‚¹
 	private InfoClerkManagerImpl m_owner = null;
 	private String m_encoding = null;
-	//ƒRƒ“ƒtƒBƒOƒŒ[ƒVƒ‡ƒ“XV—v‹XML
+	//ã‚³ãƒ³ãƒ•ã‚£ã‚°ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³æ›´æ–°è¦æ±‚XML
 	private String m_updateConfigRtcml = null;
 	public String getUpdateConfigRtcml(){return m_updateConfigRtcml;}
 	public void resetUpdateConfigRtcml(){m_updateConfigRtcml = null;}
 	
 	/**
-	 * ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * **/
 	public InfoClerkTcpServer(InfoClerkManagerImpl owner,int port,int buffsize,String encoding)
 	{
@@ -60,7 +60,7 @@ public class InfoClerkTcpServer
 	}
 	
 	/**
-	 * TCPƒT[ƒo[‚ğŠJn‚·‚é
+	 * TCPã‚µãƒ¼ãƒãƒ¼ã‚’é–‹å§‹ã™ã‚‹
 	 * **/
 	public void start()
 	{
@@ -123,7 +123,7 @@ public class InfoClerkTcpServer
 	}
 	
 	/**
-	 * ƒNƒ‰ƒCƒAƒ“ƒg‚ÆÚ‘±‚·‚é
+	 * ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã¨æ¥ç¶šã™ã‚‹
 	 * **/
 	public void accept(ServerSocketChannel serverChannel)
 	{
@@ -141,7 +141,7 @@ public class InfoClerkTcpServer
 	}
 	
 	/**
-	 * ƒNƒ‰ƒCƒAƒ“ƒg‚©‚ç“d•¶‚ğó‚¯æ‚é
+	 * ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã‹ã‚‰é›»æ–‡ã‚’å—ã‘å–ã‚‹
 	 * **/
 	public int read(SocketChannel channel)
 	{
@@ -155,15 +155,15 @@ public class InfoClerkTcpServer
 			{
 				baos.write(buffer.array(),0,len);
 			}
-			//ƒpƒPƒbƒg‰ğÍ
+			//ãƒ‘ã‚±ãƒƒãƒˆè§£æ
 			DataPacket packet = new DataPacket(baos.toByteArray());
-			//‰f‘œæ“¾ƒRƒ}ƒ“ƒhóM
+			//æ˜ åƒå–å¾—ã‚³ãƒãƒ³ãƒ‰å—ä¿¡
 			if( packet.isGetIMG() )
 			{
 				DataPacket sendPacket = new DataPacket(DataPacket.TYPE_SENDIMG, m_senddata);					
 				channel.write(ByteBuffer.wrap(sendPacket.toByteArray()));
 			}
-			//ƒvƒƒpƒeƒBæ“¾ƒRƒ}ƒ“ƒhóM
+			//ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£å–å¾—ã‚³ãƒãƒ³ãƒ‰å—ä¿¡
 			else if( packet.isGetPROPERTY() )
 			{
 				StringBuffer response = new StringBuffer();
@@ -194,12 +194,12 @@ public class InfoClerkTcpServer
 	}
 	
 	/**
-	 * ‰æ‘œ‚ğ‘—M‚·‚é
+	 * ç”»åƒã‚’é€ä¿¡ã™ã‚‹
 	 * 
-	 * @param	width	‰æ‘œ‚Ì•
-	 * @param	height	‰æ‘œ‚Ì‚‚³
+	 * @param	width	ç”»åƒã®å¹…
+	 * @param	height	ç”»åƒã®é«˜ã•
 	 * @param	bpp	
-	 * @param	pixels	‰æ‘œƒf[ƒ^
+	 * @param	pixels	ç”»åƒãƒ‡ãƒ¼ã‚¿
 	 * **/
 	public void setCameraImage(int width,int height,int bpp,byte[] pixels)
 	{
@@ -273,14 +273,14 @@ public class InfoClerkTcpServer
 	{
 		try
 		{
-			//‰f‘œ—pƒT[ƒo[ŠJn
+			//æ˜ åƒç”¨ã‚µãƒ¼ãƒãƒ¼é–‹å§‹
 			InfoClerkTcpServer imgServer = new InfoClerkTcpServer(null,10020,512,"utf-8");
 			byte[] img = imgServer.getImageBytes(ImageIO.read(new File("C:\\DEV\\17.InformationClerk\\80.sandbox\\org.jpg")),"jpeg");
 			imgServer.setSendData(img);
 			DataPacket p = new DataPacket(DataPacket.TYPE_SENDIMG, img);
 			System.out.println(p.toString());
 			imgServer.start();
-			//ƒRƒ}ƒ“ƒh—pƒT[ƒo[ŠJn
+			//ã‚³ãƒãƒ³ãƒ‰ç”¨ã‚µãƒ¼ãƒãƒ¼é–‹å§‹
 			InfoClerkTcpServer cmdServer = new InfoClerkTcpServer(null,10021,512,"utf-8");
 			cmdServer.start();
 		} catch (IOException e) {

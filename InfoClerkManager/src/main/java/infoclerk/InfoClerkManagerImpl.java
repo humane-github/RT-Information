@@ -62,8 +62,8 @@ public class InfoClerkManagerImpl extends DataFlowComponentBase
 	private InfoClerkTcpServer m_tcpImgServer = null;
 	private InfoClerkTcpServer m_tcpCmdServer = null;
 	
-	//ƒRƒ“ƒtƒBƒOƒŒ[ƒVƒ‡ƒ“æ“¾—v‹ŠÖ˜A
-	//ƒL[‚ÍƒRƒ“ƒ|[ƒlƒ“ƒg–¼
+	//ã‚³ãƒ³ãƒ•ã‚£ã‚°ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å–å¾—è¦æ±‚é–¢é€£
+	//ã‚­ãƒ¼ã¯ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆå
 	private HashMap<String,RTCML> m_componentRtcml = new HashMap<String,RTCML>();
 	public HashMap<String,RTCML> getConfigrations(){return m_componentRtcml;}
 	
@@ -101,7 +101,7 @@ public class InfoClerkManagerImpl extends DataFlowComponentBase
     public DataRef<TimedWString> m_rtcmlOut;
     public OutPort<TimedWString> m_rtcmlOutOut;
     
-    //ƒRƒ“ƒtƒBƒO
+    //ã‚³ãƒ³ãƒ•ã‚£ã‚°
     public StringHolder m_configpath = new StringHolder();
     
   /*!
@@ -190,20 +190,20 @@ public class InfoClerkManagerImpl extends DataFlowComponentBase
     @Override
     protected ReturnCode_t onActivated(int ec_id)
     {
-    	//OpenCVƒ‰ƒCƒuƒ‰ƒŠ‚Ìƒ[ƒh
+    	//OpenCVãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®ãƒ­ãƒ¼ãƒ‰
     	OpenCVLib.LoadDLL();
-    	//INƒ|[ƒg‚Ìƒoƒbƒtƒ@ƒNƒŠƒA
+    	//INãƒãƒ¼ãƒˆã®ãƒãƒƒãƒ•ã‚¡ã‚¯ãƒªã‚¢
     	portClear(m_juliusVoiceRecognitionIn);
     	portClear(m_FacesIn);
     	portClear(m_detectMotionIn);
     	portClear(m_androidVoiceRecognitionIn);
     	
-    	//İ’èƒtƒ@ƒCƒ‹“Ç‚İ‚İ
+    	//è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
     	m_config = new ConfigFile();
     	try
     	{
 			m_config.load(m_configpath.value);
-			//ƒRƒ“ƒgƒ[ƒ‹ƒpƒlƒ‹‚©‚ç‚Ì—v‹‚Ì‚½‚ßA–‘O‚Éİ’èî•ñ‚ğRTCML‰»‚µ‚Ä‚¨‚­
+			//ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ãƒ‘ãƒãƒ«ã‹ã‚‰ã®è¦æ±‚ã®ãŸã‚ã€äº‹å‰ã«è¨­å®šæƒ…å ±ã‚’RTCMLåŒ–ã—ã¦ãŠã
 			String xml = m_config.serialize(new InfoClerkConfigSerializer());
 			RTCML rtcml = new RTCML();
 			rtcml.parse(xml);
@@ -221,11 +221,11 @@ public class InfoClerkManagerImpl extends DataFlowComponentBase
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	//ƒƒO‰Šú‰»
+    	//ãƒ­ã‚°åˆæœŸåŒ–
     	m_logger = Logger.create(m_config.getString("LOG_CONFIGPATH"));
     	m_logger.trace("InfoClerkManager onActivated");
     	
-    	//ƒ†[ƒU[î•ñ‚ğ“Ç‚İ‚Ş
+    	//ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ã‚’èª­ã¿è¾¼ã‚€
     	m_userMaster = UserMasterFactory.create(
     						UserMasterFactory.TYPE.valueOf(m_config.getString("USERMASTER_TYPE")),
     						new UserMasterArgs(m_config.getString("USERMASTER_PATH"),
@@ -236,18 +236,18 @@ public class InfoClerkManagerImpl extends DataFlowComponentBase
     	int res = m_userMaster.initialize();
     	if( res < 0 )
     	{
-    		m_logger.trace(String.format("UserMaster‚Ì‰Šú‰»‚É¸”s‚µ‚Ü‚µ‚½iƒGƒ‰[ƒR[ƒh:%d)", res));
+    		m_logger.trace(String.format("UserMasterã®åˆæœŸåŒ–ã«å¤±æ•—ã—ã¾ã—ãŸï¼ˆã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰:%d)", res));
     		return super.onActivated(ec_id);
     	}
 
-    	//‰·ò”F¯ƒGƒ“ƒWƒ“‚Ìí—Ş‚ğƒƒO‚Éo—Í‚·‚é
+    	//æ¸©æ³‰èªè­˜ã‚¨ãƒ³ã‚¸ãƒ³ã®ç¨®é¡ã‚’ãƒ­ã‚°ã«å‡ºåŠ›ã™ã‚‹
     	m_logger.trace("VOICE_RECOGNITION_ENGINE="+m_config.getString("VOICE_RECOGNITION_ENGINE"));
     	   	   	
-    	//‰f‘œ‘—M—pTCPƒT[ƒo[‚Ì‰Šú‰»
+    	//æ˜ åƒé€ä¿¡ç”¨TCPã‚µãƒ¼ãƒãƒ¼ã®åˆæœŸåŒ–
     	m_tcpImgServer = new InfoClerkTcpServer(this,m_config.getInt("CTRL_IMGPORT"),
     											m_config.getInt("CTRL_PACKETSIZE"),
     											m_config.getString("CTRL_ENCODING"));
-    	//ƒRƒ}ƒ“ƒh‘—óM—pTCPƒT[ƒo[‚Ì‰Šú‰»
+    	//ã‚³ãƒãƒ³ãƒ‰é€å—ä¿¡ç”¨TCPã‚µãƒ¼ãƒãƒ¼ã®åˆæœŸåŒ–
     	m_tcpCmdServer = new InfoClerkTcpServer(this,m_config.getInt("CTRL_CMDPORT"),
 													m_config.getInt("CTRL_PACKETSIZE"),
 													m_config.getString("CTRL_ENCODING"));
@@ -255,7 +255,7 @@ public class InfoClerkManagerImpl extends DataFlowComponentBase
     	m_tcpImgServer.start();
     	m_tcpCmdServer.start();
     	
-    	//ƒXƒe[ƒ^ƒX‚ğ‘Ò‹@ó‘Ô‚Éİ’è
+    	//ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’å¾…æ©ŸçŠ¶æ…‹ã«è¨­å®š
     	m_stateWorker = new InfoClerkManagerState(this);
     	m_stateWorker.StateMachine().changeState(MotionDetectState.Instance());
 
@@ -298,7 +298,7 @@ public class InfoClerkManagerImpl extends DataFlowComponentBase
     @Override
     protected ReturnCode_t onExecute(int ec_id)
     {	
-    	//ƒJƒƒ‰‚©‚ç‚Ì‰f‘œ‚ğƒRƒ“ƒgƒ[ƒ‹ƒpƒlƒ‹‚Ö‘—M‚·‚é
+    	//ã‚«ãƒ¡ãƒ©ã‹ã‚‰ã®æ˜ åƒã‚’ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ãƒ‘ãƒãƒ«ã¸é€ä¿¡ã™ã‚‹
     	if( m_cameraImageIn.isNew() )
     	{
     		m_cameraImageIn.read();
@@ -308,7 +308,7 @@ public class InfoClerkManagerImpl extends DataFlowComponentBase
 					m_cameraImage.v.pixels);
     	}
     	    	
-    	//ƒRƒ“ƒtƒBƒOƒŒ[ƒVƒ‡ƒ“æ“¾—v‹‚É‘Î‚·‚é‰“š‚ğó‚¯‚é
+    	//ã‚³ãƒ³ãƒ•ã‚£ã‚°ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å–å¾—è¦æ±‚ã«å¯¾ã™ã‚‹å¿œç­”ã‚’å—ã‘ã‚‹
     	if( m_rtcmlInIn.isNew() )
     	{
     		m_rtcmlInIn.read();
@@ -328,7 +328,7 @@ public class InfoClerkManagerImpl extends DataFlowComponentBase
 			}
     	}
     	
-    	//ƒRƒ“ƒtƒBƒOƒŒ[ƒVƒ‡ƒ“XV—v‹‚ğ‘¼ƒRƒ“ƒ|[ƒlƒ“ƒg‚É‘—M‚·‚é
+    	//ã‚³ãƒ³ãƒ•ã‚£ã‚°ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³æ›´æ–°è¦æ±‚ã‚’ä»–ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã«é€ä¿¡ã™ã‚‹
     	if( m_tcpImgServer.getUpdateConfigRtcml() != null )
     	{
     		System.out.println("RTCMLOut1");
@@ -359,9 +359,9 @@ public class InfoClerkManagerImpl extends DataFlowComponentBase
     }  
 
     /**
-     * ‰¹º‡¬ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ö”­º‚·‚é•¶š—ñ‚ğ‘—M‚·‚é
+     * éŸ³å£°åˆæˆã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã¸ç™ºå£°ã™ã‚‹æ–‡å­—åˆ—ã‚’é€ä¿¡ã™ã‚‹
      * 
-     * @param	msg	”­º•¶š—ñ
+     * @param	msg	ç™ºå£°æ–‡å­—åˆ—
      * **/
     public void speech(String msg)
     {
@@ -371,7 +371,7 @@ public class InfoClerkManagerImpl extends DataFlowComponentBase
     }
     
     /**
-     * ó‘Ô‘JˆÚ‚ğ‰Šú‰»‚·‚é
+     * çŠ¶æ…‹é·ç§»ã‚’åˆæœŸåŒ–ã™ã‚‹
      * **/
     public void reset()
     {
@@ -397,9 +397,9 @@ public class InfoClerkManagerImpl extends DataFlowComponentBase
     }
     
 	/**
-	 * INƒ|[ƒg‚Ìƒoƒbƒtƒ@‚ğƒNƒŠƒA‚·‚é
+	 * INãƒãƒ¼ãƒˆã®ãƒãƒƒãƒ•ã‚¡ã‚’ã‚¯ãƒªã‚¢ã™ã‚‹
 	 * 
-	 * @param	inport	‰Šú‰»‚·‚éƒ|[ƒg
+	 * @param	inport	åˆæœŸåŒ–ã™ã‚‹ãƒãƒ¼ãƒˆ
 	 * **/
 	public void portClear(InPort inport)
 	{
@@ -407,7 +407,7 @@ public class InfoClerkManagerImpl extends DataFlowComponentBase
 	}
 	
 	/**
-	 * ƒƒOo—Í‚ğs‚¤
+	 * ãƒ­ã‚°å‡ºåŠ›ã‚’è¡Œã†
 	 * **/
 	public void log(String s)
 	{

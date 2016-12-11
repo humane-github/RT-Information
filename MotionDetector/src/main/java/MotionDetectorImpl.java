@@ -48,13 +48,13 @@ import RTC.TimedWString;
  */
 public class MotionDetectorImpl extends DataFlowComponentBase
 {
-	//1ƒtƒŒ[ƒ€‘O‚Ì‰f‘œs—ñ
+	//1ãƒ•ãƒ¬ãƒ¼ãƒ å‰ã®æ˜ åƒè¡Œåˆ—
 	private Mat m_prevMat = null;
-	//‹N“®or‘Ò‹@ó‘Ôƒtƒ‰ƒO
+	//èµ·å‹•orå¾…æ©ŸçŠ¶æ…‹ãƒ•ãƒ©ã‚°
 	private boolean m_sleep = false;
-	//ƒvƒŒƒrƒ…[‰æ–Ê•\¦ƒtƒ‰ƒO
+	//ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ç”»é¢è¡¨ç¤ºãƒ•ãƒ©ã‚°
 	private PreviewDialog m_previewDialog = null;
-	//RTCML‰ğÍƒGƒ“ƒWƒ“
+	//RTCMLè§£æã‚¨ãƒ³ã‚¸ãƒ³
 	private RTCML m_rtcmlParser = null;
 	
 	private int m_featuresMaxCornersValue = 0;
@@ -63,7 +63,7 @@ public class MotionDetectorImpl extends DataFlowComponentBase
 	private double m_detectThresholdValue = 0;
 	private int m_showPreviewDialogValue = 0;
 	
-	//RTC INƒ|[ƒg
+	//RTC INãƒãƒ¼ãƒˆ
     protected CameraImage m_cameraImage_val;
     protected DataRef<CameraImage> m_cameraImage;
     protected InPort<CameraImage> m_cameraImageIn;   
@@ -74,12 +74,12 @@ public class MotionDetectorImpl extends DataFlowComponentBase
     protected DataRef<TimedWString> m_rtcml;
     protected InPort<TimedWString> m_rtcmlIn;
 
-	//RTC OUTƒ|[ƒg
+	//RTC OUTãƒãƒ¼ãƒˆ
     protected TimedBoolean m_result_val;
     protected DataRef<TimedBoolean> m_result;
     protected OutPort<TimedBoolean> m_resultOut;
 
-    //RTCƒRƒ“ƒtƒBƒMƒ…ƒŒ[ƒVƒ‡ƒ“
+    //RTCã‚³ãƒ³ãƒ•ã‚£ã‚®ãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³
     protected IntegerHolder m_featuresMaxCorners = new IntegerHolder();
     protected DoubleHolder m_featuresQualityLevel = new DoubleHolder();
     protected DoubleHolder m_featuresMinDistance = new DoubleHolder();
@@ -154,20 +154,20 @@ public class MotionDetectorImpl extends DataFlowComponentBase
     @Override
     protected ReturnCode_t onActivated(int ec_id)
     {
-    	//OpenCV‚ÌDLLƒ[ƒh
+    	//OpenCVã®DLLãƒ­ãƒ¼ãƒ‰
     	OpenCVLib.LoadDLL();
     	
-    	//RTCML‰ğÍƒGƒ“ƒWƒ“‰Šú‰»
+    	//RTCMLè§£æã‚¨ãƒ³ã‚¸ãƒ³åˆæœŸåŒ–
     	m_rtcmlParser = new RTCML();
     	
-    	//ƒRƒ“ƒtƒBƒO‰Šú‰»
+    	//ã‚³ãƒ³ãƒ•ã‚£ã‚°åˆæœŸåŒ–
     	m_featuresMaxCornersValue = m_featuresMaxCorners.getValue();
     	m_featuresQualityLevelValue = m_featuresQualityLevel.getValue();
     	m_featuresMinDistanceValue = m_featuresMinDistance.getValue();
     	m_detectThresholdValue = m_detectThreshold.getValue();
     	m_showPreviewDialogValue = m_showPreviewDialog.getValue();
 
-    	//ƒvƒŒƒrƒ…[‰æ–Ê‚Ì‰Šú‰»
+    	//ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ç”»é¢ã®åˆæœŸåŒ–
     	if( m_showPreviewDialogValue == 1 )
     	{
     		m_previewDialog = new PreviewDialog();
@@ -214,15 +214,15 @@ public class MotionDetectorImpl extends DataFlowComponentBase
     @Override
     protected ReturnCode_t onExecute(int ec_id)
     {
-    	//‹N“®or’â~ƒtƒ‰ƒO‚ÌXV‚ª‚ ‚é‚©Šm”F
+    	//èµ·å‹•oråœæ­¢ãƒ•ãƒ©ã‚°ã®æ›´æ–°ãŒã‚ã‚‹ã‹ç¢ºèª
     	if( m_wakeupIn.isNew() )
     	{
-    		//ƒtƒ‰ƒO‚ÌXV‚ğs‚¤
+    		//ãƒ•ãƒ©ã‚°ã®æ›´æ–°ã‚’è¡Œã†
     		m_wakeupIn.read();
     		m_sleep = !m_wakeup.v.data;    		
     	}
     	
-    	//RTCML‚ÌóMŠm”F
+    	//RTCMLã®å—ä¿¡ç¢ºèª
     	if( m_rtcmlIn.isNew() )
     	{
     		m_rtcmlIn.read();
@@ -231,44 +231,44 @@ public class MotionDetectorImpl extends DataFlowComponentBase
     		parseRTCML(rtcml);
     	}
     	
-    	//USBƒJƒƒ‰‚©‚ç‚Ì‰f‘œ‚ğæ“¾‚·‚éB‚½‚¾‚µA’â~ó‘Ô‚Ì‚Æ‚«‚Íˆ—‚µ‚È‚¢
+    	//USBã‚«ãƒ¡ãƒ©ã‹ã‚‰ã®æ˜ åƒã‚’å–å¾—ã™ã‚‹ã€‚ãŸã ã—ã€åœæ­¢çŠ¶æ…‹ã®ã¨ãã¯å‡¦ç†ã—ãªã„
     	if( m_cameraImageIn.isNew() && !m_sleep )
     	{
-    		//ì‹Æ—pMat
+    		//ä½œæ¥­ç”¨Mat
     		Mat grayMat = null;
-    		//“Á’¥“_‚ÌÀ•W
+    		//ç‰¹å¾´ç‚¹ã®åº§æ¨™
 			MatOfPoint currentCorners = new MatOfPoint();
 			MatOfPoint2f currentCorners2f = new MatOfPoint2f();
 			
-    		//ƒJƒƒ‰‰æ‘œ“Ç‚İ‚İ
+    		//ã‚«ãƒ¡ãƒ©ç”»åƒèª­ã¿è¾¼ã¿
     		m_cameraImageIn.read();
     		Mat cameraMat = MatFactory.create(m_cameraImage.v.width,
 				    							m_cameraImage.v.height,
 				    							m_cameraImage.v.bpp,
 				    							m_cameraImage.v.pixels);
     		
-//			//‘O‰ñ‚Ì‰æ‘œ‚ğ•Û
+//			//å‰å›ã®ç”»åƒã‚’ä¿æŒ
 //			if( grayMat != null )
 //			{
 //				m_prevMat = MatFactory.create(grayMat.width(), grayMat.height(), MatType.MONO_8BIT);
 //				grayMat.copyTo(m_prevMat);
 //			}
-			//ƒOƒŒ[ƒXƒP[ƒ‹‚Ì‰æ‘œs—ñ—Ìˆæ‚ğŠm•Û
+			//ã‚°ãƒ¬ãƒ¼ã‚¹ã‚±ãƒ¼ãƒ«ã®ç”»åƒè¡Œåˆ—é ˜åŸŸã‚’ç¢ºä¿
 			grayMat = MatFactory.create(cameraMat.width(), cameraMat.height(), MatType.MONO_8BIT);
-			//‰æ‘œ‚ğƒOƒŒ[ƒXƒP[ƒ‹‚É•ÏŠ·
+			//ç”»åƒã‚’ã‚°ãƒ¬ãƒ¼ã‚¹ã‚±ãƒ¼ãƒ«ã«å¤‰æ›
 			Imgproc.cvtColor(cameraMat, grayMat, Imgproc.COLOR_BGR2GRAY);
 			
-			//ƒR[ƒi[ŒŸo
+			//ã‚³ãƒ¼ãƒŠãƒ¼æ¤œå‡º
 			Imgproc.goodFeaturesToTrack(grayMat, currentCorners,
 										m_featuresMaxCornersValue,
 										m_featuresQualityLevelValue,
 										m_featuresMinDistanceValue);
-			//MatOfPoint2‚†‚É•ÏŠ·
+			//MatOfPoint2ï½†ã«å¤‰æ›
     		currentCorners.copyTo(currentCorners2f);
-    		//calcOpticalFlowPyrlk‚ÍCV_32FC3‚µ‚©ó‚¯•t‚¯‚È‚¢‚Ì‚Å‚±‚±‚Å•ÏŠ·
+    		//calcOpticalFlowPyrlkã¯CV_32FC3ã—ã‹å—ã‘ä»˜ã‘ãªã„ã®ã§ã“ã“ã§å¤‰æ›
     		currentCorners2f.convertTo(currentCorners2f, CvType.CV_32FC3);
     		
-			//ƒIƒvƒeƒBƒJƒ‹ƒtƒ[ŒŸo
+			//ã‚ªãƒ—ãƒ†ã‚£ã‚«ãƒ«ãƒ•ãƒ­ãƒ¼æ¤œå‡º
 			if( m_prevMat != null )
 			{
 	    		MatOfByte status = new MatOfByte();
@@ -284,12 +284,12 @@ public class MotionDetectorImpl extends DataFlowComponentBase
 				byte[] tmpStatus = status.toArray();
 	    		for( Point p : tmpResultCorners2f )
 	    		{
-	    			//ŒŸo¸”s‚µ‚½ê‡‚Íˆ—‚µ‚È‚¢
+	    			//æ¤œå‡ºå¤±æ•—ã—ãŸå ´åˆã¯å‡¦ç†ã—ãªã„
 	    			if( tmpStatus[idx] != 1 ){continue;}	    			
 	    			Point currentp = tmpCurrentCorners2f[idx];
-	    			//‘O‰ñ‚Æ¡‰ñ‚Ì“Á’¥“_‚Ì‹——£‚ğZo
+	    			//å‰å›ã¨ä»Šå›ã®ç‰¹å¾´ç‚¹ã®è·é›¢ã‚’ç®—å‡º
 	    			double distance = Math.sqrt(Math.pow((p.x - currentp.x),2) + Math.pow((p.y - currentp.y),2));
-	    			//‹——£‚ªè‡’lˆÈã‚È‚ç“®‘ÌŒŸ’m‚Æ‚İ‚È‚·
+	    			//è·é›¢ãŒé–¾å€¤ä»¥ä¸Šãªã‚‰å‹•ä½“æ¤œçŸ¥ã¨ã¿ãªã™
 	    			if( distance > m_detectThresholdValue )
 	    			{
 	    				System.out.println("Detected!!!");
@@ -300,10 +300,10 @@ public class MotionDetectorImpl extends DataFlowComponentBase
 	    			idx++;
 	    		}
 			}
-			//Œ»ƒtƒŒ[ƒ€‚Ì‰f‘œ‚ğ•Û
+			//ç¾ãƒ•ãƒ¬ãƒ¼ãƒ ã®æ˜ åƒã‚’ä¿æŒ
 			m_prevMat = MatFactory.create(grayMat.width(), grayMat.height(), MatType.MONO_8BIT);
 			grayMat.copyTo(m_prevMat);
-			//ƒvƒŒƒrƒ…[‰æ–Ê•\¦
+			//ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ç”»é¢è¡¨ç¤º
 			if( m_showPreviewDialogValue == 1 ){m_previewDialog.showDialog(cameraMat);}		
     	}
     	
@@ -311,9 +311,9 @@ public class MotionDetectorImpl extends DataFlowComponentBase
     }
     
     /**
-     * RTCML‚ğ‰ğÍ‚µAw’è‚³‚ê‚½ƒpƒ‰ƒ[ƒ^‚ğXV‚·‚é
+     * RTCMLã‚’è§£æã—ã€æŒ‡å®šã•ã‚ŒãŸãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’æ›´æ–°ã™ã‚‹
      * 
-     * @param	rtcml	RTCML•¶š—ñ
+     * @param	rtcml	RTCMLæ–‡å­—åˆ—
      * **/
     private void parseRTCML(String rtcml)
     {

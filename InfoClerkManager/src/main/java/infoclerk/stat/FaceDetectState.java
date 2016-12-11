@@ -45,10 +45,10 @@ public class FaceDetectState implements BaseState
 			int faces = m_owner.getFaces();
 			if( faces > 0 )
 			{
-				//ŠçŒŸoˆÈ‘O‚Éƒ}ƒCƒN‚©‚çE‚Á‚Ä‚¢‚½‰¹º‚ğƒNƒŠƒA‚·‚é
+				//é¡”æ¤œå‡ºä»¥å‰ã«ãƒã‚¤ã‚¯ã‹ã‚‰æ‹¾ã£ã¦ã„ãŸéŸ³å£°ã‚’ã‚¯ãƒªã‚¢ã™ã‚‹
 				m_owner.noticeUsernameClear();
 				
-				m_owner.log(String.format("%dl‚Ìl•¨‚ğŒŸo‚µ‚Ü‚µ‚½B", faces));
+				m_owner.log(String.format("%däººã®äººç‰©ã‚’æ¤œå‡ºã—ã¾ã—ãŸã€‚", faces));
 				m_owner.speech(Msg.get("0010"));
 				//m_owner.writeCommandOut(InfoClerkCommands.USER_SELECT.toString());
 				worker.StateMachine().changeState(UsernameCallbackWaitState.Instance());
@@ -57,7 +57,7 @@ public class FaceDetectState implements BaseState
 	}
 	
 	/**
-	 * ƒ^ƒCƒ€ƒAƒEƒg‚Ìˆ—
+	 * ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆæ™‚ã®å‡¦ç†
 	 * **/
 	public void timeout(BaseWorker worker)
 	{

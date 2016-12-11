@@ -38,18 +38,18 @@ public class MotionDetectState implements BaseState
 		{
 			m_owner.log("MotionDetect exec");
 			m_owner.detectMotionRead();
-			//動体検知
+			//蜍穂ｽ捺､懃衍
 			boolean detected = m_owner.getDetectMotion();
 			if( detected )
 			{
-				m_owner.log(String.format("動体検知しました"));
+				m_owner.log(String.format("蜍穂ｽ捺､懃衍縺励∪縺励◆"));
 				worker.StateMachine().changeState(FaceDetectState.Instance());
 			}
 		}
 	}
 	
 	/**
-	 * タイムアウト時の処理
+	 * 繧ｿ繧､繝繧｢繧ｦ繝域凾縺ｮ蜃ｦ逅�
 	 * **/
 	public void timeout(BaseWorker worker)
 	{

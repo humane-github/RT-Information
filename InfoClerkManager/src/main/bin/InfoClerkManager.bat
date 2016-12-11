@@ -1,25 +1,13 @@
-@rem Namingサービスを起動
-@rem start start-orbd.vbs
-
 @rem InfoClerkManagerを起動
-cd ..
-set CLASSPATH=%CLASSPATH%;classes
-set CLASSPATH=%CLASSPATH%;lib\commons-cli-1.1.jar
-set CLASSPATH=%CLASSPATH%;lib\commons-dbutils-1.5.jar
-set CLASSPATH=%CLASSPATH%;lib\ConfigLib-1.0.jar
-set CLASSPATH=%CLASSPATH%;lib\DBUtility-1.0.jar
-set CLASSPATH=%CLASSPATH%;lib\ExceptionLib-1.0.jar
-set CLASSPATH=%CLASSPATH%;lib\HCharEncoder-1.0.jar
-set CLASSPATH=%CLASSPATH%;lib\Logger-1.0.jar
-set CLASSPATH=%CLASSPATH%;lib\MessageLib-1.0.jar
-set CLASSPATH=%CLASSPATH%;lib\MorphemeEngineLib-1.0.jar
-set CLASSPATH=%CLASSPATH%;lib\opencv-249.jar
-set CLASSPATH=%CLASSPATH%;lib\OpenCVLib-1.0.jar
-set CLASSPATH=%CLASSPATH%;lib\OpenRTM-aist-1.1.0.jar
-set CLASSPATH=%CLASSPATH%;lib\StateMachineLib-1.0.jar
-set CLASSPATH=%CLASSPATH%;lib\UserMaster-1.0.jar
-set CLASSPATH=%CLASSPATH%;lib\XMLLib-1.0.jar
 
-java -classpath %CLASSPATH% InfoClerkManagerComp -f conf/rtc.conf
+@rem ファイルの存在するディレクトリのパスを取得
+set CURRENT_DIR=%~dp0
+cd "%CURRENT_DIR%"
+
+@rem クラスパスを設定
+set CLASSPATH=%CLASSPATH%;"%CURRENT_DIR%infoclerk-manager.jar"
+
+@rem RTC起動
+java -classpath %CLASSPATH% CameraDeviceComp -f "%CURRENT_DIR%rtc.conf"
+
 pause
-

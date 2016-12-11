@@ -57,13 +57,13 @@ public class ConfirmSelectUserWaitState implements BaseState
 			if( voiceResInfo.classId.equals(InfoClerkManagerImpl.Config().getString("VOICE_CONFIRM_YES")) &&
 				voiceResInfo.score > InfoClerkManagerImpl.Config().getFloat("VOICE_AVAILABLE_SCORE"))
 			{
-				//’Ê’mæ‚Ö‰f‘œ‚ÆƒƒbƒZ[ƒW‚ğ‘—M‚·‚é
-				//‘—M—pƒNƒ‰ƒCƒAƒ“ƒg¶¬
+				//é€šçŸ¥å…ˆã¸æ˜ åƒã¨ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’é€ä¿¡ã™ã‚‹
+				//é€ä¿¡ç”¨ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆç”Ÿæˆ
 				m_chatClient.setIpaddress(userInfo.ipaddress());
-				//ƒƒbƒZ[ƒW‘—M
+				//ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸é€ä¿¡
 				m_chatClient.send(Msg.get("0015"));
 				
-				m_owner.log(String.format("%s(%s)‚³‚ñ‚Ö—ˆ‹q’Ê’m‚ğs‚¢‚Ü‚·", userInfo.username(),userInfo.ipaddress()));
+				m_owner.log(String.format("%s(%s)ã•ã‚“ã¸æ¥å®¢é€šçŸ¥ã‚’è¡Œã„ã¾ã™", userInfo.username(),userInfo.ipaddress()));
 //				m_owner.writeIPAddress(userInfo.ipaddress());
 //				m_owner.writePort(InfoClerkManagerImpl.Config().getInt("CHAT_PORT"));
 //				m_owner.writeMessage(Msg.get("0015"));

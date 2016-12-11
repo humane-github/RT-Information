@@ -7,13 +7,13 @@ public class JuliusExecuter
 	private static Process julius = null;
 
 	/**
-	 * JuliusƒvƒƒZƒX‚ğÀs‚·‚é
+	 * Juliusãƒ—ãƒ­ã‚»ã‚¹ã‚’å®Ÿè¡Œã™ã‚‹
 	 * 
-	 * @param	juliusPath	JuliusÀsƒtƒ@ƒCƒ‹‚ÌƒpƒX
-	 * @param	confPath	Confƒtƒ@ƒCƒ‹‚ÌƒpƒX
-	 * @param	hostname	JuliusÀsƒzƒXƒg–¼
-	 * @param	audioport	AUDIOƒ|[ƒg”Ô†
-	 * @param	moduleport	MODULEƒ|[ƒg”Ô†
+	 * @param	juliusPath	Juliuså®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹
+	 * @param	confPath	Confãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹
+	 * @param	hostname	Juliuså®Ÿè¡Œãƒ›ã‚¹ãƒˆå
+	 * @param	audioport	AUDIOãƒãƒ¼ãƒˆç•ªå·
+	 * @param	moduleport	MODULEãƒãƒ¼ãƒˆç•ªå·
 	 * **/
 	public static void execute(String juliusPath,
 								String confPath,

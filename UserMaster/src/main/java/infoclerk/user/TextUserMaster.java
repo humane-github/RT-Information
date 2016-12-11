@@ -12,9 +12,9 @@ public class TextUserMaster implements UserMaster
 	private HashMap<String,UserInfo> m_userMaster = new HashMap<String,UserInfo>();
 	
 	/**
-	 * ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * 
-	 * @param	path	ƒ†[ƒU[î•ñƒtƒ@ƒCƒ‹‚ÌƒpƒX
+	 * @param	path	ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹
 	 * **/
 	public TextUserMaster(String path)
 	{
@@ -23,9 +23,9 @@ public class TextUserMaster implements UserMaster
 	}
 	
 	/**
-	 * ƒ†[ƒU[î•ñ‚ğæ“¾‚·‚é
+	 * ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ã‚’å–å¾—ã™ã‚‹
 	 * 
-	 * @param	key	ƒ†[ƒU[–¼
+	 * @param	key	ãƒ¦ãƒ¼ã‚¶ãƒ¼å
 	 * **/
 	public UserInfo[] get(String key)
 	{
@@ -33,7 +33,7 @@ public class TextUserMaster implements UserMaster
 	}
 	
 	/**
-	 * ‘Sƒ†[ƒU[‚ğæ“¾‚·‚é
+	 * å…¨ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚’å–å¾—ã™ã‚‹
 	 * **/
 	public UserInfo[] getAll()
 	{
@@ -43,7 +43,7 @@ public class TextUserMaster implements UserMaster
 	}
 	
 	/**
-	 * ƒ†[ƒU[”‚ğæ“¾‚·‚é
+	 * ãƒ¦ãƒ¼ã‚¶ãƒ¼æ•°ã‚’å–å¾—ã™ã‚‹
 	 * **/
 	public int size()
 	{
@@ -51,7 +51,7 @@ public class TextUserMaster implements UserMaster
 	}
 	
 	/**
-	 * ƒ†[ƒU[î•ñƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+	 * ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 	 * **/
 	public int initialize()
 	{
@@ -79,7 +79,7 @@ public class TextUserMaster implements UserMaster
 	}
 	
 	/**
-	 * I—¹ˆ—
+	 * çµ‚äº†å‡¦ç†
 	 * **/
 	public int terminate()
 	{

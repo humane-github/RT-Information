@@ -15,12 +15,12 @@ public class ChatSender
 	private int m_buffSize = 0;
 
 	/**
-	 * ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * 
-	 * @param	ipaddress	UDPÚ‘±æƒzƒXƒg
-	 * @param	sendport	UDPƒ|[ƒgi‘—M—pj
-	 * @param	encoding	’ÊM‚Ég—p‚·‚é‰~ƒR[ƒfƒBƒ“ƒO
-	 * @param	buffSize	ƒpƒPƒbƒgƒTƒCƒY
+	 * @param	ipaddress	UDPæ¥ç¶šå…ˆãƒ›ã‚¹ãƒˆ
+	 * @param	sendport	UDPãƒãƒ¼ãƒˆï¼ˆé€ä¿¡ç”¨ï¼‰
+	 * @param	encoding	é€šä¿¡æ™‚ã«ä½¿ç”¨ã™ã‚‹å††ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°
+	 * @param	buffSize	ãƒ‘ã‚±ãƒƒãƒˆã‚µã‚¤ã‚º
 	 * **/
 	public ChatSender(String ipaddress,int sendport,String encoding,int buffSize)
 	{
@@ -31,13 +31,13 @@ public class ChatSender
 	}
 	
 	/**
-	 * ƒeƒLƒXƒg‚ğ‘—M‚·‚é
+	 * ãƒ†ã‚­ã‚¹ãƒˆã‚’é€ä¿¡ã™ã‚‹
 	 * 
-	 * @param	msg	‘—M‚·‚é•¶š—ñ
+	 * @param	msg	é€ä¿¡ã™ã‚‹æ–‡å­—åˆ—
 	 * **/
 	public void send(String msg)
 	{		
-		//ƒƒbƒZ[ƒW‘—M
+		//ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸é€ä¿¡
 		try
 		{
 			DataPacket packet = new DataPacket(DataPacket.TYPE_SENDMSG, msg.getBytes(m_encoding));
@@ -79,7 +79,7 @@ public class ChatSender
 	public static void main(String[] args)
 	{
 		ChatSender sender = new ChatSender("suzuki-PC", 10000, "utf-8", 8192);
-		sender.send("—ˆ‹q‚Å‚·");
+		sender.send("æ¥å®¢ã§ã™");
 	}
 
 }

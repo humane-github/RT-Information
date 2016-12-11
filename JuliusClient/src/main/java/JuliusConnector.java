@@ -22,34 +22,34 @@ public class JuliusConnector
 	
 	private static String RESULT_FORMAT="CLASSID=%s:VOICE=%s:SCORE=%s";
 	
-	// JuliusƒvƒƒZƒXƒIƒuƒWƒFƒNƒg
+	// Juliusãƒ—ãƒ­ã‚»ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	private Process m_julius = null;
-	// Julius‚Æ‚Ì’ÊM—pƒ\ƒPƒbƒg
+	// Juliusã¨ã®é€šä¿¡ç”¨ã‚½ã‚±ãƒƒãƒˆ
 	private Socket m_socket = null;
-	// Julius‚ÌÀsƒzƒXƒg–¼
+	// Juliusã®å®Ÿè¡Œãƒ›ã‚¹ãƒˆå
 	private String m_hostname = null;
-	// ‰¹º”F¯‚Ì—LŒøƒXƒRƒA
+	// éŸ³å£°èªè­˜ã®æœ‰åŠ¹ã‚¹ã‚³ã‚¢
 	private float m_availableSocre = 0;
-	// JuliusModuleƒ|[ƒg”Ô†
+	// JuliusModuleãƒãƒ¼ãƒˆç•ªå·
 	private int m_modulePort = 0;
-	// JuliusÀsƒXƒŒƒbƒh
+	// Juliuså®Ÿè¡Œã‚¹ãƒ¬ãƒƒãƒ‰
 	private Thread m_thread = null;
-	// JuliusÀsƒXƒŒƒbƒh‚Ì‹N“®ó‘Ô
+	// Juliuså®Ÿè¡Œã‚¹ãƒ¬ãƒƒãƒ‰ã®èµ·å‹•çŠ¶æ…‹
 	private boolean m_halt = false;
-	// Julius‚Ì”F¯Œ‹‰Ê‘—Mæ
+	// Juliusã®èªè­˜çµæœé€ä¿¡å…ˆ
 	private ArrayList<JuliusListener> m_listenerList = new ArrayList<JuliusListener>();
-	// æ“¾‘ÎÛ‚ÌƒNƒ‰ƒXID
+	// å–å¾—å¯¾è±¡ã®ã‚¯ãƒ©ã‚¹ID
 	private String[] m_targetClassId = new String[]{};
-	// ƒƒOo—Í—p
+	// ãƒ­ã‚°å‡ºåŠ›ç”¨
 	private Logger m_logger = null;
 	
 	/**
-	 * ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * 
-	 * @param 	j 				JuliusƒvƒƒZƒXƒIƒuƒWƒFƒNƒg
-	 * @param	hostname		JuliusÀsƒzƒXƒg–¼
-	 * @param	port			Julius‚ÌModuleƒ|[ƒg”Ô†
-	 * @param	availableScore	—LŒøƒXƒRƒA
+	 * @param 	j 				Juliusãƒ—ãƒ­ã‚»ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	 * @param	hostname		Juliuså®Ÿè¡Œãƒ›ã‚¹ãƒˆå
+	 * @param	port			Juliusã®Moduleãƒãƒ¼ãƒˆç•ªå·
+	 * @param	availableScore	æœ‰åŠ¹ã‚¹ã‚³ã‚¢
 	 * **/
 	public JuliusConnector(Process j,String hostname,int moduleport,float score)
 	{
@@ -61,14 +61,14 @@ public class JuliusConnector
 	}
 	
 	/**
-	 * JuliusListener‚ğ“o˜^‚·‚é
+	 * JuliusListenerã‚’ç™»éŒ²ã™ã‚‹
 	 * **/
 	public void addListener(JuliusListener listener)
 	{
 		m_listenerList.add(listener);
 	}
 	/**
-	 * ˆ—‘ÎÛ‚ÌƒNƒ‰ƒXID‚ğİ’è‚·‚é
+	 * å‡¦ç†å¯¾è±¡ã®ã‚¯ãƒ©ã‚¹IDã‚’è¨­å®šã™ã‚‹
 	 * **/
 	public void setTargetClassId(String[] classid)
 	{
@@ -130,9 +130,9 @@ public class JuliusConnector
 	}
 	
 	/**
-	 * Julius‚©‚ç‚ÌƒŒƒXƒ|ƒ“ƒX‚ğ‰ğÍ‚·‚é
+	 * Juliusã‹ã‚‰ã®ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚’è§£æã™ã‚‹
 	 * 
-	 * @param	xml	‚i‚•‚Œ‚‰‚•‚“‚©‚çó‚¯æ‚Á‚½”F¯Œ‹‰ÊXML
+	 * @param	xml	ï¼ªï½•ï½Œï½‰ï½•ï½“ã‹ã‚‰å—ã‘å–ã£ãŸèªè­˜çµæœXML
 	 * **/
 	private String parse(String xml)
 	{
@@ -167,7 +167,7 @@ public class JuliusConnector
 	}
 	
 	/**
-	 * Julius‚Æ‚Ì’ÊM‚ğŠJn‚·‚é
+	 * Juliusã¨ã®é€šä¿¡ã‚’é–‹å§‹ã™ã‚‹
 	 * **/
 	public int start()
 	{
@@ -186,7 +186,7 @@ public class JuliusConnector
 	}
 	
 	/**
-	 * Julius‚Æ‚Ì’ÊM‚ğI‚¦‚é
+	 * Juliusã¨ã®é€šä¿¡ã‚’çµ‚ãˆã‚‹
 	 * **/
 	public void stop()
 	{
@@ -197,10 +197,10 @@ public class JuliusConnector
 	}	
 	
 	/**
-	 * Julius‚Æ‚ÌÚ‘±‚ğŠm—§‚·‚é
+	 * Juliusã¨ã®æ¥ç¶šã‚’ç¢ºç«‹ã™ã‚‹
 	 * 
-	 * @param host	Julius‚ªÀs‚µ‚Ä‚¢‚éƒzƒXƒg–¼
-	 * @param port	Julius‚Æ‚ÌÚ‘±ƒ|[ƒg”Ô†
+	 * @param host	JuliusãŒå®Ÿè¡Œã—ã¦ã„ã‚‹ãƒ›ã‚¹ãƒˆå
+	 * @param port	Juliusã¨ã®æ¥ç¶šãƒãƒ¼ãƒˆç•ªå·
 	 * **/
     private void open(String host,int port) throws IOException
     {
@@ -217,7 +217,7 @@ public class JuliusConnector
     }
     
     /**
-     * Julius‚Æ‚ÌSocket‚ğ•Â‚¶‚é
+     * Juliusã¨ã®Socketã‚’é–‰ã˜ã‚‹
      * **/
     private void close()
     {

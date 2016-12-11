@@ -62,10 +62,10 @@ public class FaceDetectorImpl extends DataFlowComponentBase
 	private CascadeFaceDetector m_detector = null;
 	private int m_faceDetectCount = 0;
 	private Timer m_resetTimer = null;
-	//RTCML‰ğÍƒGƒ“ƒWƒ“
+	//RTCMLè§£æã‚¨ãƒ³ã‚¸ãƒ³
 	private RTCML m_rtcmlParser = null;
 	private RTCML m_configRtcmlParser = null;
-	//ƒRƒ“ƒtƒBƒMƒ…ƒŒ[ƒVƒ‡ƒ“
+	//ã‚³ãƒ³ãƒ•ã‚£ã‚®ãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³
 	/*
 	private String m_cascadePath1Value = null;
 	private String m_cascadePath2Value = null;
@@ -78,7 +78,7 @@ public class FaceDetectorImpl extends DataFlowComponentBase
     */
 	private HashMap<String,String> m_configHash = new HashMap<String,String>();
     
-    //RTC INƒ|[ƒg
+    //RTC INãƒãƒ¼ãƒˆ
     protected CameraImage m_CameraImage_val;
     protected DataRef<CameraImage> m_CameraImage;
     protected InPort<CameraImage> m_CameraImageIn;
@@ -90,7 +90,7 @@ public class FaceDetectorImpl extends DataFlowComponentBase
     protected InPort<TimedWString> m_rtcmlInIn;
     
 
-    //RTC OUTƒ|[ƒg
+    //RTC OUTãƒãƒ¼ãƒˆ
     protected TimedLong m_Faces_val;
     protected DataRef<TimedLong> m_Faces;
     protected OutPort<TimedLong> m_FacesOut;
@@ -98,7 +98,7 @@ public class FaceDetectorImpl extends DataFlowComponentBase
     protected DataRef<TimedWString> m_rtcmlOut;
     protected OutPort<TimedWString> m_rtcmlOutOut;
     
-    //RTCƒRƒ“ƒtƒBƒMƒ…ƒŒ[ƒVƒ‡ƒ“
+    //RTCã‚³ãƒ³ãƒ•ã‚£ã‚®ãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³
     protected StringHolder m_cascadePath1;
     protected StringHolder m_cascadePath2;
     protected StringHolder m_cascadePath3;
@@ -236,9 +236,9 @@ public class FaceDetectorImpl extends DataFlowComponentBase
     @Override
     protected ReturnCode_t onActivated(int ec_id)
     {
-    	//OpenCV‚ÌDLL‚ğƒ[ƒh‚·‚é
+    	//OpenCVã®DLLã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
     	OpenCVLib.LoadDLL();
-    	//ƒRƒ“ƒtƒBƒO‚Ì“Ç‚İ‚İ
+    	//ã‚³ãƒ³ãƒ•ã‚£ã‚°ã®èª­ã¿è¾¼ã¿
 //    	m_cascadePath1Value = m_cascadePath1.value;
 //    	m_cascadePath2Value = m_cascadePath2.value;
 //    	m_cascadePath3Value = m_cascadePath3.value;
@@ -257,7 +257,7 @@ public class FaceDetectorImpl extends DataFlowComponentBase
         m_configHash.put(WAIT_TIME, m_waitTime.value.toString());
         m_configHash.put(RESET_TIME, m_resetTime.value.toString());
                 
-    	//Cascadeƒtƒ@ƒCƒ‹‚Ìƒ[ƒh
+    	//Cascadeãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ­ãƒ¼ãƒ‰
     	try
     	{
         	m_detector = new CascadeFaceDetector();
@@ -272,7 +272,7 @@ public class FaceDetectorImpl extends DataFlowComponentBase
     		return super.onActivated(ec_id);    		
     	}
     	
-    	//RTCML‰ğÍƒGƒ“ƒWƒ“‰Šú‰»
+    	//RTCMLè§£æã‚¨ãƒ³ã‚¸ãƒ³åˆæœŸåŒ–
     	m_rtcmlParser = new RTCML();
     	m_configRtcmlParser = new RTCML();
     	refleshConfigRTCML();
@@ -333,7 +333,7 @@ public class FaceDetectorImpl extends DataFlowComponentBase
     		else{m_sleep = true;}
     	}
     	
-    	//RTCML‚ÌóMŠm”F
+    	//RTCMLã®å—ä¿¡ç¢ºèª
     	if( m_rtcmlInIn.isNew() )
     	{
     		m_rtcmlInIn.read();
@@ -343,7 +343,7 @@ public class FaceDetectorImpl extends DataFlowComponentBase
     	}
     	
     	/**
-    	 * ƒRƒ“ƒtƒBƒOî•ñ‚ğ‘—M
+    	 * ã‚³ãƒ³ãƒ•ã‚£ã‚°æƒ…å ±ã‚’é€ä¿¡
     	 * **/
     	if( !m_sleep )
     	{
@@ -352,8 +352,8 @@ public class FaceDetectorImpl extends DataFlowComponentBase
     	}
     	
     	/**
-    	 * ‰æ‘œ‚ğóM‚µ‚½‚©”»’è‚·‚é
-    	 * m_sleepƒtƒ‰ƒO‚Í‘¼ƒRƒ“ƒ|[ƒlƒ“ƒg‚©‚çwakeupInƒ|[ƒg‚æ‚èXV‚³‚ê‚é
+    	 * ç”»åƒã‚’å—ä¿¡ã—ãŸã‹åˆ¤å®šã™ã‚‹
+    	 * m_sleepãƒ•ãƒ©ã‚°ã¯ä»–ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‹ã‚‰wakeupInãƒãƒ¼ãƒˆã‚ˆã‚Šæ›´æ–°ã•ã‚Œã‚‹
     	 * **/
     	if( m_CameraImageIn.isNew() && !m_sleep )
     	{
@@ -361,39 +361,39 @@ public class FaceDetectorImpl extends DataFlowComponentBase
 			int detectThresholdValue = Integer.parseInt(m_configHash.get(DETECT_THRESHOLD));
     		try
     		{
-    			//‰æ‘œ‚ğ“Ç‚İ‚Ş
+    			//ç”»åƒã‚’èª­ã¿è¾¼ã‚€
         		m_CameraImageIn.read();
-        		//‰æ‘œƒf[ƒ^‚ğs—ñ‚É•ÏŠ·‚·‚é
+        		//ç”»åƒãƒ‡ãƒ¼ã‚¿ã‚’è¡Œåˆ—ã«å¤‰æ›ã™ã‚‹
         		Mat cameraMat = MatFactory.create(m_CameraImage.v.width,
         											m_CameraImage.v.height,
         											m_CameraImage.v.bpp,
         											m_CameraImage.v.pixels);
 
-        		//ƒOƒŒ[ƒXƒP[ƒ‹‚Ì‰æ‘œs—ñ—Ìˆæ‚ğŠm•Û
+        		//ã‚°ãƒ¬ãƒ¼ã‚¹ã‚±ãƒ¼ãƒ«ã®ç”»åƒè¡Œåˆ—é ˜åŸŸã‚’ç¢ºä¿
         		Mat grayImg = MatFactory.create(cameraMat.width(), cameraMat.height(), MatType.MONO_8BIT);
-        		//k¬‰æ‘œ‚Ìs—ñ—Ìˆæ‚ğŠm•Û
+        		//ç¸®å°ç”»åƒã®è¡Œåˆ—é ˜åŸŸã‚’ç¢ºä¿
         		Mat smallImg = MatFactory.create(cameraMat.width()/scaleValue, cameraMat.height()/scaleValue, MatType.MONO_8BIT);
         		
-        		//Šç”»’èˆ—‚Ì‚‘¬‰»‚Ì‚½‚ßA‰æ‘œ‚ğƒOƒŒ[ƒXƒP[ƒ‹&k¬‚·‚é
-        		//‰æ‘œ‚ğƒOƒŒ[ƒXƒP[ƒ‹‚É•ÏŠ·
+        		//é¡”åˆ¤å®šå‡¦ç†ã®é«˜é€ŸåŒ–ã®ãŸã‚ã€ç”»åƒã‚’ã‚°ãƒ¬ãƒ¼ã‚¹ã‚±ãƒ¼ãƒ«&ç¸®å°ã™ã‚‹
+        		//ç”»åƒã‚’ã‚°ãƒ¬ãƒ¼ã‚¹ã‚±ãƒ¼ãƒ«ã«å¤‰æ›
         		Imgproc.cvtColor(cameraMat, grayImg, Imgproc.COLOR_BGR2GRAY);
-        		//‰æ‘œ‚ğw’èƒTƒCƒY‚Ìk¬
+        		//ç”»åƒã‚’æŒ‡å®šã‚µã‚¤ã‚ºã®ç¸®å°
         		Imgproc.resize(grayImg, smallImg, smallImg.size(),0,0,Imgproc.INTER_LINEAR);
         		
-        		//‰æ‘œ“à‚ÌŠç”‚ğæ“¾
+        		//ç”»åƒå†…ã®é¡”æ•°ã‚’å–å¾—
         		int faces = m_detector.detect(smallImg);
-        		//1ˆÈã‚ÌŠç‚ğŒŸo‚µ‚½
+        		//1ä»¥ä¸Šã®é¡”ã‚’æ¤œå‡ºã—ãŸ
         		if( faces > 0 )
         		{
-        			//‰‰ñ‚ÌŠçŒŸo‚Ìê‡‚ÍAƒ^ƒCƒ€ƒAƒEƒgƒ^ƒCƒ}[‚ğŠJn‚·‚é
+        			//åˆå›ã®é¡”æ¤œå‡ºã®å ´åˆã¯ã€ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã‚¿ã‚¤ãƒãƒ¼ã‚’é–‹å§‹ã™ã‚‹
         			if( m_faceDetectCount == 0 ){reset(true);}
-        			//ŠçŒŸo”‚ğ‘‚â‚·
-        			//ŠçŒŸo”‚ªw’è”ˆÈã‚Æ‚È‚Á‚½‚Æ‚«AŠç‚ğŒŸo‚µ‚½‚à‚Ì‚Æ‚·‚é
+        			//é¡”æ¤œå‡ºæ•°ã‚’å¢—ã‚„ã™
+        			//é¡”æ¤œå‡ºæ•°ãŒæŒ‡å®šæ•°ä»¥ä¸Šã¨ãªã£ãŸã¨ãã€é¡”ã‚’æ¤œå‡ºã—ãŸã‚‚ã®ã¨ã™ã‚‹
         			m_faceDetectCount++;
-        			//ŠçŒŸo”‚ªw’è”ˆÈã‚Æ‚È‚Á‚½‚©”»’è
+        			//é¡”æ¤œå‡ºæ•°ãŒæŒ‡å®šæ•°ä»¥ä¸Šã¨ãªã£ãŸã‹åˆ¤å®š
         			if( m_faceDetectCount > detectThresholdValue )
         			{
-        				//ŠçŒŸo”‚ğOutƒ|[ƒg‚æ‚è‘¼ƒRƒ“ƒ|[ƒlƒ“ƒg‚Öo—Í‚·‚é
+        				//é¡”æ¤œå‡ºæ•°ã‚’Outãƒãƒ¼ãƒˆã‚ˆã‚Šä»–ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã¸å‡ºåŠ›ã™ã‚‹
             			System.out.println("** Face Detected! **");
             			reset(false);
         				m_faceDetectCount = 0;
@@ -406,7 +406,7 @@ public class FaceDetectorImpl extends DataFlowComponentBase
             			System.out.println(String.format("Detecting...[%s/%s]", m_faceDetectCount,detectThresholdValue));        				
         			}
         		}
-        		//ƒvƒŒƒrƒ…[‰æ–Ê‚Ì•\¦
+        		//ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ç”»é¢ã®è¡¨ç¤º
         		if(m_configHash.get(SHOW_PREVIEW_DIALOG).equals("1")){m_previewDialog.showDialog(cameraMat);}
     		}
     		catch(Exception e)
@@ -415,7 +415,7 @@ public class FaceDetectorImpl extends DataFlowComponentBase
     		}
     	}
     	
-		//•‰‰×ŒyŒ¸‚Ì‚½‚ßƒƒCƒ“ƒXƒŒƒbƒh‚ğˆê’èŠÔ’â~‚·‚é
+		//è² è·è»½æ¸›ã®ãŸã‚ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’ä¸€å®šæ™‚é–“åœæ­¢ã™ã‚‹
 		try {
 			Thread.sleep(waitTime);
 		} catch (InterruptedException e) {
@@ -465,9 +465,9 @@ public class FaceDetectorImpl extends DataFlowComponentBase
 
     }
     /**
-     * RTCML‚ğ‰ğÍ‚µAw’è‚³‚ê‚½ƒpƒ‰ƒ[ƒ^‚ğXV‚·‚é
+     * RTCMLã‚’è§£æã—ã€æŒ‡å®šã•ã‚ŒãŸãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’æ›´æ–°ã™ã‚‹
      * 
-     * @param	rtcml	RTCML•¶š—ñ
+     * @param	rtcml	RTCMLæ–‡å­—åˆ—
      * **/
     private void parseRTCML(String rtcml)
     {
