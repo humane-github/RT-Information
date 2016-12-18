@@ -189,7 +189,7 @@
                 <executable>cmd.exe</executable>
                 <arguments>
                   <argument>/C</argument>
-                  <argument>${basedir}\src\main\bin\install.bat</argument>
+                  <argument>${basedir}\src\main\resources\install.bat</argument>
                 </arguments>
               </configuration>
             </execution>
