@@ -140,6 +140,13 @@
         <version>1.0.0</version>
       </dependency>
 
+      <!-- RRC-Common -->
+      <dependency>
+        <groupId>jp.co.humane.humane-lib</groupId>
+        <artifactId>rtc-common</artifactId>
+        <version>1.0.0</version>
+      </dependency>
+
     </dependencies>
   </dependencyManagement>
 
