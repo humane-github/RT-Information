@@ -5,6 +5,8 @@
 set JAR_NAME=motion-detector.jar
 @rem メインクラス
 set MAIN_CLASS=MotionDetectorComp
+@rem opencvライブラリパス
+set OPENCV_LIB=D:\work\dev\opencv\opencv\build\java\x64
 @rem confファイルの名前
 set CONF_NAME=rtc.conf
 
@@ -16,6 +18,6 @@ cd %CURRENT_DIR%
 set CLASSPATH=%CLASSPATH%;"%JAR_NAME%"
 
 @rem RTC起動
-java -classpath %CLASSPATH% %MAIN_CLASS% -f "%CONF_NAME%"
+java -classpath %CLASSPATH% -Djava.library.path=%OPENCV_LIB% %MAIN_CLASS% -f "%CONF_NAME%"
 
 pause
