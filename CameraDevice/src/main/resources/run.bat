@@ -1,23 +1,23 @@
-@rem CameraDeviceComp‚ğ‹N“®
+@rem CameraDeviceCompï¿½ï¿½ï¿½Nï¿½ï¿½
 @echo off
 
-@rem jarƒtƒ@ƒCƒ‹‚Ì–¼‘OiartifactIdj
+@rem jarï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Ì–ï¿½ï¿½Oï¿½iartifactIdï¿½j
 set JAR_NAME=camera-device.jar
-@rem confƒtƒ@ƒCƒ‹‚Ì–¼‘O
+@rem confï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Ì–ï¿½ï¿½O
 set CONF_NAME=rtc.conf
-@rem opencvƒ‰ƒCƒuƒ‰ƒŠƒpƒX
+@rem opencvï¿½ï¿½ï¿½Cï¿½uï¿½ï¿½ï¿½ï¿½ï¿½pï¿½X
 set OPENCV_LIB=D:\work\dev\opencv\opencv\build\java\x64
-@rem ƒƒCƒ“ƒNƒ‰ƒX
-set MAIN_CLASS=CameraDeviceComp
+@rem ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½X
+set MAIN_CLASS=jp.co.humane.rtc.cameradevice.CameraDeviceImpl
 
-@rem ƒtƒ@ƒCƒ‹‚Ì‘¶İ‚·‚éƒfƒBƒŒƒNƒgƒŠ‚ÌƒpƒX‚ÉˆÚ“®
+@rem ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Ì‘ï¿½ï¿½İ‚ï¿½ï¿½ï¿½fï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½ï¿½Ìƒpï¿½Xï¿½ÉˆÚ“ï¿½
 set CURRENT_DIR=%~dp0
 cd %CURRENT_DIR%
 
-@rem ƒNƒ‰ƒXƒpƒX‚ğİ’è
+@rem ï¿½Nï¿½ï¿½ï¿½Xï¿½pï¿½Xï¿½ï¿½İ’ï¿½
 set CLASSPATH=%CLASSPATH%;"%JAR_NAME%"
 
-@rem RTC‹N“®
+@rem RTCï¿½Nï¿½ï¿½
 java -classpath %CLASSPATH% -Djava.library.path=%OPENCV_LIB% %MAIN_CLASS% -f "%CONF_NAME%"
 
 pause
