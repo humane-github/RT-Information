@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  
+
   <groupId>jp.co.humane.infoclerk</groupId>
   <artifactId>julius-client</artifactId>
   <version>1.0.0</version>
@@ -29,23 +29,10 @@
       <artifactId>openrtm-aist-java</artifactId>
     </dependency>
 
-    <!-- XMLLib -->
+    <!-- RRC-Common -->
     <dependency>
       <groupId>jp.co.humane.humane-lib</groupId>
-      <artifactId>xml-lib</artifactId>
-    </dependency>
-
-    <!-- ExceptionLib -->
-    <dependency>
-      <groupId>jp.co.humane.humane-lib</groupId>
-      <artifactId>exception-lib</artifactId>
-    </dependency>
-
-    <!-- Logger -->
-    <dependency>
-      <groupId>jp.co.humane.humane-lib</groupId>
-      <artifactId>logger</artifactId>
-      <version>1.0.0</version>
+      <artifactId>rtc-common</artifactId>
     </dependency>
 
   </dependencies>

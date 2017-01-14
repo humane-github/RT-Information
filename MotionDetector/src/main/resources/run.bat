@@ -4,7 +4,7 @@
 @rem jarファイルの名前（artifactId）
 set JAR_NAME=motion-detector.jar
 @rem メインクラス
-set MAIN_CLASS=MotionDetectorComp
+set MAIN_CLASS=jp.co.humane.rtc.motiondetector.MotionDetectorImpl
 @rem opencvライブラリパス
 set OPENCV_LIB=D:\work\dev\opencv\opencv\build\java\x64
 @rem confファイルの名前

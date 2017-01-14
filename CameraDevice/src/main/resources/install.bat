@@ -46,7 +46,6 @@ set TARGET_DIR=%CD%
 copy /Y "%RESOURCE_DIR%run.bat"               "%TARGET_DIR%\run.bat"
 copy /Y "%RESOURCE_DIR%rtc.conf"              "%TARGET_DIR%\rtc.conf"
 copy /Y "%RESOURCE_DIR%%CONF_NAME%"           "%TARGET_DIR%\%CONF_NAME%"
-copy /Y "%RESOURCE_DIR%japanese.properties"   "%TARGET_DIR%\japanese.properties"
 copy /Y "%PRJ_ROOT%\target\%JAR_NAME%.jar"    "%TARGET_DIR%\%JAR_NAME%.jar"
 
 @rem èIóπÉRÉÅÉìÉg

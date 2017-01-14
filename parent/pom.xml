@@ -16,8 +16,9 @@
   <!-- プロパティ定義 -->
   <properties>
     <jar.file.name>${project.artifactId}</jar.file.name>
+    <opencv.version>2.4.9-4</opencv.version>
   </properties>
-  
+
   <!-- リポジトリの参照を追加 -->
   <repositories>
     <repository>
@@ -29,7 +30,6 @@
 
   <!-- モジュール一覧 -->
   <modules>
-    <module>../UserMaster</module>
     <module>../CameraDevice</module>
     <module>../FaceDetector</module>
     <module>../InfoClerkManager</module>
@@ -63,80 +63,10 @@
         <version>1.1.0</version>
       </dependency>
 
-      <!-- MessageLib -->
-      <dependency>
-        <groupId>jp.co.humane.humane-lib</groupId>
-        <artifactId>message-lib</artifactId>
-        <version>1.0.0</version>
-      </dependency>
-
       <!-- OpenCVLib -->
       <dependency>
         <groupId>jp.co.humane.humane-lib</groupId>
         <artifactId>open-cv-lib</artifactId>
-        <version>1.0.0</version>
-      </dependency>
-
-      <!-- XMLLib -->
-      <dependency>
-        <groupId>jp.co.humane.humane-lib</groupId>
-        <artifactId>xml-lib</artifactId>
-        <version>1.0.0</version>
-      </dependency>
-
-      <!-- ConfigLib -->
-      <dependency>
-        <groupId>jp.co.humane.humane-lib</groupId>
-        <artifactId>config-lib</artifactId>
-        <version>1.0.0</version>
-      </dependency>
-
-      <!-- ExceptionLib -->
-      <dependency>
-        <groupId>jp.co.humane.humane-lib</groupId>
-        <artifactId>exception-lib</artifactId>
-        <version>1.0.0</version>
-      </dependency>
-
-      <!-- DBUtility -->
-      <dependency>
-        <groupId>jp.co.humane.humane-lib</groupId>
-        <artifactId>db-utility</artifactId>
-        <version>1.0.0</version>
-      </dependency>
-
-      <!-- HCharEncoder -->
-      <dependency>
-        <groupId>jp.co.humane.humane-lib</groupId>
-        <artifactId>hchar-encoder</artifactId>
-        <version>1.0.0</version>
-      </dependency>
-
-      <!-- Logger -->
-      <dependency>
-        <groupId>jp.co.humane.humane-lib</groupId>
-        <artifactId>logger</artifactId>
-        <version>1.0.0</version>
-      </dependency>
-
-      <!-- MorphemeEngineLib -->
-      <dependency>
-        <groupId>jp.co.humane.humane-lib</groupId>
-        <artifactId>morpheme-engine-lib</artifactId>
-        <version>1.0.0</version>
-      </dependency>
-
-      <!-- StateMachineLib-1.0.jar -->
-      <dependency>
-        <groupId>jp.co.humane.humane-lib</groupId>
-        <artifactId>state-machine-lib</artifactId>
-        <version>1.0.0</version>
-      </dependency>
-
-      <!-- FileOperatorUtil -->
-      <dependency>
-        <groupId>jp.co.humane.humane-lib</groupId>
-        <artifactId>file-operator-util</artifactId>
         <version>1.0.0</version>
       </dependency>
 
@@ -147,15 +77,22 @@
         <version>1.0.0</version>
       </dependency>
 
+      <!-- commons-lang -->
+      <dependency>
+          <groupId>org.apache.commons</groupId>
+          <artifactId>commons-lang3</artifactId>
+          <version>3.5</version>
+      </dependency>
+
     </dependencies>
   </dependencyManagement>
 
   <build>
-  
+
     <!-- infoclerkで使用する全プラグインのバージョンをここで定義 -->
     <pluginManagement>
       <plugins>
-        
+
         <!-- fat jarを生成 -->
         <plugin>
           <artifactId>maven-assembly-plugin</artifactId>
@@ -205,7 +142,7 @@
 
       </plugins>
     </pluginManagement>
-    
+
   </build>
 
 </project>

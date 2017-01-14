@@ -8,7 +8,7 @@ set CONF_NAME=rtc.conf
 @rem opencvライブラリパス
 set OPENCV_LIB=D:\work\dev\opencv\opencv\build\java\x64
 @rem メインクラス
-set MAIN_CLASS=CameraDeviceComp
+set MAIN_CLASS=jp.co.humane.rtc.cameradevice.CameraDeviceImpl
 
 @rem ファイルの存在するディレクトリのパスに移動
 set CURRENT_DIR=%~dp0

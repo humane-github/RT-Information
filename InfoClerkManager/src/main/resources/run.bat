@@ -4,7 +4,7 @@
 @rem jarファイルの名前（artifactId）
 set JAR_NAME=infoclerk-manager.jar
 @rem メインクラス
-set MAIN_CLASS=InfoClerkManagerComp
+set MAIN_CLASS=jp.co.humane.rtc.infoclerkmgr.InfoClerkManagerImpl
 @rem confファイルの名前
 set CONF_NAME=rtc.conf
 

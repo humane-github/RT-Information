@@ -4,7 +4,7 @@
 @rem jarファイルの名前（artifactId）
 set JAR_NAME=face-detector.jar
 @rem メインクラス
-set MAIN_CLASS=FaceDetectorComp
+set MAIN_CLASS=jp.co.humane.rtc.facedetector.FaceDetectorImpl
 @rem opencvライブラリパス
 set OPENCV_LIB=D:\work\dev\opencv\opencv\build\java\x64
 @rem confファイルの名前
