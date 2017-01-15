@@ -96,10 +96,7 @@ public class MotionDetectorImpl extends DataFlowStatefullComponent<MotionDetecto
         addStateMoveMap(State.DETECTING,   DetectingProcesssor.Result.TIMEOUT,      State.WAIT_WAKEUP);
 
         // 初期状態を待機中に設定
-        // TODO:後で戻す
-        // this.state = State.WAIT_WAKEUP;
-        this.state = State.DETECTING;
-
+        this.state = State.WAIT_WAKEUP;
     }
 
     /**

@@ -81,10 +81,6 @@ public class JuliusClientImpl extends DataFlowComponent<JuliusClientConfig> {
     @Override
     protected ReturnCode_t onRtcActivated(int ec_id) {
 
-        // TODO:後で消す
-        config.setJuliusExePath("D:\\work\\dev\\rtm\\julius\\dictation-kit-v4.4\\bin\\windows\\julius.exe");
-        config.setJuliusConfPath("D:\\work\\dev\\rtm\\julius\\dictation-kit-v4.4\\rtmtest.jconf");
-
         // Juliusサーバを起動する
         try {
             juliusProcess = new ProcessBuilder(config.getJuliusExePath(),
