@@ -1,0 +1,63 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>jp.co.humane-tool</groupId>
+  <artifactId>rtc-connector</artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging>
+
+  <!-- リポジトリの参照を追加 -->
+  <repositories>
+    <repository>
+      <id>humane.github.repogitory</id>
+      <name>Humane GitHub Repogitory</name>
+      <url>http://humane-github.github.io/maven-repo</url>
+    </repository>
+    <repository>
+      <id>humane.github.repogitory</id>
+      <name>Humane GitHub Repogitory</name>
+      <url>http://humane-github.github.io/maven-repo</url>
+    </repository>
+  </repositories>
+
+  <!-- 参照するjarを定義 -->
+  <dependencies>
+
+    <!-- OpenRTM-aist -->
+    <dependency>
+      <groupId>tk.devrt</groupId>
+      <artifactId>openrtm-aist-java</artifactId>
+      <version>1.1.0</version>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <plugins>
+
+      <!-- fat jarを生成 -->
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.2</version>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <finalName>${jar.file.name}</finalName>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+          <appendAssemblyId>false</appendAssemblyId>
+        </configuration>
+      </plugin>
+
+    </plugins>
+  </build>
+
+</project>
