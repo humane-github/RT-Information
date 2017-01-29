@@ -1,4 +1,7 @@
-package jp.co.humane.rtc.tool.connector;
+/**
+ *
+ */
+package jp.co.humane.rtc.tool.connector.dao.impl;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -20,33 +23,33 @@ import org.omg.CosNaming.NamingContextHelper;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.InvalidName;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
+import org.springframework.stereotype.Component;
 
 import RTC.ConnectorProfile;
-import RTC.ConnectorProfileHolder;
 import RTC.PortProfile;
 import RTC.PortService;
 import RTC.RTObject;
 import RTC.RTObjectHelper;
-import RTC.ReturnCode_t;
 import _SDOPackage.InterfaceNotImplemented;
 import _SDOPackage.InternalError;
 import _SDOPackage.NameValue;
 import _SDOPackage.NotAvailable;
 import jp.co.humane.rtc.tool.connector.common.consts.PropertyKey;
 import jp.co.humane.rtc.tool.connector.common.enums.ComponentState;
+import jp.co.humane.rtc.tool.connector.dao.NamingServerDao;
 import jp.co.humane.rtc.tool.connector.dto.ConnectInfo;
 import jp.co.humane.rtc.tool.connector.dto.PortInfo;
 import jp.co.humane.rtc.tool.connector.dto.RtcInfo;
 import jp.go.aist.rtm.RTC.CorbaNaming;
-import jp.go.aist.rtm.RTC.util.NVUtil;
 import jp.go.aist.rtm.RTC.util.ORBUtil;
 
 /**
- * 設定ファイルをもとにRTCの接続を行う。
- * @author terada
+ * ネーミングサービスのデータにアクセスするDAO。
+ * @author terada.
  *
  */
-public class RtcConnector {
+@Component
+public class NamingServerDaoImpl implements NamingServerDao {
 
     /** システムプロパティのキー：サーバー名 */
     public static final String SERVER_NAME = "rtc.connector.server.name";
@@ -76,78 +79,26 @@ public class RtcConnector {
      * コンストラクタ。
      * @throws Exception 接続に失敗した場合に発生。
      */
-    public RtcConnector() throws Exception {
+    public NamingServerDaoImpl() throws Exception {
         String server = System.getProperty(SERVER_NAME);
         String port = System.getProperty(PORT_NUMBER);
         orb = ORBUtil.getOrb();
         corbaNaming = new CorbaNaming(orb, server + ":" + port);
     }
 
-    // http://www.wakhok.ac.jp/~tatsuo/kougi98/20shuu/PrintBinding.java.html
-
-
-    public void connect(String fromObj, String fromPort, String toObj, String toPort) {
-
-        RTObject obj1 = getRTObject(fromObj);
-        RTObject obj2 = getRTObject(toObj);
-        if (null == obj1 || null == obj2) {
-            System.out.println("対応するオブジェクトが見つかりませんでした。");
-            return;
-        }
-
-        PortService port1 = null;
-        PortService port2 = null;
-        for(PortService ps : obj1.get_ports()) {
-            if (ps.get_port_profile().name.equals(fromObj + "." + fromPort)) {
-                port1 = ps;
-                break;
-            }
-        }
-        for (PortService ps : obj2.get_ports()) {
-            if (ps.get_port_profile().name.equals(toObj + "." + toPort)) {
-                port2 = ps;
-                break;
-            }
-        }
-        if (null == port1 || null == port2) {
-            System.out.println("対応するポートが見つかりませんでした。");
-            return;
-        }
-
-        ConnectorProfile prof = new ConnectorProfile();
-        prof.connector_id = "connector1";
-        prof.name = "connector1";
-        prof.ports = new PortService[] {port1, port2};
-        prof.properties = new NameValue[] {
-                NVUtil.newNV("dataport.interface_type",    "corba_cdr"),
-                NVUtil.newNV("dataport.dataflow_type",     "push"),
-                NVUtil.newNV("dataport.subscription_type", "new")
-        };
-
-        ReturnCode_t ret = port1.connect(new ConnectorProfileHolder(prof));
-
-        if (ret != ReturnCode_t.RTC_OK) {
-            System.out.println("失敗：" + ret);
-        }
-
-
+    /**
+     * RTC情報の一覧を取得する。
+     * @return RTC情報の一覧。
+     */
+    public List<RtcInfo> getRtcList() {
+        return new ArrayList<>(rtcMap.values());
     }
 
-    public void activate(String name) {
-
-        RTObject obj = getRTObject(name);
-        if (null == obj) {
-            System.out.println(name + "は存在しません");
-            return;
-        }
-
-        obj.get_owned_contexts()[0].activate_component(obj);
-    }
 
     /**
      * オブジェクト参照のマップを更新する。
      */
-    public void updateObjMap() {
+    public void reflesh() {
 
         // 取得済みの情報があれば解放する
         if (null != rtcMap) {
@@ -188,7 +139,7 @@ public class RtcConnector {
             portNameList.add(portName);
 
             // ポート情報、接続情報を取得
-            PortInfo portInfo = getPortInfo(pprof.properties);
+            PortInfo portInfo = getPortInfo(portName, pprof.properties);
             List<ConnectInfo> connectInfotList = getConnectInfoList(pprof.connector_profiles);
 
             // RTCにポートの情報を追加
@@ -205,9 +156,10 @@ public class RtcConnector {
      * ポート情報を取得する。
      * @param props プロパティ情報。
      */
-    protected PortInfo getPortInfo(NameValue[] props) {
+    protected PortInfo getPortInfo(String name, NameValue[] props) {
 
         PortInfo port = new PortInfo();
+        port.setName(name);
 
         for (NameValue nv : props) {
             String key = nv.name;
@@ -282,7 +234,7 @@ public class RtcConnector {
             PortProfile port2 = prof.ports[1].get_port_profile();
             String inPortName = port1.name;
             String outPortName = port2.name;
-            if (!getPortInfo(port1.properties).isInPort()) {
+            if (!getPortInfo(port1.name, port1.properties).isInPort()) {
                 inPortName = port2.name;
                 outPortName = port1.name;
             }
@@ -473,7 +425,7 @@ public class RtcConnector {
 
         // マップが無いまたはマップに名前が存在しない場合は更新を行う
         if (null == rtcMap || !rtcMap.containsKey(name)) {
-            updateObjMap();
+            reflesh();
         }
 
         // マップから対応するオブジェクト参照を返す
@@ -486,13 +438,5 @@ public class RtcConnector {
         return null;
     }
 
-    public static void main(String[] args) throws Exception {
-        RtcConnector connector = new RtcConnector();
-        connector.updateObjMap();
-//        connector.activate("SendString0");
-//        connector.activate("ReceiveString0");
-
-        //connector.connect("SendString0", "strOut", "ReceiveString0", "strIn");
-    }
 
 }

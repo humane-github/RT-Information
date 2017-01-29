@@ -6,17 +6,18 @@
   <version>1.0.0</version>
   <packaging>jar</packaging>
 
+  <properties>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+    <jar.file.name>rtc-connector</jar.file.name>
+  </properties>
+
   <!-- リポジトリの参照を追加 -->
   <repositories>
     <repository>
-      <id>humane.github.repogitory</id>
-      <name>Humane GitHub Repogitory</name>
-      <url>http://humane-github.github.io/maven-repo</url>
-    </repository>
-    <repository>
-      <id>humane.github.repogitory</id>
-      <name>Humane GitHub Repogitory</name>
-      <url>http://humane-github.github.io/maven-repo</url>
+      <id>mvnrepository</id>
+      <name>mvnrepository</name>
+      <url>https://mvnrepository.com/</url>
     </repository>
   </repositories>
 
@@ -30,12 +31,20 @@
       <version>1.1.0</version>
     </dependency>
 
+    <!-- Spring Shell -->
+    <dependency>
+      <groupId>org.springframework.shell</groupId>
+      <artifactId>spring-shell</artifactId>
+      <version>1.2.0.RELEASE</version>
+    </dependency>
+
   </dependencies>
 
   <build>
     <plugins>
 
       <!-- fat jarを生成 -->
+      <!--
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <version>2.2</version>
@@ -55,6 +64,35 @@
           </descriptorRefs>
           <appendAssemblyId>false</appendAssemblyId>
         </configuration>
+      </plugin>
+      -->
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.4.3</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <finalName>${jar.file.name}</finalName>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>jp.co.humane.rtc.tool.connector.shell.Main</mainClass>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                  <resource>META-INF/spring.handlers</resource>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                  <resource>META-INF/spring.schemas</resource>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
 
     </plugins>
