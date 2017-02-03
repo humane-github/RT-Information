@@ -73,7 +73,7 @@ public class NamingServerDaoImpl implements NamingServerDao {
     private CorbaNaming corbaNaming = null;
 
     /** オブジェクト参照のマップ(key:コンポーネント名、value:RTC情報) */
-    private Map<String, RtcInfo> rtcMap = null;
+    private Map<String, RtcInfo> rtcMap = new LinkedHashMap<>();
 
     /**
      * コンストラクタ。
@@ -94,6 +94,45 @@ public class NamingServerDaoImpl implements NamingServerDao {
         return new ArrayList<>(rtcMap.values());
     }
 
+    /**
+     * ポート情報のマップ（key:RTC名、value:ポート一覧）を取得する。
+     * @return ポート情報のマップ。
+     */
+    public Map<String, List<PortInfo>> getPortMap() {
+
+        Map<String, List<PortInfo>> portMap = new LinkedHashMap<>();
+        for (String rtcName : rtcMap.keySet()) {
+            RtcInfo rtc = rtcMap.get(rtcName);
+            List<PortInfo> portList = new ArrayList<>(rtc.getPortMap().values());
+            portMap.put(rtcName, portList);
+        }
+        return portMap;
+    }
+
+    /**
+     * ポートの接続数を取得する。
+     * @param rtcName   RTC名。
+     * @param portName  ポート名。
+     * @return 接続数。
+     */
+    public int getConnectNum(String rtcName, String portName) {
+
+        // 指定されたRTCが存在しない場合は0を返す
+        RtcInfo rtc = rtcMap.get(rtcName);
+        if (null == rtc) {
+            return 0;
+        }
+
+        // 対象ポートが存在しない場合は0を返す
+        Map<String, List<ConnectInfo>> connectMap = rtc.getConnectMap();
+        List<ConnectInfo> connectList = connectMap.get(portName);
+        if (null == connectList) {
+            return 0;
+        }
+
+        // 接続数を返す
+        return connectList.size();
+    }
 
     /**
      * オブジェクト参照のマップを更新する。
@@ -245,23 +284,27 @@ public class NamingServerDaoImpl implements NamingServerDao {
             // プロファイル情報
             for (NameValue nv : prof.properties) {
                 String key = nv.name;
-                String val = nv.value.extract_string();
+                String val = null;
 
                 switch(key) {
 
                 case PropertyKey.DATA_TYPE:
+                    val = nv.value.extract_string();
                     con.setDataType(val);
                     break;
 
                 case PropertyKey.DATAFLOW_TYPE:
+                    val = nv.value.extract_string();
                     con.setDataFlowType(val);
                     break;
 
                 case PropertyKey.INTERFACE_TYPE:
+                    val = nv.value.extract_string();
                     con.setInterfaceType(val);
                     break;
 
                 case PropertyKey.SUBSCRIPTION_TYPE:
+                    val = nv.value.extract_string();
                     con.setSubscriptionType(val);
                     break;
 

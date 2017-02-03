@@ -4,12 +4,14 @@
 package jp.co.humane.rtc.tool.connector.shell.cfg;
 
 import org.springframework.shell.plugin.support.DefaultPromptProvider;
+import org.springframework.stereotype.Component;
 
 /**
  * RtcConnectorのプロンプトを設定。
  * @author terada.
  *
  */
+@Component
 public class PromptConfig extends DefaultPromptProvider {
 
     /**

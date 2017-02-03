@@ -1,7 +1,7 @@
 /**
  *
  */
-package jp.co.humane.rtc.tool.connector.shell.tablebean;
+package jp.co.humane.rtc.tool.connector.shell.command.table;
 
 import java.util.LinkedHashMap;
 

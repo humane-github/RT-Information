@@ -19,7 +19,7 @@ import org.springframework.shell.table.TableBuilder;
 public class TableBuilderUtil {
 
     /** コンソールの横幅 */
-    public static final int RENDER_SIZE = 100;
+    public static final int RENDER_SIZE = 130;
 
     /**
      * リストをテーブル形式の文字列に変換する。

@@ -29,8 +29,8 @@ public class BannerConfig extends DefaultBannerProvider {
         buf.append("========================" + OsUtils.LINE_SEPARATOR);
         buf.append("                        " + OsUtils.LINE_SEPARATOR);
         buf.append("      RTC Connector     " + OsUtils.LINE_SEPARATOR);
+        buf.append("      Version:" + this.getVersion() + OsUtils.LINE_SEPARATOR);
         buf.append("                        " + OsUtils.LINE_SEPARATOR);
-        buf.append("Version:" + this.getVersion() + OsUtils.LINE_SEPARATOR);
         buf.append("========================" + OsUtils.LINE_SEPARATOR);
         buf.append("                        " + OsUtils.LINE_SEPARATOR);
         return buf.toString();
