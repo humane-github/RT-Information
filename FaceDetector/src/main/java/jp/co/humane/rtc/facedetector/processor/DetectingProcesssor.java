@@ -24,7 +24,6 @@ import RTC.TimedBoolean;
 import jp.co.humane.opencvlib.MatViewer;
 import jp.co.humane.rtc.common.component.state.StateProcessResult;
 import jp.co.humane.rtc.common.component.state.StateProcessor;
-import jp.co.humane.rtc.common.logger.RtcLogger;
 import jp.co.humane.rtc.common.port.RtcInPort;
 import jp.co.humane.rtc.common.port.RtcOutPort;
 import jp.co.humane.rtc.common.util.CorbaObj;
@@ -47,9 +46,6 @@ public class DetectingProcesssor extends StateProcessor {
         NOT_DETECT,
         TIMEOUT
     }
-
-    /** ロガー */
-    private RtcLogger logger = new RtcLogger("DetectingProcesssor");
 
     /** カメラ映像の入力ポート */
     private RtcInPort<CameraImage> cameraImageIn = null;
@@ -244,9 +240,15 @@ public class DetectingProcesssor extends StateProcessor {
      */
     private void updateViewer(Mat smallMat, List<MatOfRect> facesList) {
 
-        Iterator<Scalar> it = Arrays.asList(new Scalar(255, 0, 0),
-                                             new Scalar(0, 255, 0),
-                                             new Scalar(0, 0, 255)).iterator();
+        // 暫定的に最大8個まで表示
+        Iterator<Scalar> it =
+                Arrays.asList(new Scalar(255,   0,   0), new Scalar(  0, 255,   0), new Scalar(  0,   0, 255),
+                               new Scalar(255, 255,   0), new Scalar(255,   0, 255), new Scalar(  0, 255, 255),
+                               new Scalar(  0,   0,   0), new Scalar(255, 255, 255)).iterator();
+
+        if (8 < facesList.size()) {
+            facesList = facesList.subList(0, 7);
+        }
 
         for (MatOfRect faces : facesList) {
             Scalar scalar = it.next();

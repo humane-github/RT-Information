@@ -18,6 +18,15 @@ public class InfoClerkManagerConfig extends ConfigBase {
     /** 音声認識にかける時間（秒）*/
     private Integer voiceRecogTime = 30;
 
+    /** 画面クローズ用の顔検知インターバル（秒） */
+    private Integer closeFaceInterval = 3;
+
+    /** 画面クローズと判断する連続非検出数 */
+    private Integer closeFaceThreshold = 3;
+
+    /** 画面クローズのリトライアウト回数 */
+    private Integer closeFaceRetryOut = 20;
+
     /**
      * motionDetectTimeを取得する。
      * @return motionDetectTime motionDetectTime。
@@ -64,6 +73,54 @@ public class InfoClerkManagerConfig extends ConfigBase {
      */
     public void setVoiceRecogTime(Integer voiceRecogTime) {
         this.voiceRecogTime = voiceRecogTime;
+    }
+
+    /**
+     * closeFaceIntervalを取得する。
+     * @return closeFaceInterval closeFaceInterval。
+     */
+    public Integer getCloseFaceInterval() {
+        return closeFaceInterval;
+    }
+
+    /**
+     * closeFaceIntervalを設定する。
+     * @param closeFaceInterval closeFaceInterval.
+     */
+    public void setCloseFaceInterval(Integer closeFaceInterval) {
+        this.closeFaceInterval = closeFaceInterval;
+    }
+
+    /**
+     * closeFaceThresholdを取得する。
+     * @return closeFaceThreshold closeFaceThreshold。
+     */
+    public Integer getCloseFaceThreshold() {
+        return closeFaceThreshold;
+    }
+
+    /**
+     * closeFaceThresholdを設定する。
+     * @param closeFaceThreshold closeFaceThreshold.
+     */
+    public void setCloseFaceThreshold(Integer closeFaceThreshold) {
+        this.closeFaceThreshold = closeFaceThreshold;
+    }
+
+    /**
+     * closeFaceRetryOutを取得する。
+     * @return closeFaceRetryOut closeFaceRetryOut。
+     */
+    public Integer getCloseFaceRetryOut() {
+        return closeFaceRetryOut;
+    }
+
+    /**
+     * closeFaceRetryOutを設定する。
+     * @param closeFaceRetryOut closeFaceRetryOut.
+     */
+    public void setCloseFaceRetryOut(Integer closeFaceRetryOut) {
+        this.closeFaceRetryOut = closeFaceRetryOut;
     }
 
 }

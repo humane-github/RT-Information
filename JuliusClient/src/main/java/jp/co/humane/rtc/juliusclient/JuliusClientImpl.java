@@ -24,10 +24,10 @@ import jp.go.aist.rtm.RTC.port.ConnectorDataListenerType;
 public class JuliusClientImpl extends DataFlowComponent<JuliusClientConfig> {
 
     /** 音声情報を受け取るポート */
-    private RtcInPort<TimedOctetSeq> voiceDataIn = null;
+    private RtcInPort<TimedOctetSeq> voiceDataIn = new RtcInPort<>("voiceData", CorbaObj.newTimedOctetSeq());
 
     /** テキスト情報を出力するポート */
-    private RtcOutPort<TimedWString> resultOut = null;
+    private RtcOutPort<TimedWString> resultOut = new RtcOutPort<>("result", CorbaObj.newTimedWString());
 
     /** Juliusサーバのプロセス */
     private Process juliusProcess = null;
@@ -53,14 +53,6 @@ public class JuliusClientImpl extends DataFlowComponent<JuliusClientConfig> {
      */
     @Override
     protected ReturnCode_t onRtcInitialize() {
-
-        // 音声情報を受け取るポートを追加
-        voiceDataIn = new RtcInPort<TimedOctetSeq>("voiceData", CorbaObj.newTimedOctetSeq());
-        addInPort("voiceData", voiceDataIn);
-
-        // テキスト情報を出力するポートを追加
-        resultOut = new RtcOutPort<TimedWString>("result", CorbaObj.newTimedWString());
-        addOutPort("result", resultOut);
 
         // Juliusとの通信を行うクラスを作成
         communicator = new JuliusCommunicator(config, resultOut);

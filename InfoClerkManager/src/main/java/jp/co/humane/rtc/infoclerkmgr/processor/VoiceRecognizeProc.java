@@ -6,7 +6,6 @@ import RTC.TimedString;
 import RTC.TimedWString;
 import jp.co.humane.rtc.common.component.state.StateProcessResult;
 import jp.co.humane.rtc.common.component.state.StateProcessor;
-import jp.co.humane.rtc.common.logger.RtcLogger;
 import jp.co.humane.rtc.common.port.RtcInPort;
 import jp.co.humane.rtc.common.port.RtcOutPort;
 import jp.co.humane.rtc.common.util.CorbaObj;
@@ -18,7 +17,7 @@ import jp.co.humane.rtc.infoclerkmgr.InfoClerkManagerConfig;
  * @author terada.
  *
  */
-public class VoiceRecognizeProcessor extends StateProcessor {
+public class VoiceRecognizeProc extends StateProcessor {
 
     /**
      * 処理結果を表すENUM。
@@ -29,9 +28,6 @@ public class VoiceRecognizeProcessor extends StateProcessor {
         RECOGNIZE,
         TIMEOUT
     }
-
-    /** ロガー */
-    private RtcLogger logger = new RtcLogger("InfoClerkManager");
 
     /** 音声認識結果の入力ポート */
     private RtcInPort<TimedWString> voiceTexResulttIn = null;
@@ -50,7 +46,7 @@ public class VoiceRecognizeProcessor extends StateProcessor {
      * @param voiceTexResulttIn 音声認識結果の入力ポート。
      * @param voiceTextOut      音声合成用の出力ポート。
      */
-    public VoiceRecognizeProcessor(RtcInPort<TimedWString> voiceTexResulttIn,
+    public VoiceRecognizeProc(RtcInPort<TimedWString> voiceTexResulttIn,
                                    RtcOutPort<TimedString> voiceTextOut,
                                    InfoClerkManagerConfig config) {
         this.voiceTexResulttIn = voiceTexResulttIn;

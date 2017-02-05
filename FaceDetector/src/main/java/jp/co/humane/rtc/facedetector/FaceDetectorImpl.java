@@ -31,13 +31,13 @@ public class FaceDetectorImpl extends DataFlowStatefullComponent<FaceDetectorCon
     };
 
     /** カメラ映像の入力ポート */
-    private RtcInPort<CameraImage> cameraImageIn = null;
+    private RtcInPort<CameraImage> cameraImageIn = new RtcInPort<>("CameraImage", CorbaObj.newCameraImage());
 
     /** 顔検出の開始指示入力ポート */
-    private RtcInPort<TimedLong> wakeupIn = null;
+    private RtcInPort<TimedLong> wakeupIn = new RtcInPort<>("Wakeup", CorbaObj.newTimedLong());
 
     /** 顔検出の結果を出力するポート */
-    private RtcOutPort<TimedBoolean> detectResultOut = null;
+    private RtcOutPort<TimedBoolean> detectResultOut = new RtcOutPort<>("FaceCount", CorbaObj.newTimedBoolean());
 
     /** OpenCVの読み込み */
     static {
@@ -60,18 +60,6 @@ public class FaceDetectorImpl extends DataFlowStatefullComponent<FaceDetectorCon
      */
     @Override
     protected ReturnCode_t onRtcInitialize() {
-
-        // カメラの映像の入力ポートを追加
-        cameraImageIn = new RtcInPort<CameraImage>("CameraImage", CorbaObj.newCameraImage(255));
-        addInPort("CameraImage", cameraImageIn);
-
-        // 顔検出の開始指示入力ポートを追加
-        wakeupIn = new RtcInPort<TimedLong>("Wakeup", CorbaObj.newTimedLong());
-        addInPort("Wakeup", wakeupIn);
-
-        // 検出した顔の数を出力するポートを追加
-        detectResultOut = new RtcOutPort<TimedBoolean>("FaceCount", CorbaObj.newTimedBoolean());
-        addOutPort("FaceCount", detectResultOut);
 
         // 状態の関連情報を設定
         setStateRelation();

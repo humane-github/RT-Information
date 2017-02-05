@@ -11,9 +11,10 @@ import jp.co.humane.rtc.common.port.RtcInPort;
 import jp.co.humane.rtc.common.port.RtcOutPort;
 import jp.co.humane.rtc.common.starter.RtcStarter;
 import jp.co.humane.rtc.common.util.CorbaObj;
-import jp.co.humane.rtc.infoclerkmgr.processor.FaceDetectProcessor;
-import jp.co.humane.rtc.infoclerkmgr.processor.MotionDetectProcessor;
-import jp.co.humane.rtc.infoclerkmgr.processor.VoiceRecognizeProcessor;
+import jp.co.humane.rtc.infoclerkmgr.processor.CloseFaceDetectProc;
+import jp.co.humane.rtc.infoclerkmgr.processor.FaceDetectProc;
+import jp.co.humane.rtc.infoclerkmgr.processor.MotionDetectProc;
+import jp.co.humane.rtc.infoclerkmgr.processor.VoiceRecognizeProc;
 import jp.go.aist.rtm.RTC.Manager;
 
 /**
@@ -33,26 +34,30 @@ public class InfoClerkManagerImpl extends DataFlowStatefullComponent<InfoClerkMa
         FACE_DETECT,
 
         /** 音声認識中 */
-        RECOGNIZE_VOICE;
+        RECOGNIZE_VOICE,
+
+        /** 画面クローズ用顔認識中 */
+        CLOSE_FACE_DETECT;
+
     };
 
     /** 動体検知結果の入力ポート */
-    private RtcInPort<TimedBoolean> detectMotionResultIn = null;
+    private RtcInPort<TimedBoolean> motionResultIn = new RtcInPort<>("MotionDetectIn", CorbaObj.newTimedBoolean());
 
     /** 顔検知結果の入力ポート */
-    private RtcInPort<TimedBoolean> detectFaceResultIn = null;
+    private RtcInPort<TimedBoolean> faceResultIn = new RtcInPort<>("FaceDetecIn", CorbaObj.newTimedBoolean());
 
     /** 音声認識結果の入力ポート */
-    private RtcInPort<TimedWString> voiceTexResulttIn = null;
+    private RtcInPort<TimedWString> voiceResulttIn = new RtcInPort<>("VoiceRecognitionIn", CorbaObj.newTimedWString());
 
     /** 動体検知開始通知用の出力ポート */
-    private RtcOutPort<TimedLong> detectMotionStartOut = null;
+    private RtcOutPort<TimedLong> motionStartOut = new RtcOutPort<>("MotionDetectOut", CorbaObj.newTimedLong());
 
     /** 顔検知開始通知用の出力ポート */
-    private RtcOutPort<TimedLong> detectFaceStartOut = null;
+    private RtcOutPort<TimedLong> faceStartOut = new RtcOutPort<>("FaceDetectOut", CorbaObj.newTimedLong());
 
     /** 音声合成用の出力ポート */
-    private RtcOutPort<TimedString> voiceTextOut = null;
+    private RtcOutPort<TimedString> voiceTextOut = new RtcOutPort<>("VoiceSpeech", CorbaObj.newTimedString());
 
     /**
      * コンストラクタ。
@@ -71,34 +76,10 @@ public class InfoClerkManagerImpl extends DataFlowStatefullComponent<InfoClerkMa
     @Override
     protected ReturnCode_t onRtcInitialize() {
 
-        // 動体検知結果の入力ポートを追加
-        detectMotionResultIn = new RtcInPort<TimedBoolean>("MotionDetectIn", CorbaObj.newTimedBoolean());
-        addInPort("MotionDetectIn", detectMotionResultIn);
-
-        // 顔検知結果の入力ポートを追加
-        detectFaceResultIn = new RtcInPort<TimedBoolean>("FaceDetecIn", CorbaObj.newTimedBoolean());
-        addInPort("FaceDetectIn", detectFaceResultIn);
-
-        // 音声認識結果の入力ポートを追加
-        voiceTexResulttIn = new RtcInPort<TimedWString>("VoiceRecognitionIn", CorbaObj.newTimedWString());
-        addInPort("VoiceRecognitionIn", voiceTexResulttIn);
-
-        // 動体検知開始通知用の出力ポートを追加
-        detectMotionStartOut = new RtcOutPort<TimedLong>("MotionDetectOut", CorbaObj.newTimedLong());
-        addOutPort("MotionDetectOut", detectMotionStartOut);
-
-        // 顔検知開始通知用の出力ポートを追加
-        detectFaceStartOut = new RtcOutPort<TimedLong>("FaceDetectOut", CorbaObj.newTimedLong());
-        addOutPort("FaceDetectOut", detectFaceStartOut);
-
-        // 音声合成用の出力ポートを追加
-        voiceTextOut = new RtcOutPort<TimedString>("VoiceSpeech", CorbaObj.newTimedString());
-        addOutPort("VoiceSpeech", voiceTextOut);
-
         // 状態の関連情報を設定
         setStateRelation();
 
-        return ReturnCode_t.RTC_OK;
+        return super.onRtcInitialize();
     }
 
     /**
@@ -107,20 +88,24 @@ public class InfoClerkManagerImpl extends DataFlowStatefullComponent<InfoClerkMa
     private void setStateRelation() {
 
         // 状態とそれに対応する処理を登録
-        stateProcMap.put(State.MOTION_DETECT, new MotionDetectProcessor(detectMotionResultIn, detectMotionStartOut, config));
-        stateProcMap.put(State.FACE_DETECT, new FaceDetectProcessor(detectFaceResultIn, detectFaceStartOut, config));
-        stateProcMap.put(State.RECOGNIZE_VOICE, new VoiceRecognizeProcessor(voiceTexResulttIn, voiceTextOut, config));
+        stateProcMap.put(State.MOTION_DETECT,     new MotionDetectProc(motionResultIn, motionStartOut, config));
+        stateProcMap.put(State.FACE_DETECT,        new FaceDetectProc(faceResultIn, faceStartOut, config));
+        stateProcMap.put(State.RECOGNIZE_VOICE,   new VoiceRecognizeProc(voiceResulttIn, voiceTextOut, config));
+        stateProcMap.put(State.CLOSE_FACE_DETECT, new CloseFaceDetectProc(faceResultIn, faceStartOut, config));
 
         // 現在状態、処理結果、遷移先状態の組み合わせを登録
-        addStateMoveMap(State.MOTION_DETECT,   MotionDetectProcessor.Result.NOT_DETECT,      State.MOTION_DETECT);
-        addStateMoveMap(State.MOTION_DETECT,   MotionDetectProcessor.Result.TIMEOUT,         State.MOTION_DETECT);
-        addStateMoveMap(State.MOTION_DETECT,   MotionDetectProcessor.Result.DETECT,          State.FACE_DETECT);
-        addStateMoveMap(State.FACE_DETECT,     FaceDetectProcessor.Result.NOT_DETECT,        State.FACE_DETECT);
-        addStateMoveMap(State.FACE_DETECT,     FaceDetectProcessor.Result.TIMEOUT,            State.MOTION_DETECT);
-        addStateMoveMap(State.FACE_DETECT,     FaceDetectProcessor.Result.DETECT,             State.RECOGNIZE_VOICE);
-        addStateMoveMap(State.RECOGNIZE_VOICE, VoiceRecognizeProcessor.Result.NOT_RECOGNIZE, State.RECOGNIZE_VOICE);
-        addStateMoveMap(State.RECOGNIZE_VOICE, VoiceRecognizeProcessor.Result.RECOGNIZE,     State.MOTION_DETECT);
-        addStateMoveMap(State.RECOGNIZE_VOICE, VoiceRecognizeProcessor.Result.TIMEOUT,       State.MOTION_DETECT);
+        addStateMoveMap(State.MOTION_DETECT,     MotionDetectProc.Result.NOT_DETECT,      State.MOTION_DETECT);
+        addStateMoveMap(State.MOTION_DETECT,     MotionDetectProc.Result.TIMEOUT,         State.MOTION_DETECT);
+        addStateMoveMap(State.MOTION_DETECT,     MotionDetectProc.Result.DETECT,          State.FACE_DETECT);
+        addStateMoveMap(State.FACE_DETECT,       FaceDetectProc.Result.NOT_DETECT,        State.FACE_DETECT);
+        addStateMoveMap(State.FACE_DETECT,       FaceDetectProc.Result.TIMEOUT,           State.MOTION_DETECT);
+        addStateMoveMap(State.FACE_DETECT,       FaceDetectProc.Result.DETECT,            State.RECOGNIZE_VOICE);
+        addStateMoveMap(State.RECOGNIZE_VOICE,   VoiceRecognizeProc.Result.NOT_RECOGNIZE, State.RECOGNIZE_VOICE);
+        addStateMoveMap(State.RECOGNIZE_VOICE,   VoiceRecognizeProc.Result.RECOGNIZE,     State.CLOSE_FACE_DETECT);
+        addStateMoveMap(State.RECOGNIZE_VOICE,   VoiceRecognizeProc.Result.TIMEOUT,       State.FACE_DETECT);
+        addStateMoveMap(State.CLOSE_FACE_DETECT, CloseFaceDetectProc.Result.NOT_CLOSE,   State.CLOSE_FACE_DETECT);
+        addStateMoveMap(State.CLOSE_FACE_DETECT, CloseFaceDetectProc.Result.CLOSE,        State.MOTION_DETECT);
+        addStateMoveMap(State.CLOSE_FACE_DETECT, CloseFaceDetectProc.Result.TIMEOUT,      State.MOTION_DETECT);
 
         // 初期状態を動体検知中に設定
         this.state = State.MOTION_DETECT;

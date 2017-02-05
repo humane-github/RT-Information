@@ -1,4 +1,4 @@
-@rem CameraDeviceCompを起動
+@rem RTCを起動
 @echo off
 
 @rem jarファイルの名前（artifactId）

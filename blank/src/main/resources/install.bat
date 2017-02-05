@@ -3,8 +3,6 @@
 
 @rem jarファイル名（artifactId）
 set JAR_NAME=xxxxx
-@rem confファイル名
-set CONF_NAME=xxxxx.conf
 
 @rem 開始コメント
 echo [install.bat] start install....
@@ -45,7 +43,6 @@ set TARGET_DIR=%CD%
 @rem 各種ファイルをコピー
 copy /Y "%RESOURCE_DIR%run.bat"            "%TARGET_DIR%\run.bat"
 copy /Y "%RESOURCE_DIR%rtc.conf"           "%TARGET_DIR%\rtc.conf"
-copy /Y "%RESOURCE_DIR%%CONF_NAME%"        "%TARGET_DIR%\%CONF_NAME%"
 copy /Y "%PRJ_ROOT%\target\%JAR_NAME%.jar" "%TARGET_DIR%\%JAR_NAME%.jar"
 
 @rem 終了コメント

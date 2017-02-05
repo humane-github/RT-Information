@@ -3,7 +3,6 @@ package jp.co.humane.rtc.motiondetector.processor;
 import RTC.TimedLong;
 import jp.co.humane.rtc.common.component.state.StateProcessResult;
 import jp.co.humane.rtc.common.component.state.StateProcessor;
-import jp.co.humane.rtc.common.logger.RtcLogger;
 import jp.co.humane.rtc.common.port.RtcInPort;
 
 /**
@@ -21,9 +20,6 @@ public class WaitWakeupProcessor extends StateProcessor {
         NOT_RECEIVE,
         RECEIVE
     }
-
-    /** ロガー */
-    private RtcLogger logger = new RtcLogger("MotionDetector");
 
     /** 顔検出の開始指示入力ポート */
     private RtcInPort<TimedLong> wakeupIn = null;

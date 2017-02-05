@@ -32,7 +32,7 @@ public class CameraDeviceImpl extends DataFlowComponent<CameraDeviceConfig> {
     private VideoCapture videoCapture = null;
 
     /** カメラ映像の送信ポート */
-    protected RtcOutPort<CameraImage> cameraImageOut = null;;
+    protected RtcOutPort<CameraImage> cameraImageOut = new RtcOutPort<>("CameraImage", CorbaObj.newCameraImage());
 
     /** イメージ確認用ビューア */
     private MatViewer imageViewer = new MatViewer("CameraDevice");
@@ -48,22 +48,6 @@ public class CameraDeviceImpl extends DataFlowComponent<CameraDeviceConfig> {
      */
 	public CameraDeviceImpl(Manager manager) {
         super(manager);
-    }
-
-    /**
-     * 初期化処理。
-     * 各ポートの追加を行う。
-     *
-     * @return リターンコード。
-     */
-	@Override
-    protected ReturnCode_t onRtcInitialize() {
-
-        // カメラの映像の出力ポートを追加
-        cameraImageOut = new RtcOutPort<CameraImage>("CameraImage", CorbaObj.newCameraImage(255));
-        addOutPort("CameraImage", cameraImageOut);
-
-        return ReturnCode_t.RTC_OK;
     }
 
     /**

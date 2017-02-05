@@ -31,13 +31,13 @@ public class MotionDetectorImpl extends DataFlowStatefullComponent<MotionDetecto
     };
 
     /** カメラ映像の入力ポート */
-    private RtcInPort<CameraImage> cameraImageIn = null;
+    private RtcInPort<CameraImage> cameraImageIn = new RtcInPort<>("CameraImage", CorbaObj.newCameraImage(255));
 
     /** 動体検知の開始指示入力ポート */
-    private RtcInPort<TimedLong> wakeupIn = null;
+    private RtcInPort<TimedLong> wakeupIn = new RtcInPort<>("Wakeup", CorbaObj.newTimedLong());
 
     /** 動体検知を通知する出力ポート */
-    private RtcOutPort<TimedBoolean> detectResultOut = null;
+    private RtcOutPort<TimedBoolean> detectResultOut = new RtcOutPort<>("DetectResult", CorbaObj.newTimedBoolean());
 
     /** OpenCVの読み込み */
     static {
@@ -60,18 +60,6 @@ public class MotionDetectorImpl extends DataFlowStatefullComponent<MotionDetecto
      */
     @Override
     protected ReturnCode_t onRtcInitialize() {
-
-        // カメラの映像の入力ポートを追加
-        cameraImageIn = new RtcInPort<CameraImage>("CameraImage", CorbaObj.newCameraImage(255));
-        addInPort("CameraImage", cameraImageIn);
-
-        // 動体検知の開始指示入力ポートポートを追加
-        wakeupIn = new RtcInPort<TimedLong>("Wakeup", CorbaObj.newTimedLong());
-        addInPort("Wakeup", wakeupIn);
-
-        // 動体検知を通知する出力ポートを追加
-        detectResultOut = new RtcOutPort<TimedBoolean>("DetectResult", CorbaObj.newTimedBoolean());
-        addOutPort("DetectResult", detectResultOut);
 
         // 状態の関連情報を設定
         setStateRelation();

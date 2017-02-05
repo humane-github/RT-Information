@@ -22,7 +22,6 @@ import jp.co.humane.opencvlib.MatViewer;
 import jp.co.humane.rtc.common.collection.Pair;
 import jp.co.humane.rtc.common.component.state.StateProcessResult;
 import jp.co.humane.rtc.common.component.state.StateProcessor;
-import jp.co.humane.rtc.common.logger.RtcLogger;
 import jp.co.humane.rtc.common.port.RtcInPort;
 import jp.co.humane.rtc.common.port.RtcOutPort;
 import jp.co.humane.rtc.common.util.CorbaObj;
@@ -46,9 +45,6 @@ public class DetectingProcesssor extends StateProcessor {
         TIMEOUT
     }
 
-    /** ロガー */
-    private RtcLogger logger = new RtcLogger("DetectingProcesssor");
-
     /** カメラ映像の入力ポート */
     private RtcInPort<CameraImage> cameraImageIn = null;
 
@@ -65,7 +61,7 @@ public class DetectingProcesssor extends StateProcessor {
     private MatOfPoint prevCorners = null;
 
     /** イメージ確認用ビューア */
-    private MatViewer matViewer = new MatViewer("FaceDetector");
+    private MatViewer matViewer = new MatViewer("MotionDetector");
 
     /** 検出継続時間(sec) */
     private int detectLimitSec = 0;
