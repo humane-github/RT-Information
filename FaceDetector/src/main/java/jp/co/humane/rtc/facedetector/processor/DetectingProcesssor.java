@@ -14,8 +14,10 @@ import org.opencv.core.MatOfRect;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
+import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
+import org.opencv.objdetect.Objdetect;
 
 import RTC.CameraImage;
 import RTC.TimedBoolean;
@@ -185,76 +187,62 @@ public class DetectingProcesssor extends StateProcessor {
      */
     private boolean doDetectFace(CameraImage image) {
 
-//        // 縮小画像のサイズを取得
-//        int smallWidth = (int) (image.width / config.getZoomOutRatio());
-//        int smallHeight = (int) (image.height / config.getZoomOutRatio());
-//
+        // 縮小画像のサイズを取得
+        int smallWidth = (int) (image.width / config.getZoomOutRatio());
+        int smallHeight = (int) (image.height / config.getZoomOutRatio());
+
         // 画像を格納するMatを作成
         // CV_8UC1：8ビット + unsigned(0～255)、チャネル数1(RGBは3チャネル) ⇒ 白黒表示
         Mat cameraMat = new Mat(image.height, image.width, image.bpp);
         Mat grayMat   = new Mat(image.height, image.width, CvType.CV_8UC1);
-//        Mat smallMat  = new Mat(smallHeight, smallWidth, CvType.CV_8UC1);
+        Mat smallMat  = new Mat(smallHeight, smallWidth, CvType.CV_8UC1);
 
         // カメラの映像をMatに格納後、グレースケールに変換
         cameraMat.put(0, 0, image.pixels);
         Imgproc.cvtColor(cameraMat, grayMat, Imgproc.COLOR_BGR2GRAY);
 
-//        // 画像を縮小化する
-//        Imgproc.resize(grayMat, smallMat, smallMat.size(), 0, 0, Imgproc.INTER_LINEAR);
-//
-//        // 各特徴量を使って顔の検出処理を行う
-//        int detectedCount = 0;
-//        List<MatOfRect> facesList = new ArrayList<>();
-//        for (CascadeClassifier cc : cascadeClassifierList) {
-//
-//            // 検出処理を実行
-//            MatOfRect faces = new MatOfRect();
-//            cc.detectMultiScale(smallMat, faces, 1.1, 2, Objdetect.CASCADE_SCALE_IMAGE , new Size(30,30), new Size());
-//
-//            // 検出できた場合は検出数を増やし、検出範囲をリストに格納
-//            if (0 < faces.toArray().length) {
-//                detectedCount++;
-//                facesList.add(faces);
-//            }
-//        }
-//
-//        // ビューアに画像を表示する
-//        if (config.getEnableViewer()) {
-//            updateViewer(smallMat, facesList);
-//        }
-//
-//        // 検出数が指定回数未満の場合は未検出とする
-//        if (detectedCount < config.getDetectThreshold()) {
-//            return false;
-//        }
+        // 画像を縮小化する
+        Imgproc.resize(grayMat, smallMat, smallMat.size(), 0, 0, Imgproc.INTER_LINEAR);
 
+        // 各特徴量を使って顔の検出処理を行う
+        int detectedCount = 0;
+        int faceAreaMax = 0;
+        List<MatOfRect> facesList = new ArrayList<>();
+        for (CascadeClassifier cc : cascadeClassifierList) {
 
-        // 顔検出の特徴量は1つめのCascade
-        CascadeClassifier cc =cascadeClassifierList.get(0);
+            // 検出処理を実行
+            MatOfRect faces = new MatOfRect();
+            cc.detectMultiScale(smallMat, faces, 1.1, 2, Objdetect.CASCADE_SCALE_IMAGE , new Size(30,30), new Size());
 
-        // 検出処理を実行
-        MatOfRect faces = new MatOfRect();
-        cc.detectMultiScale(grayMat, faces);
+            // 検出できた場合は検出数を増やし、検出範囲をリストに格納
+            if (0 < faces.toArray().length) {
+                detectedCount++;
+                facesList.add(faces);
 
-         // 検出されなかったらfalse
-        if (0 < faces.toArray().length){
-            return false;
-        }
+                for (Rect rect :faces.toArray()){
+                    int faceArea = rect.width * rect.height;
 
-        // 検出した顔より面積が大きいものを抽出
-        int faceAreaMax=0;
-
-        for (Rect rect :faces.toArray()){
-            int faceArea = rect.width * rect.height;
-
-            if (faceAreaMax < faceArea){
-                faceAreaMax = faceArea;
+                    if (faceAreaMax < faceArea){
+                        faceAreaMax = faceArea;
+                    }
+                }
             }
         }
 
+        // ビューアに画像を表示する
+        if (config.getEnableViewer()) {
+            updateViewer(smallMat, facesList);
+        }
+
+        // 検出数が指定回数未満の場合は未検出とする
+        if (detectedCount < config.getDetectThreshold()) {
+            return false;
+        }
+
+
         // 一番面積の大きい顔が画像全体の?%をしめていれば検出とする
         // 今のところは50%にしているがconfigのgetDetectThresholdで設定?
-        int imageArea = grayMat.width() * grayMat.height();
+        int imageArea = smallMat.width() * smallMat.height();
         if (faceAreaMax < imageArea * 0.5){
           return false;
         }
