@@ -1,5 +1,7 @@
 package jp.co.humane.rtc.infoclerkmgr;
 
+import java.io.File;
+
 import jp.co.humane.rtc.common.starter.bean.ConfigBase;
 
 /**
@@ -26,6 +28,9 @@ public class InfoClerkManagerConfig extends ConfigBase {
 
     /** 画面クローズのリトライアウト回数 */
     private Integer closeFaceRetryOut = 20;
+
+    /** 地図CSVファイル */
+    private String mapCsvPath = System.getProperty("user.dir") + File.separator + "mapConfig.csv";
 
     /**
      * motionDetectTimeを取得する。
@@ -121,6 +126,22 @@ public class InfoClerkManagerConfig extends ConfigBase {
      */
     public void setCloseFaceRetryOut(Integer closeFaceRetryOut) {
         this.closeFaceRetryOut = closeFaceRetryOut;
+    }
+
+    /**
+     * mapCsvPathを取得する。
+     * @return mapCsvPath mapCsvPath。
+     */
+    public String getMapCsvPath() {
+        return mapCsvPath;
+    }
+
+    /**
+     * mapCsvPathを設定する。
+     * @param mapCsvPath mapCsvPath.
+     */
+    public void setMapCsvPath(String mapCsvPath) {
+        this.mapCsvPath = mapCsvPath;
     }
 
 }

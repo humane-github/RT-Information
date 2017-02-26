@@ -1,5 +1,10 @@
 package jp.co.humane.rtc.infoclerkmgr.processor;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 import RTC.TimedString;
@@ -8,7 +13,6 @@ import jp.co.humane.rtc.common.component.state.StateProcessResult;
 import jp.co.humane.rtc.common.component.state.StateProcessor;
 import jp.co.humane.rtc.common.port.RtcInPort;
 import jp.co.humane.rtc.common.port.RtcOutPort;
-import jp.co.humane.rtc.common.util.CorbaObj;
 import jp.co.humane.rtc.common.util.ElapsedTimer;
 import jp.co.humane.rtc.infoclerkmgr.InfoClerkManagerConfig;
 
@@ -29,6 +33,12 @@ public class VoiceRecognizeProc extends StateProcessor {
         TIMEOUT
     }
 
+    /** CSV区切り文字 */
+    private static final String CSV_SEPARATOR = ",";
+
+    /** CSVの文字コード */
+    private static final String CSV_CHARSET = "UTF-8";
+
     /** 音声認識結果の入力ポート */
     private RtcInPort<TimedWString> voiceTexResulttIn = null;
 
@@ -41,6 +51,9 @@ public class VoiceRecognizeProc extends StateProcessor {
     /** 経過時間タイマー */
     private ElapsedTimer timer = new ElapsedTimer();
 
+    /** キーワード・地図イメージパスのマップ */
+    private Map<String, String> imageMap = null;
+
     /**
      * コンストラクタ。
      * @param voiceTexResulttIn 音声認識結果の入力ポート。
@@ -52,6 +65,32 @@ public class VoiceRecognizeProc extends StateProcessor {
         this.voiceTexResulttIn = voiceTexResulttIn;
         this.voiceTextOut = voiceTextOut;
         this.config = config;
+    }
+
+
+    /**
+     * アクティブ時の処理。
+     * CSVファイルを読み込みなおす。
+     * @inheritDoc
+     */
+    @Override
+    public boolean onActivated(int ec_id) {
+        imageMap = new HashMap<>();
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(new File(config.getMapCsvPath()), CSV_CHARSET);
+            while (scanner.hasNext()) {
+                String[] data = scanner.nextLine().split(CSV_SEPARATOR);
+                imageMap.put(data[0], data[1]);
+            }
+        } catch (FileNotFoundException ex) {
+            throw new RuntimeException("地図のCSVファイル読み込みに失敗しました。", ex);
+        } finally {
+            if (null != scanner) {
+                scanner.close();
+            }
+        }
+        return true;
     }
 
     /**
@@ -80,27 +119,24 @@ public class VoiceRecognizeProc extends StateProcessor {
             return new StateProcessResult(Result.NOT_RECOGNIZE);
         }
 
-        // 話された内容から場所を特定して地図を表示し音声を出力する
         logger.info("音声認識結果[" + voiceText.data + "]を受け取りました。");
-        boolean isSuccess = doOutputMapAndVoice(voiceText.data);
+
+        // 話された内容に場所が含まれている場合は対応するイメージファイルを取得
+        String imagePath = null;
+        for (String keyword : imageMap.keySet()) {
+            if(-1 != voiceText.data.indexOf(keyword)) {
+                imagePath = imageMap.get(keyword);
+                logger.debug("[" + keyword + "]を検出しました。" + imagePath + "を表示します。");
+                break;
+            }
+        }
 
         // 処理が正常終了した場合はRECOGNIZE、それ以外はNOT_RECOGNIZE
-        if (isSuccess) {
-            return new StateProcessResult(Result.RECOGNIZE);
+        if (null != imagePath) {
+            return new StateProcessResult(Result.RECOGNIZE, imagePath);
         } else {
             return new StateProcessResult(Result.NOT_RECOGNIZE);
         }
-    }
-
-    /**
-     * 話された内容から場所を特定して地図を表示し音声を出力する。
-     * @param voiceText 音声認識されたテキスト。
-     * @return 処理結果。true：テキストの意味が読み取れ正常に処理ができた。false：それ以外。
-     */
-    private boolean doOutputMapAndVoice(String voiceText) {
-
-        voiceTextOut.write(CorbaObj.newTimedString(voiceText + "を認識しました"));
-        return true;
     }
 
     /**

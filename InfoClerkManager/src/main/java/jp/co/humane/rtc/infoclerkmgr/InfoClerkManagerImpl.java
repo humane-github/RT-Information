@@ -123,7 +123,7 @@ public class InfoClerkManagerImpl extends DataFlowStatefullComponent<InfoClerkMa
         StateProcessor currentProc = stateProcMap.get(this.state);
         currentProc.acceptPreResult(null);
 
-        return ReturnCode_t.RTC_OK;
+        return super.onRtcActivated(ec_id);
     }
 
     /**

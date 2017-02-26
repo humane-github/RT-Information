@@ -11,6 +11,7 @@ import jp.co.humane.rtc.common.port.RtcOutPort;
 import jp.co.humane.rtc.common.util.CorbaObj;
 import jp.co.humane.rtc.common.util.ElapsedTimer;
 import jp.co.humane.rtc.infoclerkmgr.InfoClerkManagerConfig;
+import jp.co.humane.rtc.infoclerkmgr.tool.ImageViewer;
 
 /**
  * 画面クローズ用顔認識中ステータスでの処理クラス。
@@ -47,6 +48,9 @@ public class CloseFaceDetectProc extends StateProcessor {
     /** 連続顔非検出回数 */
     private int faceNotDetectCount = 0;
 
+    /** イメージビューア */
+    private ImageViewer viewer = new ImageViewer("Info Clerk");
+
     /**
      * コンストラクタ。
      * @param detectFaceResultIn 顔検知結果の入力ポート。
@@ -59,6 +63,17 @@ public class CloseFaceDetectProc extends StateProcessor {
         this.detectFaceResultIn = detectFaceResultIn;
         this.detectFaceStartOut = detectFaceStartOut;
         this.config = config;
+    }
+
+    /**
+     * 非アクティブ時の処理。
+     * ビューアを非表示にする。
+     * @inheritDoc
+     */
+    @Override
+    public boolean onDeactivated(int ec_id) {
+        viewer.hide();
+        return super.onDeactivated(ec_id);
     }
 
     /**
@@ -103,14 +118,14 @@ public class CloseFaceDetectProc extends StateProcessor {
         // 顔認識の連続失敗回数が閾値を超えた場合は画面をクローズ
         if (config.getCloseFaceThreshold() <= faceNotDetectCount) {
             logger.info(config.getCloseFaceThreshold() + "回連続して顔認識に失敗したため画面をクローズします。");
-            // TODO:画面クローズ処理
+            viewer.hide();
             return new StateProcessResult(Result.CLOSE);
         }
 
         // 顔認識のリトライ回数を超えた場合は画面をクローズ
         if (config.getCloseFaceRetryOut() <= faceDetectTryCount) {
             logger.info(faceDetectTryCount + "回の顔認識処理を行ったため画面をクローズします。");
-            // TODO:画面クローズ処理
+            viewer.hide();
             return new StateProcessResult(Result.TIMEOUT);
         }
 
@@ -136,6 +151,10 @@ public class CloseFaceDetectProc extends StateProcessor {
         // 前回の検出状態をクリア
         faceDetectTryCount = 0;
         faceNotDetectCount = 0;
+
+        // 指定パスのイメージを表示する
+        String path = (String)result.getResultData();
+        viewer.setImage(path);
 
         // 顔検知の開始を通知する
         detectFaceStartOut.write(CorbaObj.newTimedLong(config.getCloseFaceInterval()));

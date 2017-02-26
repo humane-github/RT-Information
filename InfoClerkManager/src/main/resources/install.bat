@@ -44,6 +44,8 @@ copy /Y "%RESOURCE_DIR%run.bat"              "%TARGET_DIR%\run.bat"
 copy /Y "%RESOURCE_DIR%rtc.conf"             "%TARGET_DIR%\rtc.conf"
 copy /Y "%RESOURCE_DIR%%CONF_NAME%"          "%TARGET_DIR%\%CONF_NAME%"
 copy /Y "%PRJ_ROOT%\target\%JAR_NAME%.jar"   "%TARGET_DIR%\%JAR_NAME%.jar"
+copy /Y "%RESOURCE_DIR%mapConfig.csv"        "%TARGET_DIR%\mapConfig.csv"
+xcopy /Y /E "%RESOURCE_DIR%image"               "%TARGET_DIR%\image\"
 
 @rem èIóπÉRÉÅÉìÉg
 popd

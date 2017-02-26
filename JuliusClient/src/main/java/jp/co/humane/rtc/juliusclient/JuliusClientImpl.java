@@ -1,6 +1,7 @@
 package jp.co.humane.rtc.juliusclient;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import RTC.ReturnCode_t;
 import RTC.TimedOctetSeq;
@@ -13,6 +14,7 @@ import jp.co.humane.rtc.common.port.RtcInPort;
 import jp.co.humane.rtc.common.port.RtcOutPort;
 import jp.co.humane.rtc.common.starter.RtcStarter;
 import jp.co.humane.rtc.common.util.CorbaObj;
+import jp.co.humane.rtc.common.util.SleepTimer;
 import jp.go.aist.rtm.RTC.Manager;
 import jp.go.aist.rtm.RTC.port.ConnectorDataListenerType;
 
@@ -22,6 +24,9 @@ import jp.go.aist.rtm.RTC.port.ConnectorDataListenerType;
  *
  */
 public class JuliusClientImpl extends DataFlowComponent<JuliusClientConfig> {
+
+    /** Julius起動待機時間 */
+    private static final int JULIUS_START_WAIT = 5000;
 
     /** 音声情報を受け取るポート */
     private RtcInPort<TimedOctetSeq> voiceDataIn = new RtcInPort<>("voiceData", CorbaObj.newTimedOctetSeq());
@@ -92,6 +97,9 @@ public class JuliusClientImpl extends DataFlowComponent<JuliusClientConfig> {
         listener.setFormat("Juliusコンソール出力：{0}");
         juliusConsoleReader = new NotifyReader(listener);
         juliusConsoleReader.watch(juliusProcess.getInputStream());
+
+        // Julius起動まで待機 （TODO:妥当な時間の設定処理が必要）
+        SleepTimer.Sleep(JULIUS_START_WAIT, TimeUnit.MILLISECONDS);
 
         // Juliusとの通信を開始する
         communicator.start();
