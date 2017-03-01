@@ -35,7 +35,6 @@
     <module>../InfoClerkManager</module>
     <module>../JuliusClient</module>
     <module>../MotionDetector</module>
-    <module>../str2wstr</module>
   </modules>
 
   <!-- infoclerkで使用する全jarのバージョンをここで定義 -->
