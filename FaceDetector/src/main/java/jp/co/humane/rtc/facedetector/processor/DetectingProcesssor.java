@@ -243,7 +243,7 @@ public class DetectingProcesssor extends StateProcessor {
         // 一番面積の大きい顔が画像全体の?%をしめていれば検出とする
         // 今のところは50%にしているがconfigのgetDetectThresholdで設定?
         int imageArea = smallMat.width() * smallMat.height();
-        if (faceAreaMax < imageArea * 0.5){
+        if (faceAreaMax < imageArea * 0.3){
           return false;
         }
 
