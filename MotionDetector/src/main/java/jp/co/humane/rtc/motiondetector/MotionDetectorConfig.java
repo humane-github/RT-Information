@@ -25,7 +25,7 @@ public class MotionDetectorConfig extends ConfigBase {
     private Integer cornersMargin = 5;
 
     /** 動いたと判定する2つのフレーム間での特徴点の移動距離 */
-    private Integer cornerMoveLength = 20;
+    private Integer cornerMoveLength = 5;
 
     /** 条件を満たす特徴点の数 */
     private Integer cornerMoveCount = 20;

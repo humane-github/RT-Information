@@ -1,7 +1,0 @@
-# CMake generation dependency list for this directory.
-C:/DEV/17.InformationClerk/10.src/wstr2str/doc/CMakeLists.txt
-C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/FindDoxygen.cmake
-C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/FindPackageHandleStandardArgs.cmake
-C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/FindPackageMessage.cmake
-C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/CMakeParseArguments.cmake
-C:/DEV/17.InformationClerk/10.src/wstr2str/doc/doxyfile.in

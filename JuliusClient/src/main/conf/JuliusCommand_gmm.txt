@@ -1,0 +1,16 @@
+# juliusの起動コマンドを改行(LF)区切りで入力してください。
+# オーディオポートは${audio}、モジュールポートは${module}で指定してください。
+# 行頭を#にするとコメント行として解釈します。
+\\ls-wsxl973\p-寺田\環境構築\dictation-kit-v4.4\bin\windows\julius.exe
+-C
+\\ls-wsxl973\p-寺田\環境構築\dictation-kit-v4.4\main.jconf
+-C
+\\ls-wsxl973\p-寺田\環境構築\dictation-kit-v4.4\am-gmm.jconf
+-cutsilence
+-nostrip
+-input
+adinnet
+-adport
+${audio}
+-module
+${module}

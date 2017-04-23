@@ -1,7 +1,15 @@
 package jp.co.humane.rtc.juliusclient;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
 
 import RTC.ReturnCode_t;
 import RTC.TimedOctetSeq;
@@ -14,7 +22,6 @@ import jp.co.humane.rtc.common.port.RtcInPort;
 import jp.co.humane.rtc.common.port.RtcOutPort;
 import jp.co.humane.rtc.common.starter.RtcStarter;
 import jp.co.humane.rtc.common.util.CorbaObj;
-import jp.co.humane.rtc.common.util.SleepTimer;
 import jp.go.aist.rtm.RTC.Manager;
 import jp.go.aist.rtm.RTC.port.ConnectorDataListenerType;
 
@@ -25,8 +32,17 @@ import jp.go.aist.rtm.RTC.port.ConnectorDataListenerType;
  */
 public class JuliusClientImpl extends DataFlowComponent<JuliusClientConfig> {
 
-    /** Julius起動待機時間 */
-    private static final int JULIUS_START_WAIT = 5000;
+    /** コマンドファイルのエンコード */
+    private static final String CHARSET = "UTF-8";
+
+    /** コマンドファイルのコメント文字 */
+    private static final String COMMENT_STRING = "#";
+
+    /** コマンドファイルのオーディオポート置換文字 */
+    private static final String AUDIO_PORT = "${audio}";
+
+    /** コマンドファイルのモジュールポート置換文字 */
+    private static final String MODULE_PORT = "${module}";
 
     /** 音声情報を受け取るポート */
     private RtcInPort<TimedOctetSeq> voiceDataIn = new RtcInPort<>("voiceData", CorbaObj.newTimedOctetSeq());
@@ -78,15 +94,15 @@ public class JuliusClientImpl extends DataFlowComponent<JuliusClientConfig> {
     @Override
     protected ReturnCode_t onRtcActivated(int ec_id) {
 
+        // Julius起動コマンドを取得する
+        List<String> command = getJuliusStartCommand();
+        if (null == command) {
+            return ReturnCode_t.RTC_ERROR;
+        }
+
         // Juliusサーバを起動する
         try {
-            juliusProcess = new ProcessBuilder(config.getJuliusExePath(),
-                                               "-C",      config.getJuliusConfPath(),
-                                               "-input",  "adinnet",
-                                               "-adport", config.getJuliusAudioPort().toString(),
-                                               "-module", config.getJuliusModulePort().toString())
-                            .start();
-
+            juliusProcess = new ProcessBuilder(command).start();
         } catch (IOException ex) {
             logger.error("Juliusの起動に失敗しました。", ex);
         }
@@ -98,14 +114,56 @@ public class JuliusClientImpl extends DataFlowComponent<JuliusClientConfig> {
         juliusConsoleReader = new NotifyReader(listener);
         juliusConsoleReader.watch(juliusProcess.getInputStream());
 
-        // Julius起動まで待機 （TODO:妥当な時間の設定処理が必要）
-        SleepTimer.Sleep(JULIUS_START_WAIT, TimeUnit.MILLISECONDS);
-
         // Juliusとの通信を開始する
         communicator.start();
 
         return ReturnCode_t.RTC_OK;
     }
+
+    /**
+     * Juliusの起動コマンドを取得する。
+     * @return 起動コマンドを表す文字列のリスト。
+     */
+    private List<String> getJuliusStartCommand() {
+
+        List<String> commandList = new ArrayList<>();
+
+        // Juliusコマンドファイルの記述からコマンド情報を作成
+        Path file = Paths.get(config.getJuliusCommandFile());
+        try (BufferedReader br = Files.newBufferedReader(file, Charset.forName(CHARSET))) {
+            String line = null;
+            while ((line = br.readLine()) != null) {
+                if (!line.startsWith(COMMENT_STRING)) {
+                    String command = convertPortString(line);
+                    commandList.add(command);
+                }
+            }
+        } catch (IOException e) {
+            logger.error(file.toString() + "からJulius起動コマンドの読み込み処理に失敗しました。");
+            return null;
+        }
+        return commandList;
+    }
+
+    /**
+     * ポートの文字を置換する。
+     * @param line 置換対象文字列。
+     * @return 置換後文字列。
+     */
+    private String convertPortString(String line) {
+
+        // オーディオポートの置換
+        if (line.contains(AUDIO_PORT)) {
+            line = StringUtils.replace(line, AUDIO_PORT, String.valueOf(config.getJuliusAudioPort()), -1);
+        }
+
+        // モジュールポートの置換
+        if (line.contains(MODULE_PORT)) {
+            line = StringUtils.replace(line, MODULE_PORT, String.valueOf(config.getJuliusModulePort()), -1);
+        }
+        return line;
+    }
+
 
     /**
      * 周期的な処理。
@@ -136,9 +194,10 @@ public class JuliusClientImpl extends DataFlowComponent<JuliusClientConfig> {
         communicator.stop();
 
         // Juliusプロセスの停止
-        juliusProcess.destroy();
-
-        logger.info("juliusプロセスを停止しました。");
+        if (null != juliusProcess) {
+            juliusProcess.destroy();
+            logger.info("juliusプロセスを停止しました。");
+        }
 
         return ReturnCode_t.RTC_OK;
     }

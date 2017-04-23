@@ -10,6 +10,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -77,14 +78,10 @@ public class JuliusCommunicator extends ConnectorDataListenerT<TimedOctetSeq> {
      */
     public void start() {
 
-        // 新たにソケットを作成する
-        textSocket = new Socket();
-        voiceSocket = new Socket();
-
         // ソケットをオープン
         try {
-            textSocket.connect(new InetSocketAddress(config.getJuliusHostname(), config.getJuliusModulePort()));
-            voiceSocket.connect(new InetSocketAddress(config.getJuliusHostname(), config.getJuliusAudioPort()));
+            textSocket = openSocket(config.getJuliusHostname(), config.getJuliusModulePort());
+            voiceSocket = openSocket(config.getJuliusHostname(), config.getJuliusAudioPort());
         } catch (IOException e) {
             String msg = "Juliusとの通信に失敗しました。";
             logger.error(msg);
@@ -93,7 +90,42 @@ public class JuliusCommunicator extends ConnectorDataListenerT<TimedOctetSeq> {
 
         // テキスト受信ソケットを監視
         listenTextSocket();
+    }
 
+    /**
+     * 指定ポートのソケット通信の接続を行う。
+     * @param hostname ホスト名。
+     * @param port     ポート番号。
+     * @return ソケットインスタンス。
+     * @throws IOException リトライアウト発生時にスロー。
+     */
+    private Socket openSocket(String hostname, Integer port) throws IOException {
+
+        int retryCount = 0;
+        Socket socket = new Socket();
+
+        // リトライアウトするまで接続する
+        while (true) {
+
+            try {
+                socket.connect(new InetSocketAddress(hostname, port));
+                break;
+            } catch (IOException e) {
+                retryCount++;
+                String msg = "Juliusと" + port + "番ポートの接続に失敗しました(" + retryCount + "回目)。";
+                logger.info(msg);
+
+                // リトライアウトした場合はIOExceptionをスローする
+                if (config.getConnectRetryOutCount() <= retryCount) {
+                    logger.error(retryCount + "回接続に失敗しました。リトライアウトします。");
+                    throw e;
+                }
+            }
+            socket.close();
+            socket = new Socket();
+            SleepTimer.Sleep(config.getConnectRetrySecond(), TimeUnit.SECONDS);
+        }
+        return socket;
     }
 
     /**
@@ -262,8 +294,12 @@ public class JuliusCommunicator extends ConnectorDataListenerT<TimedOctetSeq> {
 
         // ソケットをクローズさせる
         try {
-            voiceSocket.close();
-            textSocket.close();
+            if (null != voiceSocket) {
+                voiceSocket.close();
+            }
+            if (null != textSocket) {
+                textSocket.close();
+            }
         } catch (IOException ex) {
             throw new RuntimeException("Juliusサーバとのソケットをクローズできませんでした。", ex);
         }

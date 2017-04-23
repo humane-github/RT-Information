@@ -1,5 +1,7 @@
 package jp.co.humane.rtc.juliusclient;
 
+import java.io.File;
+
 import jp.co.humane.rtc.common.starter.bean.ConfigBase;
 
 /**
@@ -15,14 +17,17 @@ public class JuliusClientConfig extends ConfigBase {
     /** Juliusのテキスト受信用ポート番号 */
     private Integer juliusModulePort = 23973;
 
+    /** Julius接続リトライ間隔(sec) */
+    private Integer connectRetrySecond = 30;
+
+    /** Julius接続リトライアウト回数 */
+    private Integer connectRetryOutCount = 20;
+
     /** Juliusホスト名 */
     private String juliusHostname = "localhost";
 
-    /** Juliusの実行ファイルのパス */
-    private String juliusExePath = "C:\\DEV\\17.InformationClerk\\20.bin\\julius-4.3-win32bin\\bin\\julius.exe";
-
-    /** Juliusの設定ファイルのパス */
-    private String juliusConfPath = "C:\\DEV\\17.InformationClerk\\20.bin\\julius-4.3-win32bin\\gram\\conf.jconf";
+    /** Juliusコマンドファイル */
+    private String juliusCommandFile = System.getProperty("user.dir") + File.separator + "JuliusCommand.txt";
 
     /** 有効スコア */
     private Double availableScore = 0.5;
@@ -67,6 +72,38 @@ public class JuliusClientConfig extends ConfigBase {
     }
 
     /**
+     * connectRetrySecondを取得する。
+     * @return connectRetrySecond connectRetrySecond。
+     */
+    public Integer getConnectRetrySecond() {
+        return connectRetrySecond;
+    }
+
+    /**
+     * connectRetrySecondを設定する。
+     * @param connectRetrySecond connectRetrySecond.
+     */
+    public void setConnectRetrySecond(Integer connectRetrySecond) {
+        this.connectRetrySecond = connectRetrySecond;
+    }
+
+    /**
+     * connectRetryOutCountを取得する。
+     * @return connectRetryOutCount connectRetryOutCount。
+     */
+    public Integer getConnectRetryOutCount() {
+        return connectRetryOutCount;
+    }
+
+    /**
+     * connectRetryOutCountを設定する。
+     * @param connectRetryOutCount connectRetryOutCount.
+     */
+    public void setConnectRetryOutCount(Integer connectRetryOutCount) {
+        this.connectRetryOutCount = connectRetryOutCount;
+    }
+
+    /**
      * juliusHostnameを取得する。
      * @return juliusHostname juliusHostname.
      */
@@ -83,35 +120,19 @@ public class JuliusClientConfig extends ConfigBase {
     }
 
     /**
-     * juliusExePathを取得する。
-     * @return juliusExePath juliusExePath.
+     * juliusCommandFileを取得する。
+     * @return juliusCommandFile juliusCommandFile。
      */
-    public String getJuliusExePath() {
-        return juliusExePath;
+    public String getJuliusCommandFile() {
+        return juliusCommandFile;
     }
 
     /**
-     * juliusExePathを設定する。
-     * @param juliusExePath juliusExePath.
+     * juliusCommandFileを設定する。
+     * @param juliusCommandFile juliusCommandFile.
      */
-    public void setJuliusExePath(String juliusExePath) {
-        this.juliusExePath = juliusExePath;
-    }
-
-    /**
-     * juliusConfPathを取得する。
-     * @return juliusConfPath juliusConfPath.
-     */
-    public String getJuliusConfPath() {
-        return juliusConfPath;
-    }
-
-    /**
-     * juliusConfPathを設定する。
-     * @param juliusConfPath juliusConfPath.
-     */
-    public void setJuliusConfPath(String juliusConfPath) {
-        this.juliusConfPath = juliusConfPath;
+    public void setJuliusCommandFile(String juliusCommandFile) {
+        this.juliusCommandFile = juliusCommandFile;
     }
 
     /**

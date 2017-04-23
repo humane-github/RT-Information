@@ -35,6 +35,12 @@
       <artifactId>rtc-common</artifactId>
     </dependency>
 
+    <!-- commons-lang -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+    </dependency>
+
   </dependencies>
 
   <build>
