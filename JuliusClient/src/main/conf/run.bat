@@ -1,8 +1,14 @@
 @rem JuliusClientを起動
 @echo off
 
+@rem ファイルの存在するディレクトリのパスに移動
+set CURRENT_DIR=%~dp0
+cd %CURRENT_DIR%
+
 @rem コマンドプロンプトタイトル変更
-title JuliusClient
+title %CURRENT_DIR:*bin\=%%~nx0
+@rem 日本語を扱えるようにする
+chcp 932
 
 @rem jarファイルの名前（artifactId）
 set JAR_NAME=julius-client.jar
@@ -10,10 +16,6 @@ set JAR_NAME=julius-client.jar
 set MAIN_CLASS=jp.co.humane.rtc.juliusclient.JuliusClientImpl
 @rem confファイルの名前
 set CONF_NAME=rtc.conf
-
-@rem ファイルの存在するディレクトリのパスに移動
-set CURRENT_DIR=%~dp0
-cd %CURRENT_DIR%
 
 @rem クラスパスを設定
 set CLASSPATH=%CLASSPATH%;"%JAR_NAME%"

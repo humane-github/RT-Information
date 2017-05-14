@@ -22,13 +22,13 @@ public class MotionDetectorConfig extends ConfigBase {
      * コーナー間の最小距離。
      * (コーナーが1個所で連続抽出されないようにするための距離)
      */
-    private Integer cornersMargin = 5;
+    private Integer cornersMargin = 10;
 
     /** 動いたと判定する2つのフレーム間での特徴点の移動距離 */
-    private Integer cornerMoveLength = 5;
+    private Integer cornerMoveLength = 10;
 
     /** 条件を満たす特徴点の数 */
-    private Integer cornerMoveCount = 20;
+    private Integer cornerMoveCount = 3;
 
     /** ビューアの有効状態 */
     private Boolean enableViewer = false;
